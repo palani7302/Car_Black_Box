@@ -5,7 +5,6 @@
  * Created on December 14, 2023, 1:00 PM
  */
 
-
 #include <xc.h>
 #include "car_black_box.h"
 #include "clcd.h"
