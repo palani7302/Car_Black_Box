@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.41 build 20230208172133 
-                                                                                               Fri Dec 15 14:12:12 2023
+                                                                                               Fri Dec 15 17:36:35 2023
 
 Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1 
      1                           	processor	18F4580
@@ -705,7 +705,7 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    691 ;;
    692 ;; *************** function _main *****************
    693 ;; Defined at:
-   694 ;;		line 24 in file "main.c"
+   694 ;;		line 23 in file "main.c"
    695 ;; Parameters:    Size  Location     Type
    696 ;;		None
    697 ;; Auto vars:     Size  Location     Type
@@ -749,11 +749,11 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    735   001194                     _main:
    736                           	callstack 27
    737   001194                     
-   738                           ;main.c: 25:     init_config();
+   738                           ;main.c: 24:     init_config();
    739   001194  EC5D  F00C         	call	_init_config	;wreg free
    740   001198                     l34:
    741                           
-   742                           ;main.c: 31:         adc_val = read_adc(4) / 10.23;
+   742                           ;main.c: 29:         adc_val = read_adc(4) / 10.23;
    743   001198  0E14               	movlw	20
    744   00119A  6E1B               	movwf	___fldiv@a^0,c
    745   00119C  0EAE               	movlw	174
@@ -783,12 +783,12 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    769   0011E8  C030  F03A         	movff	?___fltol,main@adc_val
    770   0011EC  C031  F03B         	movff	?___fltol+1,main@adc_val+1
    771                           
-   772                           ;main.c: 32:         key = read_switches(1);
+   772                           ;main.c: 30:         key = read_switches(1);
    773   0011F0  0E01               	movlw	1
    774   0011F2  ECEB  F00A         	call	_read_switches
    775   0011F6  6E3C               	movwf	main@key^0,c
    776   0011F8                     
-   777                           ;main.c: 34:         if (key == 10) {
+   777                           ;main.c: 32:         if (key == 10) {
    778   0011F8  0E0A               	movlw	10
    779   0011FA  183C               	xorwf	main@key^0,w,c
    780   0011FC  A4D8               	btfss	status,2,c
@@ -798,12 +798,12 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    784   001206  EF07  F009         	goto	l2376
    785   00120A                     u2080:
    786   00120A                     
-   787                           ;main.c: 35:             pass_flag = 1;
+   787                           ;main.c: 33:             pass_flag = 1;
    788   00120A  0E01               	movlw	1
    789   00120C  6E59               	movwf	_pass_flag^0,c
    790   00120E                     l2376:
    791                           
-   792                           ;main.c: 38:         if (pass_flag == 1) {
+   792                           ;main.c: 36:         if (pass_flag == 1) {
    793   00120E  0459               	decf	_pass_flag^0,w,c
    794   001210  A4D8               	btfss	status,2,c
    795   001212  EF0D  F009         	goto	u2091
@@ -812,7 +812,7 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    798   00121A  EF1B  F009         	goto	l2382
    799   00121E                     u2090:
    800   00121E                     
-   801                           ;main.c: 39:             clcd_print("                ", (0xC0 + (0)));
+   801                           ;main.c: 37:             clcd_print("                ", (0xC0 + (0)));
    802   00121E  0E67               	movlw	low STR_9
    803   001220  6E03               	movwf	clcd_print@data^0,c
    804   001222  0E06               	movlw	high STR_9
@@ -821,14 +821,14 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    807   001228  6E05               	movwf	clcd_print@addr^0,c
    808   00122A  ECAA  F00B         	call	_clcd_print	;wreg free
    809   00122E                     
-   810                           ;main.c: 40:             enter_password();
+   810                           ;main.c: 38:             enter_password();
    811   00122E  EC2F  F005         	call	_enter_password	;wreg free
    812                           
-   813                           ;main.c: 41:         } else {
+   813                           ;main.c: 39:         } else {
    814   001232  EFCC  F008         	goto	l34
    815   001236                     l2382:
    816                           
-   817                           ;main.c: 42:             clcd_print("TIME", (0x80 + (2)));
+   817                           ;main.c: 40:             clcd_print("TIME", (0x80 + (2)));
    818   001236  0E9B               	movlw	low STR_10
    819   001238  6E03               	movwf	clcd_print@data^0,c
    820   00123A  0E06               	movlw	high STR_10
@@ -837,7 +837,7 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    823   001240  6E05               	movwf	clcd_print@addr^0,c
    824   001242  ECAA  F00B         	call	_clcd_print	;wreg free
    825                           
-   826                           ;main.c: 43:             clcd_print("EV", (0x80 + (10)));
+   826                           ;main.c: 41:             clcd_print("EV", (0x80 + (10)));
    827   001246  0EBF               	movlw	low STR_11
    828   001248  6E03               	movwf	clcd_print@data^0,c
    829   00124A  0E06               	movlw	high STR_11
@@ -846,7 +846,7 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    832   001250  6E05               	movwf	clcd_print@addr^0,c
    833   001252  ECAA  F00B         	call	_clcd_print	;wreg free
    834                           
-   835                           ;main.c: 44:             clcd_print("SP", (0x80 + (14)));
+   835                           ;main.c: 42:             clcd_print("SP", (0x80 + (14)));
    836   001256  0EB9               	movlw	low STR_12
    837   001258  6E03               	movwf	clcd_print@data^0,c
    838   00125A  0E06               	movlw	high STR_12
@@ -855,14 +855,14 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    841   001260  6E05               	movwf	clcd_print@addr^0,c
    842   001262  ECAA  F00B         	call	_clcd_print	;wreg free
    843                           
-   844                           ;main.c: 46:             display_time();
+   844                           ;main.c: 44:             display_time();
    845   001266  EC66  F00C         	call	_display_time	;wreg free
    846   00126A                     
-   847                           ;main.c: 47:             display_event(key);
+   847                           ;main.c: 45:             display_event(key);
    848   00126A  503C               	movf	main@key^0,w,c
    849   00126C  ECA4  F009         	call	_display_event
    850   001270                     
-   851                           ;main.c: 48:             display_speed(adc_val);
+   851                           ;main.c: 46:             display_speed(adc_val);
    852   001270  C03A  F00B         	movff	main@adc_val,display_speed@speed
    853   001274  C03B  F00C         	movff	main@adc_val+1,display_speed@speed+1
    854   001278  ECCC  F00B         	call	_display_speed	;wreg free
@@ -963,7 +963,7 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    948                           
    949 ;; *************** function _init_config *****************
    950 ;; Defined at:
-   951 ;;		line 17 in file "main.c"
+   951 ;;		line 16 in file "main.c"
    952 ;; Parameters:    Size  Location     Type
    953 ;;		None
    954 ;; Auto vars:     Size  Location     Type
@@ -1000,16 +1000,16 @@ Microchip MPLAB XC8 C Compiler v2.41 (Free license) build 20230208172133 Og1
    985   0018BA                     _init_config:
    986                           	callstack 27
    987   0018BA                     
-   988                           ;main.c: 18:     init_clcd();
+   988                           ;main.c: 17:     init_clcd();
    989   0018BA  EC01  F00A         	call	_init_clcd	;wreg free
    990   0018BE                     
-   991                           ;main.c: 19:     init_matrix_keypad();
+   991                           ;main.c: 18:     init_matrix_keypad();
    992   0018BE  EC6F  F00C         	call	_init_matrix_keypad	;wreg free
    993   0018C2                     
-   994                           ;main.c: 20:     init_adc();
+   994                           ;main.c: 19:     init_adc();
    995   0018C2  EC29  F00C         	call	_init_adc	;wreg free
    996   0018C6                     
-   997                           ;main.c: 21:     init_timer0();
+   997                           ;main.c: 20:     init_timer0();
    998   0018C6  EC38  F00C         	call	_init_timer0	;wreg free
    999   0018CA  0012               	return		;funcret
   1000   0018CC                     __end_of_init_config:
@@ -4762,7 +4762,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.41 build 20230208172133 
-Symbol Table                                                                                   Fri Dec 15 14:12:12 2023
+Symbol Table                                                                                   Fri Dec 15 17:36:35 2023
 
               ___fldiv@aexp 002F                ___fldiv@bexp 002E                ___fldiv@sign 0027  
             clcd_print@addr 0005              clcd_print@data 0003                          l34 1198  

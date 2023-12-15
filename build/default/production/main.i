@@ -14,7 +14,6 @@
 
 
 
-
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -17906,7 +17905,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 2 3
-# 9 "main.c" 2
+# 8 "main.c" 2
 
 # 1 "./car_black_box.h" 1
 # 19 "./car_black_box.h"
@@ -17917,7 +17916,7 @@ void display_event(unsigned char );
 void display_speed(unsigned short );
 void enter_password();
 void init_timer0();
-# 10 "main.c" 2
+# 9 "main.c" 2
 
 # 1 "./clcd.h" 1
 # 38 "./clcd.h"
@@ -17925,20 +17924,20 @@ void init_clcd(void);
 void clcd_print(const unsigned char *data, unsigned char addr);
 void clcd_putch(const unsigned char data, unsigned char addr);
 void clcd_write(unsigned char bit_values, unsigned char control_bit);
-# 11 "main.c" 2
+# 10 "main.c" 2
 
 # 1 "./keypad.h" 1
 # 35 "./keypad.h"
 void init_matrix_keypad();
 unsigned char read_switches(unsigned char );
 unsigned char scan_key();
-# 12 "main.c" 2
+# 11 "main.c" 2
 
 # 1 "./adc.h" 1
 # 19 "./adc.h"
 void init_adc();
 unsigned short read_adc(unsigned char channel);
-# 13 "main.c" 2
+# 12 "main.c" 2
 
 
 extern unsigned char pass_flag = 0;
@@ -17952,7 +17951,6 @@ void init_config() {
 
 void main(void) {
     init_config();
-
     unsigned short adc_val;
     unsigned char key;
 

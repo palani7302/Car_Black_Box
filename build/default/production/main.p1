@@ -1287,117 +1287,117 @@ Version 4.0 HI-TECH Software Intermediate Code
 :s 8C
 ..
 ]
-"15 main.c
-[; ;main.c: 15: extern unsigned char pass_flag = 0;
+"14 main.c
+[; ;main.c: 14: extern unsigned char pass_flag = 0;
 [v _pass_flag `uc ~T0 @X0 1 e ]
 [i _pass_flag
 -> -> 0 `i `uc
 ]
-"17
-[; ;main.c: 17: void init_config() {
+"16
+[; ;main.c: 16: void init_config() {
 [v _init_config `(v ~T0 @X0 1 ef ]
 {
 [e :U _init_config ]
 [f ]
-"18
-[; ;main.c: 18:     init_clcd();
+"17
+[; ;main.c: 17:     init_clcd();
 [e ( _init_clcd ..  ]
-"19
-[; ;main.c: 19:     init_matrix_keypad();
+"18
+[; ;main.c: 18:     init_matrix_keypad();
 [e ( _init_matrix_keypad ..  ]
-"20
-[; ;main.c: 20:     init_adc();
+"19
+[; ;main.c: 19:     init_adc();
 [e ( _init_adc ..  ]
-"21
-[; ;main.c: 21:     init_timer0();
+"20
+[; ;main.c: 20:     init_timer0();
 [e ( _init_timer0 ..  ]
-"22
-[; ;main.c: 22: }
+"21
+[; ;main.c: 21: }
 [e :UE 1088 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"24
-[; ;main.c: 24: void main(void) {
+"23
+[; ;main.c: 23: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"25
-[; ;main.c: 25:     init_config();
+"24
+[; ;main.c: 24:     init_config();
 [e ( _init_config ..  ]
-"27
-[; ;main.c: 27:     unsigned short adc_val;
+"25
+[; ;main.c: 25:     unsigned short adc_val;
 [v _adc_val `us ~T0 @X0 1 a ]
-"28
-[; ;main.c: 28:     unsigned char key;
+"26
+[; ;main.c: 26:     unsigned char key;
 [v _key `uc ~T0 @X0 1 a ]
-"30
-[; ;main.c: 30:     while (1) {
+"28
+[; ;main.c: 28:     while (1) {
 [e :U 1091 ]
 {
-"31
-[; ;main.c: 31:         adc_val = read_adc(4) / 10.23;
+"29
+[; ;main.c: 29:         adc_val = read_adc(4) / 10.23;
 [e = _adc_val -> / -> -> ( _read_adc (1 -> -> 4 `i `uc `ui `d .10.23 `us ]
-"32
-[; ;main.c: 32:         key = read_switches(1);
+"30
+[; ;main.c: 30:         key = read_switches(1);
 [e = _key ( _read_switches (1 -> -> 1 `i `uc ]
-"34
-[; ;main.c: 34:         if (key == 10) {
+"32
+[; ;main.c: 32:         if (key == 10) {
 [e $ ! == -> _key `i -> 10 `i 1093  ]
 {
-"35
-[; ;main.c: 35:             pass_flag = 1;
+"33
+[; ;main.c: 33:             pass_flag = 1;
 [e = _pass_flag -> -> 1 `i `uc ]
-"36
-[; ;main.c: 36:         }
+"34
+[; ;main.c: 34:         }
 }
 [e :U 1093 ]
-"38
-[; ;main.c: 38:         if (pass_flag == 1) {
+"36
+[; ;main.c: 36:         if (pass_flag == 1) {
 [e $ ! == -> _pass_flag `i -> 1 `i 1094  ]
 {
-"39
-[; ;main.c: 39:             clcd_print("                ", (0xC0 + (0)));
+"37
+[; ;main.c: 37:             clcd_print("                ", (0xC0 + (0)));
 [e ( _clcd_print (2 , :s 9C -> + -> 192 `i -> 0 `i `uc ]
-"40
-[; ;main.c: 40:             enter_password();
+"38
+[; ;main.c: 38:             enter_password();
 [e ( _enter_password ..  ]
-"41
-[; ;main.c: 41:         } else {
+"39
+[; ;main.c: 39:         } else {
 }
 [e $U 1095  ]
 [e :U 1094 ]
 {
-"42
-[; ;main.c: 42:             clcd_print("TIME", (0x80 + (2)));
+"40
+[; ;main.c: 40:             clcd_print("TIME", (0x80 + (2)));
 [e ( _clcd_print (2 , :s 10C -> + -> 128 `i -> 2 `i `uc ]
-"43
-[; ;main.c: 43:             clcd_print("EV", (0x80 + (10)));
+"41
+[; ;main.c: 41:             clcd_print("EV", (0x80 + (10)));
 [e ( _clcd_print (2 , :s 11C -> + -> 128 `i -> 10 `i `uc ]
-"44
-[; ;main.c: 44:             clcd_print("SP", (0x80 + (14)));
+"42
+[; ;main.c: 42:             clcd_print("SP", (0x80 + (14)));
 [e ( _clcd_print (2 , :s 12C -> + -> 128 `i -> 14 `i `uc ]
-"46
-[; ;main.c: 46:             display_time();
+"44
+[; ;main.c: 44:             display_time();
 [e ( _display_time ..  ]
-"47
-[; ;main.c: 47:             display_event(key);
+"45
+[; ;main.c: 45:             display_event(key);
 [e ( _display_event (1 _key ]
-"48
-[; ;main.c: 48:             display_speed(adc_val);
+"46
+[; ;main.c: 46:             display_speed(adc_val);
 [e ( _display_speed (1 _adc_val ]
-"49
-[; ;main.c: 49:         }
+"47
+[; ;main.c: 47:         }
 }
 [e :U 1095 ]
-"50
-[; ;main.c: 50:     }
+"48
+[; ;main.c: 48:     }
 }
 [e :U 1090 ]
 [e $U 1091  ]
 [e :U 1092 ]
-"51
-[; ;main.c: 51: }
+"49
+[; ;main.c: 49: }
 [e :UE 1089 ]
 }
 [a 11C 69 86 0 ]
