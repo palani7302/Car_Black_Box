@@ -22,7 +22,6 @@ void init_config() {
 
 void main(void) {
     init_config();
-
     unsigned short adc_val;
     unsigned char key;
 
