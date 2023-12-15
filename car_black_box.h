@@ -17,6 +17,7 @@ extern "C" {
 #endif
 
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
+unsigned char *menu[5] = {"View log", "Down - log", "Clear log", "Set time", "Change pass"};
 
 void display_time();
 void display_event(unsigned char );
