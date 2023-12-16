@@ -17917,6 +17917,7 @@ unsigned short read_adc(unsigned char channel);
 # 1 "./car_black_box.h" 1
 # 19 "./car_black_box.h"
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
+unsigned char *menu[5] = {"View log", "Down - log", "Clear log", "Set time", "Change pass"};
 
 void display_time();
 void display_event(unsigned char );
@@ -17926,7 +17927,7 @@ void init_timer0();
 # 11 "car_black_box.c" 2
 
 # 1 "./clcd.h" 1
-# 38 "./clcd.h"
+# 39 "./clcd.h"
 void init_clcd(void);
 void clcd_print(const unsigned char *data, unsigned char addr);
 void clcd_putch(const unsigned char data, unsigned char addr);

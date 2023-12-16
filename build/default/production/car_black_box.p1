@@ -1,9 +1,9 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"39 ./clcd.h
-[; ;./clcd.h: 39: void clcd_print(const unsigned char *data, unsigned char addr);
+"40 ./clcd.h
+[; ;./clcd.h: 40: void clcd_print(const unsigned char *data, unsigned char addr);
 [v _clcd_print `(v ~T0 @X0 0 ef2`*Cuc`uc ]
-"40
-[; ;./clcd.h: 40: void clcd_putch(const unsigned char data, unsigned char addr);
+"41
+[; ;./clcd.h: 41: void clcd_putch(const unsigned char data, unsigned char addr);
 [v _clcd_putch `(v ~T0 @X0 0 ef2`Cuc`uc ]
 "16 car_black_box.c
 [; ;car_black_box.c: 16: extern unsigned char sec;
@@ -1269,6 +1269,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 :s 8C
 ..
 ]
+"20
+[; ;./car_black_box.h: 20: unsigned char *menu[5] = {"View log", "Down - log", "Clear log", "Set time", "Change pass"};
+[v _menu `*uc ~T0 @X0 -> 5 `i e ]
+[i _menu
+:U ..
+:s 9C
+:s 10C
+:s 11C
+:s 12C
+:s 13C
+..
+]
 "15 car_black_box.c
 [; ;car_black_box.c: 15: unsigned char pass_flag = 0;
 [v _pass_flag `uc ~T0 @X0 1 e ]
@@ -1283,7 +1295,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "19
 [; ;car_black_box.c: 19:     clcd_print("12:00:00", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 9C -> + -> 192 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 14C -> + -> 192 `i -> 0 `i `uc ]
 "20
 [; ;car_black_box.c: 20: }
 [e :UE 1088 ]
@@ -1297,12 +1309,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "23
 [; ;car_black_box.c: 23:     static unsigned char gear = 0, flag = 0;
-[v F10468 `uc ~T0 @X0 1 s gear ]
-[i F10468
+[v F10469 `uc ~T0 @X0 1 s gear ]
+[i F10469
 -> -> 0 `i `uc
 ]
-[v F10469 `uc ~T0 @X0 1 s flag ]
-[i F10469
+[v F10470 `uc ~T0 @X0 1 s flag ]
+[i F10470
 -> -> 0 `i `uc
 ]
 "24
@@ -1311,10 +1323,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "25
 [; ;car_black_box.c: 25:         flag = 1;
-[e = F10469 -> -> 1 `i `uc ]
+[e = F10470 -> -> 1 `i `uc ]
 "26
 [; ;car_black_box.c: 26:         gear = 0;
-[e = F10468 -> -> 0 `i `uc ]
+[e = F10469 -> -> 0 `i `uc ]
 "27
 [; ;car_black_box.c: 27:     }
 }
@@ -1325,16 +1337,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "29
 [; ;car_black_box.c: 29:         flag = 0;
-[e = F10469 -> -> 0 `i `uc ]
+[e = F10470 -> -> 0 `i `uc ]
 "30
 [; ;car_black_box.c: 30:         gear++;
-[e ++ F10468 -> -> 1 `i `uc ]
+[e ++ F10469 -> -> 1 `i `uc ]
 "31
 [; ;car_black_box.c: 31:         if (gear == 7)
-[e $ ! == -> F10468 `i -> 7 `i 1092  ]
+[e $ ! == -> F10469 `i -> 7 `i 1092  ]
 "32
 [; ;car_black_box.c: 32:             gear = 6;
-[e = F10468 -> -> 6 `i `uc ]
+[e = F10469 -> -> 6 `i `uc ]
 [e :U 1092 ]
 "33
 [; ;car_black_box.c: 33:     }
@@ -1342,14 +1354,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 1091 ]
 "34
 [; ;car_black_box.c: 34:     if (key == 3 && flag == 0) {
-[e $ ! && == -> _key `i -> 3 `i == -> F10469 `i -> 0 `i 1093  ]
+[e $ ! && == -> _key `i -> 3 `i == -> F10470 `i -> 0 `i 1093  ]
 {
 "35
 [; ;car_black_box.c: 35:         if (--gear == 0)
-[e $ ! == -> =- F10468 -> -> 1 `i `uc `i -> 0 `i 1094  ]
+[e $ ! == -> =- F10469 -> -> 1 `i `uc `i -> 0 `i 1094  ]
 "36
 [; ;car_black_box.c: 36:             gear = 1;
-[e = F10468 -> -> 1 `i `uc ]
+[e = F10469 -> -> 1 `i `uc ]
 [e :U 1094 ]
 "37
 [; ;car_black_box.c: 37:     }
@@ -1357,7 +1369,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 1093 ]
 "39
 [; ;car_black_box.c: 39:     if (flag == 1) {
-[e $ ! == -> F10469 `i -> 1 `i 1095  ]
+[e $ ! == -> F10470 `i -> 1 `i 1095  ]
 {
 "40
 [; ;car_black_box.c: 40:         clcd_print(signature[7], (0xC0 + (10)));
@@ -1370,7 +1382,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "42
 [; ;car_black_box.c: 42:         clcd_print(signature[gear], (0xC0 + (10)));
-[e ( _clcd_print (2 , -> *U + &U _signature * -> F10468 `ux -> -> # *U &U _signature `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
+[e ( _clcd_print (2 , -> *U + &U _signature * -> F10469 `ux -> -> # *U &U _signature `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
 "43
 [; ;car_black_box.c: 43:     }
 }
@@ -1405,8 +1417,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "54
 [; ;car_black_box.c: 54:     unsigned char key1, password[5] = "1010", input_pass[5];
 [v _key1 `uc ~T0 @X0 1 a ]
-[v F10474 `uc ~T0 @X0 -> 5 `i s ]
-[i F10474
+[v F10475 `uc ~T0 @X0 -> 5 `i s ]
+[i F10475
 :U ..
 -> 49 `c
 -> 48 `c
@@ -1416,7 +1428,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ]
 [v _password `uc ~T0 @X0 -> 5 `i a ]
-[e = _password F10474 ]
+[e = _password F10475 ]
 [v _input_pass `uc ~T0 @X0 -> 5 `i a ]
 "55
 [; ;car_black_box.c: 55:     unsigned char ind = 0, count = 0, attempt = 3;
@@ -1443,7 +1455,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _key1 ( _read_switches (1 -> -> 1 `i `uc ]
 "62
 [; ;car_black_box.c: 62:         clcd_print(" Enter Password ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 10C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 15C -> + -> 128 `i -> 0 `i `uc ]
 "66
 [; ;car_black_box.c: 66:         if (key1 == 11) {
 [e $ ! == -> _key1 `i -> 11 `i 1102  ]
@@ -1492,7 +1504,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "79
 [; ;car_black_box.c: 79:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 11C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 16C -> + -> 128 `i -> 0 `i `uc ]
 "80
 [; ;car_black_box.c: 80:             pass_flag = 0;
 [e = _pass_flag -> -> 0 `i `uc ]
@@ -1566,10 +1578,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "104
 [; ;car_black_box.c: 104:                 clcd_print("Correct password", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 12C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 17C -> + -> 128 `i -> 0 `i `uc ]
 "105
 [; ;car_black_box.c: 105:                 clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 13C -> + -> 192 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 18C -> + -> 192 `i -> 0 `i `uc ]
 "106
 [; ;car_black_box.c: 106:                 _delay((unsigned long)((2000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
@@ -1579,10 +1591,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "108
 [; ;car_black_box.c: 108:                     clcd_print("    View Log    ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 14C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 19C -> + -> 128 `i -> 0 `i `uc ]
 "109
 [; ;car_black_box.c: 109:                     clcd_print("    Clear Log   ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 15C -> + -> 192 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 20C -> + -> 192 `i -> 0 `i `uc ]
 "110
 [; ;car_black_box.c: 110:                 }
 }
@@ -1606,19 +1618,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e -- _attempt -> -> 1 `i `uc ]
 "118
 [; ;car_black_box.c: 118:                 clcd_print(" Wrong Password ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 16C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 21C -> + -> 128 `i -> 0 `i `uc ]
 "119
 [; ;car_black_box.c: 119:                 clcd_putch(attempt + 48, (0xC0 + (1)));
 [e ( _clcd_putch (2 , -> + -> _attempt `i -> 48 `i `uc -> + -> 192 `i -> 1 `i `uc ]
 "120
 [; ;car_black_box.c: 120:                 clcd_print(" -> attempts  ", (0xC0 + (2)));
-[e ( _clcd_print (2 , :s 17C -> + -> 192 `i -> 2 `i `uc ]
+[e ( _clcd_print (2 , :s 22C -> + -> 192 `i -> 2 `i `uc ]
 "121
 [; ;car_black_box.c: 121:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "122
 [; ;car_black_box.c: 122:                 clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 18C -> + -> 192 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 23C -> + -> 192 `i -> 0 `i `uc ]
 "124
 [; ;car_black_box.c: 124:             }
 }
@@ -1642,10 +1654,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "129
 [; ;car_black_box.c: 129:                 clcd_print(" Attempts over  ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 19C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 24C -> + -> 128 `i -> 0 `i `uc ]
 "130
 [; ;car_black_box.c: 130:                 clcd_print(" Wait for ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 20C -> + -> 192 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 25C -> + -> 192 `i -> 0 `i `uc ]
 "131
 [; ;car_black_box.c: 131:                 clcd_putch(sec / 10 + 48, (0xC0 + (10)));
 [e ( _clcd_putch (2 , -> + / -> _sec `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 10 `i `uc ]
@@ -1654,7 +1666,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _clcd_putch (2 , -> + % -> _sec `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 11 `i `uc ]
 "133
 [; ;car_black_box.c: 133:                 clcd_print("sec", (0xC0 + (13)));
-[e ( _clcd_print (2 , :s 21C -> + -> 192 `i -> 13 `i `uc ]
+[e ( _clcd_print (2 , :s 26C -> + -> 192 `i -> 13 `i `uc ]
 "134
 [; ;car_black_box.c: 134:             }
 }
@@ -1663,10 +1675,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 "135
 [; ;car_black_box.c: 135:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 22C -> + -> 128 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 27C -> + -> 128 `i -> 0 `i `uc ]
 "136
 [; ;car_black_box.c: 136:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 23C -> + -> 192 `i -> 0 `i `uc ]
+[e ( _clcd_print (2 , :s 28C -> + -> 192 `i -> 0 `i `uc ]
 "138
 [; ;car_black_box.c: 138:             pass_flag = 0;
 [e = _pass_flag -> -> 0 `i `uc ]
@@ -1686,8 +1698,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;car_black_box.c: 141: }
 [e :UE 1098 ]
 }
-[a 12C 67 111 114 114 101 99 116 32 112 97 115 115 119 111 114 100 0 ]
-[a 21C 115 101 99 0 ]
+[a 13C 67 104 97 110 103 101 32 112 97 115 115 0 ]
+[a 9C 86 105 101 119 32 108 111 103 0 ]
+[a 11C 67 108 101 97 114 32 108 111 103 0 ]
+[a 10C 68 111 119 110 32 45 32 108 111 103 0 ]
+[a 12C 83 101 116 32 116 105 109 101 0 ]
+[a 17C 67 111 114 114 101 99 116 32 112 97 115 115 119 111 114 100 0 ]
+[a 26C 115 101 99 0 ]
 [a 7C 71 82 0 ]
 [a 1C 79 78 0 ]
 [a 2C 71 78 0 ]
@@ -1695,17 +1712,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 5C 71 51 0 ]
 [a 4C 71 50 0 ]
 [a 3C 71 49 0 ]
-[a 9C 49 50 58 48 48 58 48 48 0 ]
-[a 20C 32 87 97 105 116 32 102 111 114 32 0 ]
-[a 10C 32 69 110 116 101 114 32 80 97 115 115 119 111 114 100 32 0 ]
-[a 16C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
+[a 14C 49 50 58 48 48 58 48 48 0 ]
+[a 25C 32 87 97 105 116 32 102 111 114 32 0 ]
+[a 15C 32 69 110 116 101 114 32 80 97 115 115 119 111 114 100 32 0 ]
+[a 21C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
 [a 8C 67 32 0 ]
-[a 17C 32 45 62 32 97 116 116 101 109 112 116 115 32 32 0 ]
-[a 19C 32 65 116 116 101 109 112 116 115 32 111 118 101 114 32 32 0 ]
-[a 15C 32 32 32 32 67 108 101 97 114 32 76 111 103 32 32 32 0 ]
-[a 14C 32 32 32 32 86 105 101 119 32 76 111 103 32 32 32 32 0 ]
-[a 11C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 13C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 22C 32 45 62 32 97 116 116 101 109 112 116 115 32 32 0 ]
+[a 24C 32 65 116 116 101 109 112 116 115 32 111 118 101 114 32 32 0 ]
+[a 20C 32 32 32 32 67 108 101 97 114 32 76 111 103 32 32 32 0 ]
+[a 19C 32 32 32 32 86 105 101 119 32 76 111 103 32 32 32 32 0 ]
+[a 16C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 18C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 22C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 23C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 27C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 28C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]

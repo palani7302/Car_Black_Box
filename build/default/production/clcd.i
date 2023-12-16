@@ -17908,7 +17908,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 8 "clcd.c" 2
 
 # 1 "./clcd.h" 1
-# 38 "./clcd.h"
+# 39 "./clcd.h"
 void init_clcd(void);
 void clcd_print(const unsigned char *data, unsigned char addr);
 void clcd_putch(const unsigned char data, unsigned char addr);
