@@ -17917,12 +17917,13 @@ unsigned short read_adc(unsigned char channel);
 # 1 "./car_black_box.h" 1
 # 19 "./car_black_box.h"
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
-unsigned char *menu[5] = {"View log", "Down - log", "Clear log", "Set time", "Change pass"};
+unsigned char *menu_opt[5] = {"View log    ", "Down - log  ", "Clear log   ", "Set time    ", "Change pass "};
 
 void display_time();
 void display_event(unsigned char );
 void display_speed(unsigned short );
 void enter_password();
+void menu();
 void init_timer0();
 # 11 "car_black_box.c" 2
 
@@ -17981,31 +17982,29 @@ void display_speed(unsigned short speed) {
 }
 
 void enter_password() {
-    unsigned char key1, password[5] = "1010", input_pass[5];
+    unsigned char pass_key, password[5] = "1010", input_pass[5];
     unsigned char ind = 0, count = 0, attempt = 3;
     unsigned int wait = 0;
 
     sec = 60;
     while (pass_flag == 1) {
-        key1 = read_switches(1);
+        pass_key = read_switches(1);
 
         clcd_print(" Enter Password ", (0x80 + (0)));
 
 
-
-        if (key1 == 11) {
+        if (pass_key == 11) {
             sec = 60;
             input_pass[ind] = '1';
             clcd_putch('*', (0xC0 + (ind + 5)));
             ind++;
-        } else if (key1 == 12) {
+        } else if (pass_key == 12) {
             sec = 60;
             input_pass[ind] = '0';
             clcd_putch('*', (0xC0 + (ind + 5)));
             ind++;
         }
-        if (sec == 55 )
-        {
+        if (sec == 55) {
             clcd_print("                ", (0x80 + (0)));
             pass_flag = 0;
         }
@@ -18033,13 +18032,11 @@ void enter_password() {
             if (count == 4) {
                 clcd_print("Correct password", (0x80 + (0)));
                 clcd_print("                ", (0xC0 + (0)));
-                _delay((unsigned long)((2000)*(20000000/4000.0)));
-                while (1) {
-                    clcd_print("    View Log    ", (0x80 + (0)));
-                    clcd_print("    Clear Log   ", (0xC0 + (0)));
-                }
-            }
+                _delay((unsigned long)((500)*(20000000/4000.0)));
+                clcd_print("                ", (0x80 + (0)));
 
+                menu();
+            }
             else if (count < 4) {
                 count = 0;
                 attempt--;
@@ -18067,5 +18064,52 @@ void enter_password() {
 
             pass_flag = 0;
         }
+    }
+}
+
+void menu() {
+    unsigned char menu_key, star = 0, pre_key;
+    char line = 0;
+    sec = 60;
+
+    while (pass_flag == 1) {
+        menu_key = read_switches(1);
+        if (menu_key == 11) {
+            sec = 60;
+            star = 0;
+            if (pre_key == menu_key) {
+                if (line-- <= 0) {
+                    line = 0;
+                }
+            }
+            pre_key = menu_key;
+        } else if (menu_key == 12) {
+            star = 1;
+            sec = 60;
+            if (pre_key == menu_key) {
+                if (line++ >= 3) {
+                    line = 3;
+                }
+            }
+            pre_key = menu_key;
+        }
+
+        if (sec == 55) {
+            clcd_print("                ", (0x80 + (0)));
+            clcd_print("                ", (0xC0 + (0)));
+            pass_flag = 0;
+        }
+
+        if (star == 1) {
+            clcd_putch(' ', (0x80 + (0)));
+            clcd_putch('*', (0xC0 + (0)));
+        } else if (star == 0) {
+            clcd_putch('*', (0x80 + (0)));
+            clcd_putch(' ', (0xC0 + (0)));
+        }
+
+        clcd_print(menu_opt[line], (0x80 + (2)));
+        clcd_print(menu_opt[line + 1], (0xC0 + (2)));
+
     }
 }

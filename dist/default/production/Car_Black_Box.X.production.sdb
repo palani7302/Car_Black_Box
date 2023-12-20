@@ -51,6 +51,8 @@
 [v _display_speed display_speed `(v  1 e 1 0 ]
 "53
 [v _enter_password enter_password `(v  1 e 1 0 ]
+"139
+[v _menu menu `(v  1 e 1 0 ]
 "11 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\clcd.c
 [v _clcd_write clcd_write `(v  1 e 1 0 ]
 "34
@@ -75,6 +77,8 @@
 [v _init_timer0 init_timer0 `(v  1 e 1 0 ]
 "19 C:\Users\palan\MPLABXProjects\Car_Black_Box.X/car_black_box.h
 [v _signature signature `[8]*.32uc  1 e 16 0 ]
+"20
+[v _menu_opt menu_opt `[5]*.32uc  1 e 10 0 ]
 "26058 C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f4580.h
 [v _PORTD PORTD `VEuc  1 e 1 @3971 ]
 "27059
@@ -215,21 +219,33 @@
 "53 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _enter_password enter_password `(v  1 e 1 0 ]
 {
-"95
-[v enter_password@j j `i  1 a 2 27 ]
+"93
+[v enter_password@j j `i  1 a 2 33 ]
 "54
-[v enter_password@input_pass input_pass `[5]uc  1 a 5 17 ]
-[v enter_password@password password `[5]uc  1 a 5 12 ]
+[v enter_password@input_pass input_pass `[5]uc  1 a 5 23 ]
+[v enter_password@password password `[5]uc  1 a 5 18 ]
 "56
-[v enter_password@wait wait `ui  1 a 2 25 ]
+[v enter_password@wait wait `ui  1 a 2 31 ]
 "55
-[v enter_password@ind ind `uc  1 a 1 29 ]
-[v enter_password@count count `uc  1 a 1 24 ]
-[v enter_password@attempt attempt `uc  1 a 1 23 ]
+[v enter_password@ind ind `uc  1 a 1 35 ]
+[v enter_password@count count `uc  1 a 1 30 ]
+[v enter_password@attempt attempt `uc  1 a 1 29 ]
 "54
-[v enter_password@key1 key1 `uc  1 a 1 22 ]
-[v enter_password@F10475 F10475 `[5]uc  1 s 5 F10475 ]
+[v enter_password@pass_key pass_key `uc  1 a 1 28 ]
+[v enter_password@F10476 F10476 `[5]uc  1 s 5 F10476 ]
+"137
+} 0
+"139
+[v _menu menu `(v  1 e 1 0 ]
+{
+"140
+[v menu@menu_key menu_key `uc  1 a 1 15 ]
 "141
+[v menu@line line `uc  1 a 1 14 ]
+"140
+[v menu@star star `uc  1 a 1 13 ]
+[v menu@pre_key pre_key `uc  1 a 1 12 ]
+"184
 } 0
 "20 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\matrix_keypad.c
 [v _read_switches read_switches `(uc  1 e 1 0 ]

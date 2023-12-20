@@ -8,8 +8,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "19 ./adc.h
 [; ;./adc.h: 19: void init_adc();
 [v _init_adc `(v ~T0 @X0 0 e? ]
-"26 ./car_black_box.h
-[; ;./car_black_box.h: 26: void init_timer0();
+"27 ./car_black_box.h
+[; ;./car_black_box.h: 27: void init_timer0();
 [v _init_timer0 `(v ~T0 @X0 0 e? ]
 [p mainexit ]
 "20 ./adc.h
@@ -1288,9 +1288,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ]
 "20
-[; ;./car_black_box.h: 20: unsigned char *menu[5] = {"View log", "Down - log", "Clear log", "Set time", "Change pass"};
-[v _menu `*uc ~T0 @X0 -> 5 `i e ]
-[i _menu
+[; ;./car_black_box.h: 20: unsigned char *menu_opt[5] = {"View log    ", "Down - log  ", "Clear log   ", "Set time    ", "Change pass "};
+[v _menu_opt `*uc ~T0 @X0 -> 5 `i e ]
+[i _menu_opt
 :U ..
 :s 9C
 :s 10C
@@ -1412,11 +1412,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 49: }
 [e :UE 1089 ]
 }
-[a 13C 67 104 97 110 103 101 32 112 97 115 115 0 ]
-[a 9C 86 105 101 119 32 108 111 103 0 ]
-[a 11C 67 108 101 97 114 32 108 111 103 0 ]
-[a 10C 68 111 119 110 32 45 32 108 111 103 0 ]
-[a 12C 83 101 116 32 116 105 109 101 0 ]
 [a 16C 69 86 0 ]
 [a 7C 71 82 0 ]
 [a 17C 83 80 0 ]
@@ -1427,5 +1422,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 5C 71 51 0 ]
 [a 4C 71 50 0 ]
 [a 3C 71 49 0 ]
+[a 13C 67 104 97 110 103 101 32 112 97 115 115 32 0 ]
 [a 8C 67 32 0 ]
+[a 10C 68 111 119 110 32 45 32 108 111 103 32 32 0 ]
+[a 11C 67 108 101 97 114 32 108 111 103 32 32 32 0 ]
+[a 9C 86 105 101 119 32 108 111 103 32 32 32 32 0 ]
+[a 12C 83 101 116 32 116 105 109 101 32 32 32 32 0 ]
 [a 14C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]

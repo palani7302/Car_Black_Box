@@ -51,31 +51,29 @@ void display_speed(unsigned short speed) {
 }
 
 void enter_password() {
-    unsigned char key1, password[5] = "1010", input_pass[5];
+    unsigned char pass_key, password[5] = "1010", input_pass[5];
     unsigned char ind = 0, count = 0, attempt = 3;
     unsigned int wait = 0;
 
     sec = 60;
     while (pass_flag == 1) {
-        key1 = read_switches(EDGE);
+        pass_key = read_switches(EDGE);
 
         clcd_print(" Enter Password ", LINE1(0));
-        //clcd_print("                ", LINE2(0));
 
         //Stores the value from the key and prints '*' on the CLCD
-        if (key1 == 11) {
+        if (pass_key == 11) {
             sec = 60;
             input_pass[ind] = '1';
             clcd_putch('*', LINE2(ind + 5));
             ind++;
-        } else if (key1 == 12) {
+        } else if (pass_key == 12) {
             sec = 60;
             input_pass[ind] = '0';
             clcd_putch('*', LINE2(ind + 5));
             ind++;
         }
-        if (sec == 55 )
-        {
+        if (sec == 55) {
             clcd_print("                ", LINE1(0));
             pass_flag = 0;
         }
@@ -103,13 +101,11 @@ void enter_password() {
             if (count == 4) {
                 clcd_print("Correct password", LINE1(0));
                 clcd_print("                ", LINE2(0));
-                __delay_ms(2000);
-                while (1) {
-                    clcd_print("    View Log    ", LINE1(0));
-                    clcd_print("    Clear Log   ", LINE2(0));
-                }
-            }
-                //If the password is incorrect, 5 attemts given to the user
+                __delay_ms(500);
+                clcd_print("                ", LINE1(0));
+
+                menu();
+            }//If the password is incorrect, 5 attemts given to the user
             else if (count < 4) {
                 count = 0;
                 attempt--;
@@ -137,5 +133,52 @@ void enter_password() {
 
             pass_flag = 0;
         }
+    }
+}
+
+void menu() {
+    unsigned char menu_key, star = 0, pre_key;
+    char line = 0;
+    sec = 60;
+
+    while (pass_flag == 1) {
+        menu_key = read_switches(EDGE);
+        if (menu_key == 11) {
+            sec = 60;
+            star = 0;
+            if (pre_key == menu_key) {
+                if (line-- <= 0) {
+                    line = 0;
+                }
+            }
+            pre_key = menu_key;
+        } else if (menu_key == 12) {
+            star = 1;
+            sec = 60;
+            if (pre_key == menu_key) {
+                if (line++ >= 3) {
+                    line = 3;
+                }
+            }
+            pre_key = menu_key;
+        }
+        
+        if (sec == 55) {
+            clcd_print("                ", LINE1(0));
+            clcd_print("                ", LINE2(0));
+            pass_flag = 0;
+        }
+        
+        if (star == 1) {
+            clcd_putch(' ', LINE1(0));
+            clcd_putch('*', LINE2(0));
+        } else if (star == 0) {
+            clcd_putch('*', LINE1(0));
+            clcd_putch(' ', LINE2(0));
+        }
+
+        clcd_print(menu_opt[line], LINE1(2));
+        clcd_print(menu_opt[line + 1], LINE2(2));
+
     }
 }
