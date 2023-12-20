@@ -1,7 +1,7 @@
 ### HEXMate logfile and output summary ###
 
 ### Command-line arguments ###
- C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o
+ C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o
  -Odist/default/production\Car_Black_Box.X.production.hex
  -logfile=dist/default/production\Car_Black_Box.X.production.hxl
  -format=INHX032
@@ -10,23 +10,23 @@
 
 ### Memory Usage ###
  Input file ranges:
-  0h - 3h		(C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
-  8h - 11h		(C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
-  600h - 1AA2h		(C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
-  1AA4h - 1AABh		(C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
-  200000h - 200007h		(C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
-  300000h - 30000Dh		(C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
+  0h - 3h		(C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
+  8h - 11h		(C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
+  600h - 1AC0h		(C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
+  1AC2h - 1AC9h		(C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
+  200000h - 200007h		(C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
+  300000h - 30000Dh		(C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
  Unused ranges:
   4h - 7h
   12h - 5FFh
-  1AA3h - 1AA3h
-  1AACh - 1FFFFFh
+  1AC1h - 1AC1h
+  1ACAh - 1FFFFFh
   200008h - 2FFFFFh
 
 ### Hex Memory Map ###
  Legend:
   -- = Unused memory
-  H1 = Input file             (C:\Users\palan\AppData\Local\Temp\xcAs97o.\driver_tmp_3.o)
+  H1 = Input file             (C:\Users\palan\AppData\Local\Temp\xcBs2lo.1\driver_tmp_3.o)
 ----------------------------------------------------------
          | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 ----------------------------------------------------------
@@ -363,7 +363,9 @@
 00001A70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001A80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001A90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00001AA0 | H1 H1 H1 -- H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- --
+00001AA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00001AB0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00001AC0 | H1 -- H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- --
 ----------------------------------------------------------
 00200000 | H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- -- -- --
 ----------------------------------------------------------

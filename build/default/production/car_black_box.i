@@ -18068,7 +18068,7 @@ void enter_password() {
 }
 
 void menu() {
-    unsigned char menu_key, star = 0, pre_key;
+    unsigned char menu_key, star = 0, pre_key, delay = 0;
     char line = 0;
     sec = 60;
 
@@ -18093,13 +18093,7 @@ void menu() {
             }
             pre_key = menu_key;
         }
-
-        if (sec == 55) {
-            clcd_print("                ", (0x80 + (0)));
-            clcd_print("                ", (0xC0 + (0)));
-            pass_flag = 0;
-        }
-
+        clcd_putch(line%10+48, (0x80 + (15)));
         if (star == 1) {
             clcd_putch(' ', (0x80 + (0)));
             clcd_putch('*', (0xC0 + (0)));
@@ -18111,5 +18105,10 @@ void menu() {
         clcd_print(menu_opt[line], (0x80 + (2)));
         clcd_print(menu_opt[line + 1], (0xC0 + (2)));
 
+        if (sec == 55) {
+            clcd_print("                ", (0x80 + (0)));
+            clcd_print("                ", (0xC0 + (0)));
+            pass_flag = 0;
+        }
     }
 }

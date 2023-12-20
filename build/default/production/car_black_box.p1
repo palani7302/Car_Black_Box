@@ -1696,11 +1696,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _menu ]
 [f ]
 "140
-[; ;car_black_box.c: 140:     unsigned char menu_key, star = 0, pre_key;
+[; ;car_black_box.c: 140:     unsigned char menu_key, star = 0, pre_key, delay = 0;
 [v _menu_key `uc ~T0 @X0 1 a ]
 [v _star `uc ~T0 @X0 1 a ]
 [e = _star -> -> 0 `i `uc ]
 [v _pre_key `uc ~T0 @X0 1 a ]
+[v _delay `uc ~T0 @X0 1 a ]
+[e = _delay -> -> 0 `i `uc ]
 "141
 [; ;car_black_box.c: 141:     char line = 0;
 [v _line `uc ~T0 @X0 1 a ]
@@ -1788,67 +1790,70 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 1130 ]
 [e :U 1129 ]
+"165
+[; ;car_black_box.c: 165:         clcd_putch(line%10+48, (0x80 + (15)));
+[e ( _clcd_putch (2 , -> + % -> _line `i -> 10 `i -> 48 `i `uc -> + -> 128 `i -> 15 `i `uc ]
 "166
-[; ;car_black_box.c: 166:         if (sec == 55) {
-[e $ ! == -> _sec `i -> 55 `i 1133  ]
+[; ;car_black_box.c: 166:         if (star == 1) {
+[e $ ! == -> _star `i -> 1 `i 1133  ]
 {
 "167
-[; ;car_black_box.c: 167:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 28C -> + -> 128 `i -> 0 `i `uc ]
-"168
-[; ;car_black_box.c: 168:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 29C -> + -> 192 `i -> 0 `i `uc ]
-"169
-[; ;car_black_box.c: 169:             pass_flag = 0;
-[e = _pass_flag -> -> 0 `i `uc ]
-"170
-[; ;car_black_box.c: 170:         }
-}
-[e :U 1133 ]
-"172
-[; ;car_black_box.c: 172:         if (star == 1) {
-[e $ ! == -> _star `i -> 1 `i 1134  ]
-{
-"173
-[; ;car_black_box.c: 173:             clcd_putch(' ', (0x80 + (0)));
+[; ;car_black_box.c: 167:             clcd_putch(' ', (0x80 + (0)));
 [e ( _clcd_putch (2 , -> -> 32 `ui `uc -> + -> 128 `i -> 0 `i `uc ]
-"174
-[; ;car_black_box.c: 174:             clcd_putch('*', (0xC0 + (0)));
+"168
+[; ;car_black_box.c: 168:             clcd_putch('*', (0xC0 + (0)));
 [e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 192 `i -> 0 `i `uc ]
-"175
-[; ;car_black_box.c: 175:         } else if (star == 0) {
+"169
+[; ;car_black_box.c: 169:         } else if (star == 0) {
 }
-[e $U 1135  ]
-[e :U 1134 ]
-[e $ ! == -> _star `i -> 0 `i 1136  ]
+[e $U 1134  ]
+[e :U 1133 ]
+[e $ ! == -> _star `i -> 0 `i 1135  ]
 {
-"176
-[; ;car_black_box.c: 176:             clcd_putch('*', (0x80 + (0)));
+"170
+[; ;car_black_box.c: 170:             clcd_putch('*', (0x80 + (0)));
 [e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 128 `i -> 0 `i `uc ]
-"177
-[; ;car_black_box.c: 177:             clcd_putch(' ', (0xC0 + (0)));
+"171
+[; ;car_black_box.c: 171:             clcd_putch(' ', (0xC0 + (0)));
 [e ( _clcd_putch (2 , -> -> 32 `ui `uc -> + -> 192 `i -> 0 `i `uc ]
+"172
+[; ;car_black_box.c: 172:         }
+}
+[e :U 1135 ]
+[e :U 1134 ]
+"174
+[; ;car_black_box.c: 174:         clcd_print(menu_opt[line], (0x80 + (2)));
+[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> _line `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 128 `i -> 2 `i `uc ]
+"175
+[; ;car_black_box.c: 175:         clcd_print(menu_opt[line + 1], (0xC0 + (2)));
+[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> -> + -> _line `i -> 1 `i `ui `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 192 `i -> 2 `i `uc ]
+"177
+[; ;car_black_box.c: 177:         if (sec == 55) {
+[e $ ! == -> _sec `i -> 55 `i 1136  ]
+{
 "178
-[; ;car_black_box.c: 178:         }
+[; ;car_black_box.c: 178:             clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 28C -> + -> 128 `i -> 0 `i `uc ]
+"179
+[; ;car_black_box.c: 179:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 29C -> + -> 192 `i -> 0 `i `uc ]
+"180
+[; ;car_black_box.c: 180:             pass_flag = 0;
+[e = _pass_flag -> -> 0 `i `uc ]
+"181
+[; ;car_black_box.c: 181:         }
 }
 [e :U 1136 ]
-[e :U 1135 ]
-"180
-[; ;car_black_box.c: 180:         clcd_print(menu_opt[line], (0x80 + (2)));
-[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> _line `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 128 `i -> 2 `i `uc ]
-"181
-[; ;car_black_box.c: 181:         clcd_print(menu_opt[line + 1], (0xC0 + (2)));
-[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> -> + -> _line `i -> 1 `i `ui `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 192 `i -> 2 `i `uc ]
-"183
-[; ;car_black_box.c: 183:     }
+"182
+[; ;car_black_box.c: 182:     }
 }
 [e :U 1123 ]
 "144
 [; ;car_black_box.c: 144:     while (pass_flag == 1) {
 [e $ == -> _pass_flag `i -> 1 `i 1124  ]
 [e :U 1125 ]
-"184
-[; ;car_black_box.c: 184: }
+"183
+[; ;car_black_box.c: 183: }
 [e :UE 1122 ]
 }
 [a 17C 67 111 114 114 101 99 116 32 112 97 115 115 119 111 114 100 0 ]
