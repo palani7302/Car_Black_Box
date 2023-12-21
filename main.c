@@ -11,7 +11,7 @@
 #include "keypad.h"
 #include "adc.h"
 
-extern unsigned char pass_flag = 0;
+extern unsigned char pass_flag = 0, sec;
 
 void init_config() {
     init_clcd();
@@ -27,16 +27,25 @@ void main(void) {
 
     while (1) {
         adc_val = read_adc(4) / 10.23;
-        key = read_switches(EDGE);
+        
+        if (pass_flag == 2)
+            key = read_switches(LEVEL);
+        else
+            key = read_switches(EDGE);
 
         if (key == 10) {
             pass_flag = 1;
+            sec = 60;
+            clcd_print("                ", LINE2(0));
         }
 
         if (pass_flag == 1) {
-            clcd_print("                ", LINE2(0));
-            enter_password();
-        } else {
+            enter_password(key);
+        } 
+        else if (pass_flag == 2) {
+            menu(key);
+        } 
+        else {
             clcd_print("TIME", LINE1(2));
             clcd_print("EV", LINE1(10));
             clcd_print("SP", LINE1(14));

@@ -17,13 +17,13 @@ extern "C" {
 #endif
 
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
-unsigned char *menu_opt[5] = {"View log    ", "Down - log  ", "Clear log   ", "Set time    ", "Change pass "};
+unsigned char *menu_opt[5] = {"View log    ", "Set time    ", "Down - log  ", "Clear log   ", "Change pass "};
 
 void display_time();
 void display_event(unsigned char );
 void display_speed(unsigned short );
-void enter_password();
-void menu();
+void enter_password(unsigned char );
+void menu(unsigned char );
 void init_timer0();
 
 #endif	/* CAR_BLACK_BOX_H */

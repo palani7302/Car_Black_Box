@@ -17909,7 +17909,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 9 "isr.c" 2
 
 
-unsigned int count = 0;
+unsigned int count_isr = 0;
 unsigned char sec = 60;
 
 void __attribute__((picinterrupt(("")))) isr()
@@ -17919,13 +17919,13 @@ void __attribute__((picinterrupt(("")))) isr()
 
     if ( TMR0IF )
     {
-        if ( count++ == 80 )
+        if ( count_isr++ == 80 )
         {
             if ( sec-- == 0 )
             {
                 sec = 60;
             }
-            count = 0;
+            count_isr = 0;
         }
         TMR0IF = 0;
     }

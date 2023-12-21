@@ -17910,13 +17910,13 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./car_black_box.h" 1
 # 19 "./car_black_box.h"
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
-unsigned char *menu_opt[5] = {"View log    ", "Down - log  ", "Clear log   ", "Set time    ", "Change pass "};
+unsigned char *menu_opt[5] = {"View log    ", "Set time    ", "Down - log  ", "Clear log   ", "Change pass "};
 
 void display_time();
 void display_event(unsigned char );
 void display_speed(unsigned short );
-void enter_password();
-void menu();
+void enter_password(unsigned char );
+void menu(unsigned char );
 void init_timer0();
 # 9 "main.c" 2
 
@@ -17942,7 +17942,7 @@ unsigned short read_adc(unsigned char channel);
 # 12 "main.c" 2
 
 
-extern unsigned char pass_flag = 0;
+extern unsigned char pass_flag = 0, sec;
 
 void init_config() {
     init_clcd();
@@ -17958,16 +17958,25 @@ void main(void) {
 
     while (1) {
         adc_val = read_adc(4) / 10.23;
-        key = read_switches(1);
+
+        if (pass_flag == 2)
+            key = read_switches(0);
+        else
+            key = read_switches(1);
 
         if (key == 10) {
             pass_flag = 1;
+            sec = 60;
+            clcd_print("                ", (0xC0 + (0)));
         }
 
         if (pass_flag == 1) {
-            clcd_print("                ", (0xC0 + (0)));
-            enter_password();
-        } else {
+            enter_password(key);
+        }
+        else if (pass_flag == 2) {
+            menu(key);
+        }
+        else {
             clcd_print("TIME", (0x80 + (2)));
             clcd_print("EV", (0x80 + (10)));
             clcd_print("SP", (0x80 + (14)));

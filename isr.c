@@ -8,7 +8,7 @@
 
 #include <xc.h>
 
-unsigned int count = 0;
+unsigned int count_isr = 0;
 unsigned char sec = 60;
 
 void __interrupt() isr()
@@ -18,13 +18,13 @@ void __interrupt() isr()
     
     if ( TMR0IF )
     {
-        if ( count++ == 80 )
+        if ( count_isr++ == 80 )
         {
             if ( sec-- == 0 )
             {
                 sec = 60;
             }
-            count = 0;
+            count_isr = 0;
         }
         TMR0IF = 0;
     }
