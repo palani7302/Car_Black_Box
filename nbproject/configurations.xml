@@ -8,6 +8,9 @@
       <itemPath>keypad.h</itemPath>
       <itemPath>car_black_box.h</itemPath>
       <itemPath>adc.h</itemPath>
+      <itemPath>RTC.h</itemPath>
+      <itemPath>i2c.h</itemPath>
+      <itemPath>eeprom.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -23,6 +26,9 @@
       <itemPath>adc.c</itemPath>
       <itemPath>timer0.c</itemPath>
       <itemPath>isr.c</itemPath>
+      <itemPath>i2c.c</itemPath>
+      <itemPath>RTC.c</itemPath>
+      <itemPath>eeprom.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -38,7 +44,7 @@
         <targetDevice>PIC18F4580</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>

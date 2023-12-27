@@ -1,4 +1,4 @@
-# 1 "car_black_box.c"
+# 1 "RTC.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,7 +6,7 @@
 # 1 "<built-in>" 2
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "car_black_box.c" 2
+# 1 "RTC.c" 2
 
 
 
@@ -14,6 +14,22 @@
 
 
 
+# 1 "./RTC.h" 1
+# 25 "./RTC.h"
+void write_ds1307(unsigned char address1, unsigned char data);
+unsigned char read_ds1307(unsigned char address1);
+void init_ds1307(void);
+# 8 "RTC.c" 2
+
+# 1 "./i2c.h" 1
+# 12 "./i2c.h"
+void init_i2c(void);
+void i2c_start(void);
+void i2c_rep_start(void);
+void i2c_stop(void);
+void i2c_write(unsigned char data);
+unsigned char i2c_read(void);
+# 9 "RTC.c" 2
 
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 3
@@ -17906,263 +17922,55 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 2 3
-# 9 "car_black_box.c" 2
-
-# 1 "./adc.h" 1
-# 19 "./adc.h"
-void init_adc();
-unsigned short read_adc(unsigned char channel);
-# 10 "car_black_box.c" 2
-
-# 1 "./car_black_box.h" 1
-# 19 "./car_black_box.h"
-unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
-unsigned char *menu_opt[5] = {"View log     ", "Set time     ", "Download log ", "Clear log    ", "Change pass  "};
-unsigned char *menu_eve[5] = {"VL", "ST", "DL", "CL", "CP"};
-unsigned char event[17];
-
-void display_time();
-void display_event(unsigned char );
-void display_speed(unsigned short );
-void enter_password(unsigned char );
-void menu(unsigned char );
-void store_event(unsigned char, unsigned char *);
-void init_timer0();
-# 11 "car_black_box.c" 2
-
-# 1 "./clcd.h" 1
-# 39 "./clcd.h"
-void init_clcd(void);
-void clcd_print(const unsigned char *data, unsigned char addr);
-void clcd_putch(const unsigned char data, unsigned char addr);
-void clcd_write(unsigned char bit_values, unsigned char control_bit);
-# 12 "car_black_box.c" 2
-
-# 1 "./keypad.h" 1
-# 35 "./keypad.h"
-void init_matrix_keypad();
-unsigned char read_switches(unsigned char );
-unsigned char scan_key();
-# 13 "car_black_box.c" 2
+# 10 "RTC.c" 2
 
 
-extern unsigned char sec, count_eve, ev;
 
-unsigned char gear = 0, flag = 0;
 
-unsigned char password[5] = "1100", input_pass[5], pass_flag = 0;
-unsigned char ind = 0, count = 0, attempt = 3;
-unsigned int wait = 0;
 
-unsigned char line = 0, star = 0, prekey, pre_key_1, mode = 0;
 
-void display_event(unsigned char key) {
-    if (key == 1) {
-        flag = 1;
-        gear = 0;
-        ev = 0;
-    }
-    if (key == 2) {
-        flag = 0;
-        gear++;
-        ev = 0;
-        if (gear == 7)
-            gear = 6;
-    }
-    if (key == 3 && flag == 0 && gear >= 1) {
-        if (--gear == 0)
-            gear = 1;
-        ev = 0;
-    }
 
-    if (ev == 1) {
-        clcd_print(menu_eve[mode], (0xC0 + (10)));
-        event[11] = menu_eve[mode][0];
-        event[12] = menu_eve[mode][1];
-    } else {
-        if (flag == 1) {
-            clcd_print(signature[7], (0xC0 + (10)));
-            event[11] = signature[7][0];
-            event[12] = signature[7][1];
-        } else {
-            clcd_print(signature[gear], (0xC0 + (10)));
-            event[11] = signature[gear][0];
-            event[12] = signature[gear][1];
-        }
-    }
+
+void init_ds1307(void)
+{
+ unsigned char dummy;
+
+
+ dummy = read_ds1307(0x00);
+ write_ds1307(0x00, dummy | 0x80);
+
+
+ dummy = read_ds1307(0x02);
+ write_ds1307(0x02, dummy | 0x40);
+# 43 "RTC.c"
+ write_ds1307(0x07, 0x93);
+
+
+ dummy = read_ds1307(0x00);
+ write_ds1307(0x00, dummy & 0x7F);
+
 }
 
-void display_speed(unsigned short speed) {
-    event[13] = ' ';
-    clcd_putch((speed / 10) + 48, (0xC0 + (14)));
-    clcd_putch((speed % 10) + 48, (0xC0 + (15)));
-    event[14] = (speed / 10) + 48;
-    event[15] = (speed % 10) + 48;
-    event[16] = '\0';
+void write_ds1307(unsigned char address, unsigned char data)
+{
+ i2c_start();
+ i2c_write(0xD0);
+ i2c_write(address);
+ i2c_write(data);
+ i2c_stop();
 }
 
-void enter_password(unsigned char key) {
-    clcd_print(" Enter Password ", (0x80 + (0)));
+unsigned char read_ds1307(unsigned char address)
+{
+ unsigned char data;
 
+ i2c_start();
+ i2c_write(0xD0);
+ i2c_write(address);
+ i2c_rep_start();
+ i2c_write(0xD1);
+ data = i2c_read();
+ i2c_stop();
 
-    if (key == 11) {
-        sec = 60;
-        input_pass[ind] = '1';
-        clcd_putch('*', (0xC0 + (ind + 5)));
-        ind++;
-    } else if (key == 12) {
-        sec = 60;
-        input_pass[ind] = '0';
-        clcd_putch('*', (0xC0 + (ind + 5)));
-        ind++;
-    }
-    if (sec == 55) {
-        clcd_print("                ", (0x80 + (0)));
-        clcd_print("                ", (0xC0 + (0)));
-        pass_flag = ind = 0;
-        attempt = 3;
-
-        return;
-    }
-
-    if (wait++ < 500)
-        clcd_putch('_', (0xC0 + (ind + 5)));
-    else if (wait > 500)
-        clcd_putch(' ', (0xC0 + (ind + 5)));
-
-    if (wait == 1000)
-        wait = 0;
-
-
-    if (ind == 4) {
-        _delay((unsigned long)((300)*(20000000/4000.0)));
-        ind = 0;
-        for (int j = 0; j < 4; j++) {
-            if (password[j] == input_pass[j]) {
-                count++;
-            }
-        }
-
-
-
-        if (count == 4) {
-            clcd_print("Correct password", (0x80 + (0)));
-            clcd_print("                ", (0xC0 + (0)));
-            _delay((unsigned long)((1000)*(20000000/4000.0)));
-            pass_flag = 2;
-            sec = 60;
-            clcd_print("                ", (0x80 + (0)));
-            ind = mode = count = wait = 0;
-            attempt = 3;
-        }
-        else if (count < 4) {
-            count = 0;
-            attempt--;
-
-
-            clcd_print(" Wrong Password ", (0x80 + (0)));
-            clcd_putch(attempt + 48, (0xC0 + (1)));
-            clcd_print(" -> attempts  ", (0xC0 + (2)));
-            _delay((unsigned long)((1000)*(20000000/4000.0)));
-            clcd_print("                ", (0xC0 + (0)));
-
-        }
-    }
-
-    if (attempt == 0) {
-        for (sec = 59; sec != 60;) {
-            clcd_print(" Attempts over  ", (0x80 + (0)));
-            clcd_print(" Wait for ", (0xC0 + (0)));
-            clcd_putch(sec / 10 + 48, (0xC0 + (10)));
-            clcd_putch(sec % 10 + 48, (0xC0 + (11)));
-            clcd_print("sec", (0xC0 + (13)));
-        }
-        clcd_print("                ", (0x80 + (0)));
-        clcd_print("                ", (0xC0 + (0)));
-
-        pass_flag = ind = 0;
-        attempt = 3;
-        return;
-    }
-}
-
-void menu(unsigned char key) {
-
-    if (key == 11) {
-        prekey = 11;
-        if (wait++ > 400) {
-            while (1) {
-                clcd_print(" Entered into : ", (0x80 + (0)));
-                clcd_print(menu_opt[mode], (0xC0 + (0)));
-                break;
-            }
-            if ( mode == 0 )
-                ev = 0;
-            else
-                ev = 1;
-
-            _delay((unsigned long)((2000)*(20000000/4000.0)));
-            pass_flag = line = star = prekey = pre_key_1 = 0;
-            clcd_print("                ", (0x80 + (0)));
-            clcd_print("                ", (0xC0 + (0)));
-            return;
-        }
-    } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
-        sec = 60;
-        star = 0;
-
-        if (pre_key_1 == 11) {
-            if (line-- <= 0)
-                line = 0;
-        }
-        if (mode-- <= 0)
-            mode = 0;
-
-        pre_key_1 = prekey;
-        wait = 0;
-    }
-
-
-    if (key == 12) {
-        prekey = 12;
-        if (wait++ > 400) {
-            pass_flag = line = mode = star = 0;
-            clcd_print("                ", (0x80 + (0)));
-            clcd_print("                ", (0xC0 + (0)));
-            return;
-        }
-    } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 12) {
-        sec = 60;
-        star = 1;
-
-        if (pre_key_1 == 12) {
-            if (line++ >= 3)
-                line = 3;
-        }
-
-        if (mode++ >= 4)
-            mode = 4;
-
-        pre_key_1 = prekey;
-        wait = 0;
-    }
-
-
-    if (star == 1) {
-        clcd_putch(' ', (0x80 + (0)));
-        clcd_putch('*', (0xC0 + (0)));
-    } else if (star == 0) {
-        clcd_putch('*', (0x80 + (0)));
-        clcd_putch(' ', (0xC0 + (0)));
-    }
-
-    clcd_print(menu_opt[line], (0x80 + (2)));
-    clcd_print(menu_opt[line + 1], (0xC0 + (2)));
-
-    if (sec == 55) {
-        clcd_print("                ", (0x80 + (0)));
-        clcd_print("                ", (0xC0 + (0)));
-        pass_flag = line = mode = star = 0;
-        return;
-    }
+ return data;
 }

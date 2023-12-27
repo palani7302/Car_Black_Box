@@ -17910,13 +17910,16 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./car_black_box.h" 1
 # 19 "./car_black_box.h"
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
-unsigned char *menu_opt[5] = {"View log    ", "Set time    ", "Down - log  ", "Clear log   ", "Change pass "};
+unsigned char *menu_opt[5] = {"View log     ", "Set time     ", "Download log ", "Clear log    ", "Change pass  "};
+unsigned char *menu_eve[5] = {"VL", "ST", "DL", "CL", "CP"};
+unsigned char event[17];
 
 void display_time();
 void display_event(unsigned char );
 void display_speed(unsigned short );
 void enter_password(unsigned char );
 void menu(unsigned char );
+void store_event(unsigned char, unsigned char *);
 void init_timer0();
 # 9 "main.c" 2
 
@@ -17941,14 +17944,74 @@ void init_adc();
 unsigned short read_adc(unsigned char channel);
 # 12 "main.c" 2
 
+# 1 "./RTC.h" 1
+# 25 "./RTC.h"
+void write_ds1307(unsigned char address1, unsigned char data);
+unsigned char read_ds1307(unsigned char address1);
+void init_ds1307(void);
+# 13 "main.c" 2
+
+# 1 "./i2c.h" 1
+# 12 "./i2c.h"
+void init_i2c(void);
+void i2c_start(void);
+void i2c_rep_start(void);
+void i2c_stop(void);
+void i2c_write(unsigned char data);
+unsigned char i2c_read(void);
+# 14 "main.c" 2
+
+# 1 "./eeprom.h" 1
+# 14 "./eeprom.h"
+void write_ext_eeprom(unsigned char address1, unsigned char data);
+unsigned char read_ext_eeprom(unsigned char address1);
+# 15 "main.c" 2
+
 
 extern unsigned char pass_flag = 0, sec;
+unsigned char clock_reg[3], time[9];
+unsigned char count_eve = 0, ev = 0;
+
+static void get_time(void)
+{
+ clock_reg[0] = read_ds1307(0x02);
+ clock_reg[1] = read_ds1307(0x01);
+ clock_reg[2] = read_ds1307(0x00);
+    event[0] = ' ';
+    event[1] = ' ';
+
+ if (clock_reg[0] & 0x40)
+ {
+  time[0] = event[2] = '0' + ((clock_reg[0] >> 4) & 0x01);
+  time[1] = event[3] = '0' + (clock_reg[0] & 0x0F);
+ }
+ else
+ {
+  time[0] = event[2] = '0' + ((clock_reg[0] >> 4) & 0x03);
+  time[1] = event[3] = '0' + (clock_reg[0] & 0x0F);
+ }
+ time[2] = event[4] = ':';
+ time[3] = event[5] = '0' + ((clock_reg[1] >> 4) & 0x0F);
+ time[4] = event[6] = '0' + (clock_reg[1] & 0x0F);
+ time[5] = event[7] = ':';
+ time[6] = event[8] = '0' + ((clock_reg[2] >> 4) & 0x0F);
+ time[7] = event[9] = '0' + (clock_reg[2] & 0x0F);
+ time[8] = '\0';
+    event[10] = ' ';
+}
+
+void display_time() {
+    get_time();
+    clcd_print(time, (0xC0 + (0)));
+}
 
 void init_config() {
     init_clcd();
     init_matrix_keypad();
     init_adc();
     init_timer0();
+    init_i2c();
+ init_ds1307();
 }
 
 void main(void) {

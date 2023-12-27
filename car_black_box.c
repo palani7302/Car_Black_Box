@@ -12,47 +12,59 @@
 #include "clcd.h"
 #include "keypad.h"
 
-extern unsigned char sec;
+extern unsigned char sec, count_eve, ev;
 
-unsigned char password[5] = "1010", input_pass[5], pass_flag = 0;
+unsigned char gear = 0, flag = 0;
+
+unsigned char password[5] = "1100", input_pass[5], pass_flag = 0;
 unsigned char ind = 0, count = 0, attempt = 3;
 unsigned int wait = 0;
 
 unsigned char line = 0, star = 0, prekey, pre_key_1, mode = 0;
 
-void display_time() {
-    clcd_print("12:00:00", LINE2(0));
-}
-
 void display_event(unsigned char key) {
-    static unsigned char gear = 0, flag = 0;
     if (key == 1) {
         flag = 1;
         gear = 0;
+        ev = 0;
     }
     if (key == 2) {
         flag = 0;
         gear++;
+        ev = 0;
         if (gear == 7)
             gear = 6;
     }
-    if (key == 3 && flag == 0) {
+    if (key == 3 && flag == 0 && gear >= 1) {
         if (--gear == 0)
             gear = 1;
+        ev = 0;
     }
 
-    if (flag == 1) {
-        clcd_print(signature[7], LINE2(10));
+    if (ev == 1) {
+        clcd_print(menu_eve[mode], LINE2(10));
+        event[11] = menu_eve[mode][0];
+        event[12] = menu_eve[mode][1];
     } else {
-        clcd_print(signature[gear], LINE2(10));
+        if (flag == 1) {
+            clcd_print(signature[7], LINE2(10));
+            event[11] = signature[7][0];
+            event[12] = signature[7][1];
+        } else {
+            clcd_print(signature[gear], LINE2(10));
+            event[11] = signature[gear][0];
+            event[12] = signature[gear][1];
+        }
     }
 }
 
 void display_speed(unsigned short speed) {
-
+    event[13] = ' ';
     clcd_putch((speed / 10) + 48, LINE2(14));
     clcd_putch((speed % 10) + 48, LINE2(15));
-
+    event[14] = (speed / 10) + 48;
+    event[15] = (speed % 10) + 48;
+    event[16] = '\0';
 }
 
 void enter_password(unsigned char key) {
@@ -73,8 +85,7 @@ void enter_password(unsigned char key) {
     if (sec == 55) {
         clcd_print("                ", LINE1(0));
         clcd_print("                ", LINE2(0));
-        pass_flag = 0;
-        ind = 0;
+        pass_flag = ind = 0;
         attempt = 3;
 
         return;
@@ -107,10 +118,8 @@ void enter_password(unsigned char key) {
             pass_flag = 2;
             sec = 60;
             clcd_print("                ", LINE1(0));
-            ind = 0;
-            count = 0;
+            ind = mode = count = wait = 0;
             attempt = 3;
-            wait = 0;
         }//If the password is incorrect, 3 attemts given to the user
         else if (count < 4) {
             count = 0;
@@ -137,8 +146,7 @@ void enter_password(unsigned char key) {
         clcd_print("                ", LINE1(0));
         clcd_print("                ", LINE2(0));
 
-        pass_flag = 0;
-        ind = 0;
+        pass_flag = ind = 0;
         attempt = 3;
         return;
     }
@@ -148,13 +156,24 @@ void menu(unsigned char key) {
     //Key 11
     if (key == 11) {
         prekey = 11;
-        if (wait++ > 200) {
+        if (wait++ > 400) {
             while (1) {
                 clcd_print(" Entered into : ", LINE1(0));
                 clcd_print(menu_opt[mode], LINE2(0));
+                break;
             }
+            if ( mode == 0 )
+                ev = 0;
+            else
+                ev = 1;
+            
+            __delay_ms(2000);
+            pass_flag = line = star = prekey = pre_key_1 = 0;
+            clcd_print("                ", LINE1(0));
+            clcd_print("                ", LINE2(0));
+            return;
         }
-    } else if (wait != 0 && wait < 200 && key == 0xFF && prekey == 11) {
+    } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
         sec = 60;
         star = 0;
 
@@ -172,16 +191,13 @@ void menu(unsigned char key) {
     //Key 12
     if (key == 12) {
         prekey = 12;
-        if (wait++ > 200) {
-            pass_flag = 0;
-            line = 0;
-            mode = 0;
-            star = 0;
+        if (wait++ > 400) {
+            pass_flag = line = mode = star = 0;
             clcd_print("                ", LINE1(0));
             clcd_print("                ", LINE2(0));
             return;
         }
-    } else if (wait != 0 && wait < 200 && key == 0xFF && prekey == 12) {
+    } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 12) {
         sec = 60;
         star = 1;
 
@@ -212,10 +228,7 @@ void menu(unsigned char key) {
     if (sec == 55) {
         clcd_print("                ", LINE1(0));
         clcd_print("                ", LINE2(0));
-        pass_flag = 0;
-        line = 0;
-        mode = 0;
-        star = 0;
+        pass_flag = line = mode = star = 0;
         return;
     }
 }
