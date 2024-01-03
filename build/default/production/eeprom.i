@@ -16,9 +16,11 @@
 
 
 # 1 "./eeprom.h" 1
-# 14 "./eeprom.h"
+# 16 "./eeprom.h"
 void write_ext_eeprom(unsigned char address1, unsigned char data);
 unsigned char read_ext_eeprom(unsigned char address1);
+void store_event(unsigned char *data);
+void read_event(unsigned char *address, unsigned char *data);
 # 9 "eeprom.c" 2
 
 # 1 "./i2c.h" 1
@@ -30,6 +32,14 @@ void i2c_stop(void);
 void i2c_write(unsigned char data);
 unsigned char i2c_read(void);
 # 10 "eeprom.c" 2
+
+# 1 "./clcd.h" 1
+# 39 "./clcd.h"
+void init_clcd(void);
+void clcd_print(const unsigned char *data, unsigned char addr);
+void clcd_putch(const unsigned char data, unsigned char addr);
+void clcd_write(unsigned char bit_values, unsigned char control_bit);
+# 11 "eeprom.c" 2
 
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 3
@@ -17922,7 +17932,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 2 3
-# 11 "eeprom.c" 2
+# 12 "eeprom.c" 2
 
 
 
@@ -17930,6 +17940,8 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 
 
 
+
+extern unsigned char count_eve, total_events;
 
 void write_ext_eeprom(unsigned char address, unsigned char data)
 {
@@ -17938,6 +17950,8 @@ void write_ext_eeprom(unsigned char address, unsigned char data)
  i2c_write(address);
  i2c_write(data);
  i2c_stop();
+
+    _delay((unsigned long)((10)*(20000000/4000.0)));
 }
 
 unsigned char read_ext_eeprom(unsigned char address)
@@ -17953,4 +17967,32 @@ unsigned char read_ext_eeprom(unsigned char address)
  i2c_stop();
 
  return data;
+}
+
+void store_event(unsigned char *data)
+{
+    unsigned char address = 0x00 + (16 * count_eve);
+    for (unsigned char i = 0; i < 16; i++)
+    {
+        write_ext_eeprom(address+i, data[i]);
+    }
+
+    if (count_eve++ == 9)
+    {
+        count_eve = 0;
+        total_events = 10;
+    }
+    else if (total_events < 10)
+        total_events++;
+
+    return;
+}
+
+void read_event(unsigned char *address, unsigned char *data)
+{
+    for ( unsigned char i = 0; i < 16; i++ )
+    {
+        data[i] = read_ext_eeprom(address+i);
+    }
+    data[17] = '\0';
 }

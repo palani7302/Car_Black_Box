@@ -3,4 +3,5 @@ car_black_box.c  \
 adc.h  \
 car_black_box.h  \
 clcd.h  \
-keypad.h 
+keypad.h  \
+eeprom.h 

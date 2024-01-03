@@ -17912,14 +17912,16 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 unsigned char *signature[8] = {"ON", "GN", "G1", "G2", "G3", "G4", "GR", "C "};
 unsigned char *menu_opt[5] = {"View log     ", "Set time     ", "Download log ", "Clear log    ", "Change pass  "};
 unsigned char *menu_eve[5] = {"VL", "ST", "DL", "CL", "CP"};
-unsigned char event[17];
+unsigned char event[16];
 
 void display_time();
 void display_event(unsigned char );
 void display_speed(unsigned short );
+void store_password(unsigned char key, unsigned char *pass);
 void enter_password(unsigned char );
 void menu(unsigned char );
-void store_event(unsigned char, unsigned char *);
+void view_log(unsigned char );
+void change_password(unsigned char );
 void init_timer0();
 # 9 "main.c" 2
 
@@ -17962,41 +17964,39 @@ unsigned char i2c_read(void);
 # 14 "main.c" 2
 
 # 1 "./eeprom.h" 1
-# 14 "./eeprom.h"
+# 16 "./eeprom.h"
 void write_ext_eeprom(unsigned char address1, unsigned char data);
 unsigned char read_ext_eeprom(unsigned char address1);
+void store_event(unsigned char *data);
+void read_event(unsigned char *address, unsigned char *data);
 # 15 "main.c" 2
 
 
 extern unsigned char pass_flag = 0, sec;
 unsigned char clock_reg[3], time[9];
-unsigned char count_eve = 0, ev = 0;
+unsigned char count_eve = 0, ev = 0, total_events = 0;
 
-static void get_time(void)
-{
- clock_reg[0] = read_ds1307(0x02);
- clock_reg[1] = read_ds1307(0x01);
- clock_reg[2] = read_ds1307(0x00);
+static void get_time(void) {
+    clock_reg[0] = read_ds1307(0x02);
+    clock_reg[1] = read_ds1307(0x01);
+    clock_reg[2] = read_ds1307(0x00);
     event[0] = ' ';
     event[1] = ' ';
 
- if (clock_reg[0] & 0x40)
- {
-  time[0] = event[2] = '0' + ((clock_reg[0] >> 4) & 0x01);
-  time[1] = event[3] = '0' + (clock_reg[0] & 0x0F);
- }
- else
- {
-  time[0] = event[2] = '0' + ((clock_reg[0] >> 4) & 0x03);
-  time[1] = event[3] = '0' + (clock_reg[0] & 0x0F);
- }
- time[2] = event[4] = ':';
- time[3] = event[5] = '0' + ((clock_reg[1] >> 4) & 0x0F);
- time[4] = event[6] = '0' + (clock_reg[1] & 0x0F);
- time[5] = event[7] = ':';
- time[6] = event[8] = '0' + ((clock_reg[2] >> 4) & 0x0F);
- time[7] = event[9] = '0' + (clock_reg[2] & 0x0F);
- time[8] = '\0';
+    if (clock_reg[0] & 0x40) {
+        time[0] = event[2] = '0' + ((clock_reg[0] >> 4) & 0x01);
+        time[1] = event[3] = '0' + (clock_reg[0] & 0x0F);
+    } else {
+        time[0] = event[2] = '0' + ((clock_reg[0] >> 4) & 0x03);
+        time[1] = event[3] = '0' + (clock_reg[0] & 0x0F);
+    }
+    time[2] = event[4] = ':';
+    time[3] = event[5] = '0' + ((clock_reg[1] >> 4) & 0x0F);
+    time[4] = event[6] = '0' + (clock_reg[1] & 0x0F);
+    time[5] = event[7] = ':';
+    time[6] = event[8] = '0' + ((clock_reg[2] >> 4) & 0x0F);
+    time[7] = event[9] = '0' + (clock_reg[2] & 0x0F);
+    time[8] = '\0';
     event[10] = ' ';
 }
 
@@ -18011,7 +18011,7 @@ void init_config() {
     init_adc();
     init_timer0();
     init_i2c();
- init_ds1307();
+    init_ds1307();
 }
 
 void main(void) {
@@ -18019,13 +18019,15 @@ void main(void) {
     unsigned short adc_val;
     unsigned char key;
 
+    event[11] = 'O';
+    event[12] = 'N';
+    adc_val = read_adc(4) / 10.23;
+    display_time();
+    display_speed(adc_val);
+    store_event(event);
+
     while (1) {
         adc_val = read_adc(4) / 10.23;
-
-        if (pass_flag == 2)
-            key = read_switches(0);
-        else
-            key = read_switches(1);
 
         if (key == 10) {
             pass_flag = 1;
@@ -18033,20 +18035,47 @@ void main(void) {
             clcd_print("                ", (0xC0 + (0)));
         }
 
-        if (pass_flag == 1) {
-            enter_password(key);
-        }
-        else if (pass_flag == 2) {
-            menu(key);
-        }
-        else {
-            clcd_print("TIME", (0x80 + (2)));
-            clcd_print("EV", (0x80 + (10)));
-            clcd_print("SP", (0x80 + (14)));
+        if (pass_flag == 1 || pass_flag == 1 || pass_flag == 7)
+            key = read_switches(1);
+        else
+            key = read_switches(0);
 
-            display_time();
-            display_event(key);
-            display_speed(adc_val);
+        switch (pass_flag) {
+            case 0:
+                clcd_print("TIME", (0x80 + (2)));
+                clcd_print("EV", (0x80 + (10)));
+                clcd_print("SP", (0x80 + (14)));
+
+                display_time();
+                display_event(key);
+                display_speed(adc_val);
+                break;
+
+            case 1:
+                enter_password(key);
+                break;
+
+            case 2:
+                menu(key);
+                break;
+
+            case 3:
+                view_log(key);
+                break;
+
+            case 4:
+                break;
+
+            case 5:
+                break;
+
+            case 6:
+                break;
+
+            case 7:
+                change_password(key);
+                break;
         }
+
     }
 }
