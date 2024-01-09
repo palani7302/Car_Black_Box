@@ -1,4 +1,4 @@
-# 1 "adc.c"
+# 1 "uart.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,7 +6,7 @@
 # 1 "<built-in>" 2
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "adc.c" 2
+# 1 "uart.c" 2
 
 
 
@@ -17906,40 +17906,78 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\\pic\\include\\xc.h" 2 3
-# 9 "adc.c" 2
+# 9 "uart.c" 2
 
-# 1 "./adc.h" 1
-# 19 "./adc.h"
-void init_adc();
-unsigned short read_adc(unsigned char channel);
-# 10 "adc.c" 2
+# 1 "./uart.h" 1
+# 19 "./uart.h"
+void init_uart();
+void putch(unsigned char data);
+void puts(unsigned char *data);
+unsigned char getch();
+unsigned char getche();
+# 10 "uart.c" 2
 
 
-void init_adc()
-{
-    ADON = 1;
-    VCFG1 = 0;
-    VCFG0 = 0;
-    PCFG3 = 1;
-    PCFG2 = 1;
-    PCFG1 = 1;
-    PCFG0 = 1;
-    ACQT2 = 1;
-    ACQT1 = 0;
-    ACQT0 = 0;
-    ADCS2 = 0;
-    ADCS1 = 1;
-    ADCS0 = 0;
-    ADFM = 1;
+void init_uart() {
+    TRISC7 = 1;
+    TRISC6 = 0;
+
+    CSRC = 0;
+    TX9 = 0;
+    TXEN = 1;
+    SYNC = 0;
+    SENDB = 0;
+    BRGH = 1;
+    TRMT = 0;
+
+
+    SPEN = 1;
+    RX9 = 0;
+    SREN = 0;
+    CREN = 1;
+    ADDEN = 0;
+    FERR = 0;
+    OERR = 0;
+
+
+    ABDOVF = 0;
+    RCIDL = 1;
+    SCKP = 0;
+    BRG16 = 0;
+    WUE = 0;
+    ABDEN = 0;
+
+    SPBRG = 64;
+
+    TXIE = 1;
+    TXIF = 0;
+    RCIE = 1;
+    RCIF = 0;
+# 79 "uart.c"
 }
 
-unsigned short read_adc(unsigned char channel)
-{
-    ADCON0 = (ADCON0 & 0xC3) | (channel << 2);
+void putch(unsigned char data) {
+    while (!TXIF);
+    TXREG = data;
+    TXIF = 0;
+}
 
-    GO = 1;
-    while ( GO )
-    {
-        return (ADRESL | ((ADRESH & 0x03) << 8));
+void puts(unsigned char *data) {
+    while (*data) {
+        putch(*data++);
     }
+}
+
+unsigned char getch() {
+    while (!RCIF);
+    RCIF = 0;
+    return RCREG;
+}
+
+unsigned char getche() {
+    char ch;
+    while (!RCIF);
+    RCIF = 0;
+    putch(ch = RCREG);
+    return ch;
 }

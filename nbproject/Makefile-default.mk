@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c clcd.c matrix_keypad.c car_black_box.c adc.c timer0.c isr.c i2c.c RTC.c eeprom.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c clcd.c matrix_keypad.c car_black_box.c adc.c timer0.c isr.c i2c.c RTC.c eeprom.c uart.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.p1 ${OBJECTDIR}/clcd.p1 ${OBJECTDIR}/matrix_keypad.p1 ${OBJECTDIR}/car_black_box.p1 ${OBJECTDIR}/adc.p1 ${OBJECTDIR}/timer0.p1 ${OBJECTDIR}/isr.p1 ${OBJECTDIR}/i2c.p1 ${OBJECTDIR}/RTC.p1 ${OBJECTDIR}/eeprom.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.p1.d ${OBJECTDIR}/clcd.p1.d ${OBJECTDIR}/matrix_keypad.p1.d ${OBJECTDIR}/car_black_box.p1.d ${OBJECTDIR}/adc.p1.d ${OBJECTDIR}/timer0.p1.d ${OBJECTDIR}/isr.p1.d ${OBJECTDIR}/i2c.p1.d ${OBJECTDIR}/RTC.p1.d ${OBJECTDIR}/eeprom.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.p1 ${OBJECTDIR}/clcd.p1 ${OBJECTDIR}/matrix_keypad.p1 ${OBJECTDIR}/car_black_box.p1 ${OBJECTDIR}/adc.p1 ${OBJECTDIR}/timer0.p1 ${OBJECTDIR}/isr.p1 ${OBJECTDIR}/i2c.p1 ${OBJECTDIR}/RTC.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/uart.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.p1.d ${OBJECTDIR}/clcd.p1.d ${OBJECTDIR}/matrix_keypad.p1.d ${OBJECTDIR}/car_black_box.p1.d ${OBJECTDIR}/adc.p1.d ${OBJECTDIR}/timer0.p1.d ${OBJECTDIR}/isr.p1.d ${OBJECTDIR}/i2c.p1.d ${OBJECTDIR}/RTC.p1.d ${OBJECTDIR}/eeprom.p1.d ${OBJECTDIR}/uart.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.p1 ${OBJECTDIR}/clcd.p1 ${OBJECTDIR}/matrix_keypad.p1 ${OBJECTDIR}/car_black_box.p1 ${OBJECTDIR}/adc.p1 ${OBJECTDIR}/timer0.p1 ${OBJECTDIR}/isr.p1 ${OBJECTDIR}/i2c.p1 ${OBJECTDIR}/RTC.p1 ${OBJECTDIR}/eeprom.p1
+OBJECTFILES=${OBJECTDIR}/main.p1 ${OBJECTDIR}/clcd.p1 ${OBJECTDIR}/matrix_keypad.p1 ${OBJECTDIR}/car_black_box.p1 ${OBJECTDIR}/adc.p1 ${OBJECTDIR}/timer0.p1 ${OBJECTDIR}/isr.p1 ${OBJECTDIR}/i2c.p1 ${OBJECTDIR}/RTC.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/uart.p1
 
 # Source Files
-SOURCEFILES=main.c clcd.c matrix_keypad.c car_black_box.c adc.c timer0.c isr.c i2c.c RTC.c eeprom.c
+SOURCEFILES=main.c clcd.c matrix_keypad.c car_black_box.c adc.c timer0.c isr.c i2c.c RTC.c eeprom.c uart.c
 
 
 
@@ -174,6 +174,14 @@ ${OBJECTDIR}/eeprom.p1: eeprom.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/eeprom.d ${OBJECTDIR}/eeprom.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/eeprom.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/uart.p1: uart.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/uart.p1.d 
+	@${RM} ${OBJECTDIR}/uart.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1   -mdfp=${DFP_DIR}/xc8  -fno-short-double -fno-short-float -memi=wordwrite -mrom=0-3000 -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/uart.p1 uart.c 
+	@-${MV} ${OBJECTDIR}/uart.d ${OBJECTDIR}/uart.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/uart.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -254,6 +262,14 @@ ${OBJECTDIR}/eeprom.p1: eeprom.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp=${DFP_DIR}/xc8  -fno-short-double -fno-short-float -memi=wordwrite -mrom=0-3000 -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/eeprom.p1 eeprom.c 
 	@-${MV} ${OBJECTDIR}/eeprom.d ${OBJECTDIR}/eeprom.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/eeprom.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/uart.p1: uart.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/uart.p1.d 
+	@${RM} ${OBJECTDIR}/uart.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp=${DFP_DIR}/xc8  -fno-short-double -fno-short-float -memi=wordwrite -mrom=0-3000 -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/uart.p1 uart.c 
+	@-${MV} ${OBJECTDIR}/uart.d ${OBJECTDIR}/uart.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/uart.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

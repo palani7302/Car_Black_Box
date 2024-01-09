@@ -28,6 +28,9 @@ void store_password(unsigned char key, unsigned char *pass);
 void enter_password(unsigned char );
 void menu(unsigned char );
 void view_log(unsigned char );
+void set_time(unsigned char );
+void download_log();
+void clear_log();
 void change_password(unsigned char );
 void init_timer0();
 

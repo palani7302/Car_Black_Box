@@ -17923,6 +17923,7 @@ void clcd_write(unsigned char byte, unsigned char control_bit)
 
 
  RC2 = 1;
+
  RC2 = 0;
 
  TRISD7 = 0xFF;

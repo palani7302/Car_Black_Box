@@ -15,9 +15,9 @@ void init_adc()
     VCFG1 = 0;
     VCFG0 = 0;
     PCFG3 = 1;
-    PCFG2 = 0;
+    PCFG2 = 1;
     PCFG1 = 1;
-    PCFG0 = 0;
+    PCFG0 = 1;
     ACQT2 = 1;
     ACQT1 = 0;
     ACQT0 = 0;

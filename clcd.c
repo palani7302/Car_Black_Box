@@ -15,6 +15,7 @@ void clcd_write(unsigned char byte, unsigned char control_bit)
 
 	/* Should be atleast 200ns */
 	CLCD_EN = HI;
+    //__delay_ms(2);
 	CLCD_EN = LO;
 
 	PORT_DIR = INPUT;

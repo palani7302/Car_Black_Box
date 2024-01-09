@@ -12,55 +12,66 @@
 #include "clcd.h"
 #include "keypad.h"
 #include "eeprom.h"
+#include "uart.h"
 
-extern unsigned char sec, count_eve, ev, total_events;
+extern unsigned char sec, count_eve, ev, total_events, password[4];
 
 unsigned char gear = 0, flag = 0, repeated_event = 0;
 
-unsigned char password[4] = {'1', '0', '1', '0'}, input_pass[4], pass_flag = 0;
+unsigned char input_pass[4], pass_flag = 0;
 unsigned char ind = 0, count = 0, attempt = 3, new_password = 0, confirm_password = 0;
 unsigned char ind_1 = 0, ind_2 = 0;
 unsigned int wait = 0;
 
-unsigned char line = 0, star = 0, prekey, pre_key_1, mode = 0, option = 0;
+unsigned char line = 0, star = 0, prekey = 0, pre_key_1 = 0, mode = 0, option = 0;
 
-unsigned char log_index = 0, event_flag = 0, data[17];
+unsigned char log_index = 0, event_flag = 0, data[15], index = 0;
 
 void display_event(unsigned char key) {
-    if (key == 1) {
+    if (key == 1 && prekey != 1) {
         event_flag = 1;
         flag = 1;
         gear = 0;
         ev = 0;
+        prekey = key;
     }
     if (key == 2) {
-        event_flag = 1;
-        flag = 0;
-        gear++;
-        ev = 0;
-        if (gear == 7)
-            gear = 6;
+        if (gear == 6 && prekey == 2);
+        else {
+            event_flag = 1;
+            flag = 0;
+            ev = 0;
+            if (++gear >= 6) {
+                gear = 6;
+                prekey = key;
+            }
+        }
     }
-    if (key == 3 && flag == 0 && gear >= 1) {
-        event_flag = 1;
-        if (--gear == 0)
-            gear = 1;
-        ev = 0;
+    if (key == 3 && flag == 0 && gear > 1) {
+        if (gear == 1 && prekey == 3);
+        else {
+            event_flag = 1;
+            ev = 0;
+            if (--gear <= 1) {
+                gear = 1;
+                prekey = key;
+            }
+        }
     }
 
-    if (ev == 1) {
+    if (ev == 1 || option != 0) {
         clcd_print(menu_eve[option], LINE2(10));
-        event[11] = menu_eve[option][0];
-        event[12] = menu_eve[option][1];
+        event[9] = menu_eve[option][0];
+        event[10] = menu_eve[option][1];
     } else {
         if (flag == 1) {
             clcd_print(signature[7], LINE2(10));
-            event[11] = signature[7][0];
-            event[12] = signature[7][1];
+            event[9] = signature[7][0];
+            event[10] = signature[7][1];
         } else {
             clcd_print(signature[gear], LINE2(10));
-            event[11] = signature[gear][0];
-            event[12] = signature[gear][1];
+            event[9] = signature[gear][0];
+            event[10] = signature[gear][1];
         }
     }
 
@@ -71,11 +82,11 @@ void display_event(unsigned char key) {
 }
 
 void display_speed(unsigned short speed) {
-    event[13] = ' ';
+    event[11] = ' ';
     clcd_putch((speed / 10) + 48, LINE2(14));
     clcd_putch((speed % 10) + 48, LINE2(15));
-    event[14] = (speed / 10) + 48;
-    event[15] = (speed % 10) + 48;
+    event[12] = (speed / 10) + 48;
+    event[13] = (speed % 10) + 48;
 }
 
 void store_password(unsigned char key, unsigned char *pass) {
@@ -135,7 +146,7 @@ void enter_password(unsigned char key) {
             pass_flag = 2;
             sec = 60;
             clcd_print("                ", LINE1(0));
-            ind = mode = count = wait = 0;
+            ind = mode = count = wait = prekey = pre_key_1 = 0;
             attempt = 3;
         }//If the password is incorrect, 3 attemts given to the user
         else if (count < 4) {
@@ -177,26 +188,22 @@ void menu(unsigned char key) {
             clcd_print(menu_opt[mode], LINE2(0));
             __delay_ms(1000);
             pass_flag = 3 + mode;
-            option = mode;
-            if (mode == 0 || option == 0) {
-                ev = 0;
-                read_event(EEPROM_ADDRESS + 0, data);
+            if (mode == 0) {
+                event_flag = ev = 0;
+                read_event(EEPROM_ADDRESS + (14 * ((log_index + index) % 10)), data);
             } else {
-                ev = 1;
-                event_flag = 1;
+                option = mode;
+                event_flag = ev = 1;
+                event[9] = menu_eve[option][0];
+                event[10] = menu_eve[option][1];
             }
-
-            if (ev == 1) {
-                event[11] = menu_eve[option][0];
-                event[12] = menu_eve[option][1];
-            }
-
-            if (event_flag == 1) {
+            
+            if (ev = 1 && event_flag == 1 && mode != 3) {
                 event_flag = 0;
                 store_event(event);
             }
 
-            line = star = prekey = pre_key_1 = log_index = 0;
+            line = star = prekey = pre_key_1 = wait = 0;
             sec = 60;
             clcd_print("                ", LINE1(0));
             clcd_print("                ", LINE2(0));
@@ -258,9 +265,6 @@ void menu(unsigned char key) {
         clcd_print("                ", LINE1(0));
         clcd_print("                ", LINE2(0));
         option = mode;
-        if (option == 0)
-            ev = 0;
-
         pass_flag = line = mode = star = 0;
         return;
     }
@@ -274,7 +278,7 @@ void view_log(unsigned char key) {
     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
         if (log_index-- == 0)
             log_index = (total_events - 1);
-
+        
         wait = 0;
     }
 
@@ -282,10 +286,9 @@ void view_log(unsigned char key) {
     if (key == 12) {
         prekey = 12;
         if (wait++ > 500) {
-            log_index = 0;
+            log_index = wait = 0;
             sec = 60;
             pass_flag = 2;
-            wait = 0;
             clcd_print("                ", LINE1(0));
             clcd_print("                ", LINE2(0));
             return;
@@ -297,37 +300,89 @@ void view_log(unsigned char key) {
         wait = 0;
     }
 
-    read_event(EEPROM_ADDRESS + (16 * log_index), data);
-
     clcd_print("Logs :-         ", LINE1(0));
-    clcd_print(data, LINE2(0));
     clcd_putch(log_index + 48, LINE2(0));
-    clcd_putch((total_events / 10) + 48, LINE1(10));
-    clcd_putch((total_events % 10) + 48, LINE1(11));
+    read_event(EEPROM_ADDRESS + (14 * ((log_index + index) % 10)), data);
+    clcd_print(data, LINE2(2));
+}
+
+void set_time(unsigned char key) {
+    clcd_putch('2', LINE2(15));
+    __delay_ms(1000);
+
+    mode = wait = 0;
+    pass_flag = 2;
+    sec = 60;
+}
+
+void download_log() {
+    clcd_print("Downloading...  ", LINE1(0));
+    clcd_putch(total_events/10 + 48, LINE2(5));
+    clcd_putch(total_events%10 + 48, LINE2(6));
+    clcd_putch('3', LINE2(15));
+    __delay_ms(1000);
+
+    //interrupt
+    GIE = 0;
+    PEIE = 0;
+    TMR0IE = 0;
+    TMR0IF = 0;
+    TMR0ON = 0;
+    
+    init_uart();
+    
+    puts("#   TIME   EV SP\n\r");
+    for ( unsigned char i = 0; i < total_events; i++ )
+    {
+        putch(((log_index+index)%10)/10+48);
+        puts("\n\r");
+    }
+    
+    //interrupt
+    GIE = 1;
+    PEIE = 1;
+    TMR0IE = 1;
+    TMR0IF = 0;
+    TMR0ON = 1;
+    
+    pass_flag = 2;
+    mode = wait = 0;
+    sec = 60;
+    return;
+}
+
+void clear_log() {
+    clcd_putch('4', LINE2(15));
+    count_eve = total_events = log_index = index = mode = wait = 0;
+    store_event(event);
+    event_flag = 0;
+    clcd_print("  Logs cleared  ", LINE1(0));
+    __delay_ms(1000);
+    clcd_putch(count_eve + 48, LINE2(10));
+    __delay_ms(1000);
+
+    pass_flag = 2;
+    sec = 60;
 }
 
 void change_password(unsigned char key) {
-    clcd_print("Current Password", LINE1(0));
-
     if (sec == 55) {
         clcd_print("                ", LINE1(0));
         clcd_print("                ", LINE2(0));
-        option = mode;
-        if (option == 0)
-            ev = 0;
         ind = mode = wait = 0;
         pass_flag = 2;
         sec = 60;
-
         return;
     }
 
-    if (ind < 4)
+    if (ind < 4 && new_password == 0 && confirm_password == 0) {
         store_password(key, input_pass);
+        clcd_print("Current Password", LINE1(0));
+    }
 
     //Starts checking the entered key with the default password
-    if (ind == 4) {
-        __delay_ms(300);
+    if (ind == 4 && new_password == 0 && confirm_password == 0) {
+        __delay_ms(100);
         for (int j = 0; j < 4; j++) {
             if (password[j] == input_pass[j]) {
                 count++;
@@ -338,13 +393,14 @@ void change_password(unsigned char key) {
             clcd_print("Password Matched", LINE1(0));
             clcd_print("                ", LINE2(0));
             __delay_ms(1000);
-            count = 0;
-            ind = 5;
+            count = ind = wait = key = 0;
+            sec = 60;
             new_password = 1;
+            attempt = 3;
         } else if (count < 4) {
-            count = 0;
+            count = ind = wait = 0;
             attempt--;
-            
+
             clcd_print(" Wrong Password ", LINE1(0));
             clcd_putch(attempt + 48, LINE2(1));
             clcd_print(" -> attempts  ", LINE2(2));
@@ -352,11 +408,72 @@ void change_password(unsigned char key) {
             clcd_print("                ", LINE2(0));
         }
     }
-    if (attempt == 0)
-    {
+    if (attempt == 0) {
+        clcd_print(" Attempts over  ", LINE2(0));
+        __delay_ms(1000);
+        ind = mode = wait = 0;
+        pass_flag = 2;
+        sec = 60;
         return;
     }
 
     if (new_password == 1) {
+        clcd_print("  New Password ", LINE1(0));
+        if (ind < 4) {
+            store_password(key, password);
+        } else {
+            __delay_ms(100);
+            new_password = ind = key = 0;
+            confirm_password = 1;
+            clcd_print("                ", LINE2(0));
+        }
+    }
+
+    if (confirm_password == 1) {
+        clcd_print("Confirm Password", LINE1(0));
+        if (ind < 4)
+            store_password(key, input_pass);
+
+        if (ind == 4) {
+            __delay_ms(100);
+
+            for (int j = 0; j < 4; j++) {
+                if (password[j] == input_pass[j]) {
+                    count++;
+                }
+            }
+
+            if (count == 4) {
+                clcd_print("Password Matched", LINE1(0));
+                clcd_print("                ", LINE2(0));
+                __delay_ms(1000);
+                clcd_print("Password changed", LINE1(0));
+                clcd_print("  Successfully  ", LINE2(0));
+                
+                for ( unsigned char i = 0; i < 4; i++ )
+                {
+                    write_ext_eeprom(EEPROM_ADDRESS_1 + i, password[i]);
+                }
+                
+                __delay_ms(1000);
+                count = ind = new_password = confirm_password = mode = wait = 0;
+                attempt = 3;
+                pass_flag = 2;
+                sec = 60;
+                return;
+            } else if (count < 4) {
+                clcd_print(" Wrong Password ", LINE1(0));
+                clcd_print("                ", LINE2(0));
+                __delay_ms(1000);
+                clcd_print("  Password Not  ", LINE1(0));
+                clcd_print("     Changed    ", LINE2(0));
+                __delay_ms(1000);
+                count = ind = new_password = confirm_password = mode = wait = 0;
+                attempt = 3;
+                pass_flag = 2;
+                sec = 60;
+                return;
+            }
+        }
     }
 }

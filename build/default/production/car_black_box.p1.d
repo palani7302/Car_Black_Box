@@ -4,4 +4,5 @@ adc.h  \
 car_black_box.h  \
 clcd.h  \
 keypad.h  \
-eeprom.h 
+eeprom.h  \
+uart.h 

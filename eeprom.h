@@ -12,6 +12,7 @@
 #define SLAVE_WRITE_EEPROM		0xA0
 
 #define EEPROM_ADDRESS 0x00
+#define EEPROM_ADDRESS_1 0xAA
 
 void write_ext_eeprom(unsigned char address1,  unsigned char data);
 unsigned char read_ext_eeprom(unsigned char address1);

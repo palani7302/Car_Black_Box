@@ -11,6 +11,7 @@
       <itemPath>RTC.h</itemPath>
       <itemPath>i2c.h</itemPath>
       <itemPath>eeprom.h</itemPath>
+      <itemPath>uart.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -29,6 +30,7 @@
       <itemPath>i2c.c</itemPath>
       <itemPath>RTC.c</itemPath>
       <itemPath>eeprom.c</itemPath>
+      <itemPath>uart.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
