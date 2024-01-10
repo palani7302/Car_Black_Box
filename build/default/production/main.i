@@ -17921,7 +17921,7 @@ void store_password(unsigned char key, unsigned char *pass);
 void enter_password(unsigned char );
 void menu(unsigned char );
 void view_log(unsigned char );
-void set_time();
+void set_time(unsigned char );
 void download_log();
 void clear_log();
 void change_password(unsigned char );
@@ -18036,7 +18036,7 @@ void main(void) {
     while (1) {
         adc_val = read_adc(4) / 10.23;
 
-        if (key == 10) {
+        if (key == 10 && pass_flag == 0) {
             pass_flag = 1;
             sec = 60;
             clcd_print("                ", (0xC0 + (0)));
@@ -18071,7 +18071,7 @@ void main(void) {
                 break;
 
             case 4:
-                set_time();
+                set_time(key);
                 break;
 
             case 5:

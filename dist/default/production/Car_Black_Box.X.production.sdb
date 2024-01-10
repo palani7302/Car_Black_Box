@@ -45,25 +45,25 @@
 [v ___omul __omul `(uo  1 e 8 0 ]
 "10 C:\Program Files\Microchip\xc8\v2.41\pic\sources\c99\common\xxtofl.c
 [v ___xxtofl __xxtofl `(d  1 e 4 0 ]
-"30 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"33 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _display_event display_event `(v  1 e 1 0 ]
-"84
+"87
 [v _display_speed display_speed `(v  1 e 1 0 ]
-"92
+"95
 [v _store_password store_password `(v  1 e 1 0 ]
-"115
+"118
 [v _enter_password enter_password `(v  1 e 1 0 ]
-"182
+"185
 [v _menu menu `(v  1 e 1 0 ]
-"273
+"275
 [v _view_log view_log `(v  1 e 1 0 ]
-"309
+"311
 [v _set_time set_time `(v  1 e 1 0 ]
-"318
+"391
 [v _download_log download_log `(v  1 e 1 0 ]
-"354
+"426
 [v _clear_log clear_log `(v  1 e 1 0 ]
-"368
+"440
 [v _change_password change_password `(v  1 e 1 0 ]
 "11 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\clcd.c
 [v _clcd_write clcd_write `(v  1 e 1 0 ]
@@ -315,32 +315,34 @@
 [v _VCFG1 VCFG1 `VEb  1 e 0 @32269 ]
 "40416
 [v _WUE WUE `VEb  1 e 0 @32193 ]
-"19 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"20 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _gear gear `uc  1 e 1 0 ]
 [v _flag flag `uc  1 e 1 0 ]
-"21
+"22
 [v _pass_flag pass_flag `uc  1 e 1 0 ]
 [v _input_pass input_pass `[4]uc  1 e 4 0 ]
-"22
+"23
 [v _ind ind `uc  1 e 1 0 ]
 [v _count count `uc  1 e 1 0 ]
 [v _attempt attempt `uc  1 e 1 0 ]
 [v _new_password new_password `uc  1 e 1 0 ]
 [v _confirm_password confirm_password `uc  1 e 1 0 ]
-"24
+"25
 [v _wait wait `ui  1 e 2 0 ]
-"26
+"27
 [v _line line `uc  1 e 1 0 ]
 [v _star star `uc  1 e 1 0 ]
 [v _prekey prekey `uc  1 e 1 0 ]
 [v _pre_key_1 pre_key_1 `uc  1 e 1 0 ]
 [v _mode mode `uc  1 e 1 0 ]
 [v _option option `uc  1 e 1 0 ]
-"28
+"29
 [v _log_index log_index `uc  1 e 1 0 ]
 [v _event_flag event_flag `uc  1 e 1 0 ]
 [v _data data `[15]uc  1 e 15 0 ]
 [v _index index `uc  1 e 1 0 ]
+"31
+[v _time_flag time_flag `uc  1 e 1 0 ]
 "11 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\isr.c
 [v _count_isr count_isr `ui  1 e 2 0 ]
 "12
@@ -364,19 +366,22 @@
 [v main@key key `uc  1 a 1 62 ]
 "130
 } 0
-"273 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"275 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _view_log view_log `(v  1 e 1 0 ]
 {
 [v view_log@key key `uc  1 a 1 wreg ]
 [v view_log@key key `uc  1 a 1 wreg ]
-"275
+"277
 [v view_log@key key `uc  1 a 1 24 ]
-"307
-} 0
 "309
+} 0
+"311
 [v _set_time set_time `(v  1 e 1 0 ]
 {
-"316
+[v set_time@key key `uc  1 a 1 wreg ]
+[v set_time@key key `uc  1 a 1 wreg ]
+[v set_time@key key `uc  1 a 1 7 ]
+"389
 } 0
 "20 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\matrix_keypad.c
 [v _read_switches read_switches `(uc  1 e 1 0 ]
@@ -404,14 +409,14 @@
 [v read_adc@channel channel `uc  1 a 1 7 ]
 "39
 } 0
-"182 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"185 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _menu menu `(v  1 e 1 0 ]
 {
 [v menu@key key `uc  1 a 1 wreg ]
 [v menu@key key `uc  1 a 1 wreg ]
-"184
+"187
 [v menu@key key `uc  1 a 1 22 ]
-"271
+"273
 } 0
 "69 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\eeprom.c
 [v _read_event read_event `(v  1 e 1 0 ]
@@ -492,23 +497,23 @@
 {
 "28
 } 0
-"115 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"118 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _enter_password enter_password `(v  1 e 1 0 ]
 {
 [v enter_password@key key `uc  1 a 1 wreg ]
-"134
+"137
 [v enter_password@j j `i  1 a 2 24 ]
-"115
+"118
 [v enter_password@key key `uc  1 a 1 wreg ]
 [v enter_password@key key `uc  1 a 1 23 ]
-"180
+"183
 } 0
-"318
+"391
 [v _download_log download_log `(v  1 e 1 0 ]
 {
-"335
+"408
 [v download_log@i i `uc  1 a 1 18 ]
-"352
+"424
 } 0
 "87 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\uart.c
 [v _puts puts `(v  1 e 1 0 ]
@@ -595,11 +600,11 @@
 {
 "79
 } 0
-"84 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"87 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _display_speed display_speed `(v  1 e 1 0 ]
 {
 [v display_speed@speed speed `us  1 p 2 16 ]
-"90
+"93
 } 0
 "7 C:\Program Files\Microchip\xc8\v2.41\pic\sources\c99\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
@@ -623,18 +628,18 @@
 [v ___lwdiv@divisor divisor `ui  1 p 2 2 ]
 "30
 } 0
-"30 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"33 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _display_event display_event `(v  1 e 1 0 ]
 {
 [v display_event@key key `uc  1 a 1 wreg ]
 [v display_event@key key `uc  1 a 1 wreg ]
 [v display_event@key key `uc  1 a 1 10 ]
-"82
+"85
 } 0
-"354
+"426
 [v _clear_log clear_log `(v  1 e 1 0 ]
 {
-"366
+"438
 } 0
 "46 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\eeprom.c
 [v _store_event store_event `(v  1 e 1 0 ]
@@ -647,20 +652,20 @@
 [v store_event@data data `*.39uc  1 p 2 4 ]
 "67
 } 0
-"368 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"440 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _change_password change_password `(v  1 e 1 0 ]
 {
 [v change_password@key key `uc  1 a 1 wreg ]
-"453
+"525
 [v change_password@i i `uc  1 a 1 28 ]
-"440
-[v change_password@j_364 j `i  1 a 2 26 ]
-"386
+"512
+[v change_password@j_380 j `i  1 a 2 26 ]
+"458
 [v change_password@j j `i  1 a 2 24 ]
-"368
+"440
 [v change_password@key key `uc  1 a 1 wreg ]
 [v change_password@key key `uc  1 a 1 23 ]
-"479
+"554
 } 0
 "22 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\eeprom.c
 [v _write_ext_eeprom write_ext_eeprom `(v  1 e 1 0 ]
@@ -695,15 +700,15 @@
 {
 "35
 } 0
-"92 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
+"95 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\car_black_box.c
 [v _store_password store_password `(v  1 e 1 0 ]
 {
 [v store_password@key key `uc  1 a 1 wreg ]
 [v store_password@key key `uc  1 a 1 wreg ]
 [v store_password@pass pass `*.39uc  1 p 2 16 ]
-"94
+"97
 [v store_password@key key `uc  1 a 1 20 ]
-"113
+"116
 } 0
 "75 C:\Users\palan\MPLABXProjects\Car_Black_Box.X\clcd.c
 [v _clcd_putch clcd_putch `(v  1 e 1 0 ]

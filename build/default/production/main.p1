@@ -55,8 +55,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./car_black_box.h: 30: void view_log(unsigned char );
 [v _view_log `(v ~T0 @X0 0 ef1`uc ]
 "31
-[; ;./car_black_box.h: 31: void set_time();
-[v _set_time `(v ~T0 @X0 0 e? ]
+[; ;./car_black_box.h: 31: void set_time(unsigned char );
+[v _set_time `(v ~T0 @X0 0 ef1`uc ]
 "32
 [; ;./car_black_box.h: 32: void download_log();
 [v _download_log `(v ~T0 @X0 0 e? ]
@@ -1557,8 +1557,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 76:         adc_val = read_adc(4) / 10.23;
 [e = _adc_val -> / -> -> ( _read_adc (1 -> -> 4 `i `uc `ui `d .10.23 `us ]
 "78
-[; ;main.c: 78:         if (key == 10) {
-[e $ ! == -> _key `i -> 10 `i 1100  ]
+[; ;main.c: 78:         if (key == 10 && pass_flag == 0) {
+[e $ ! && == -> _key `i -> 10 `i == -> _pass_flag `i -> 0 `i 1100  ]
 {
 "79
 [; ;main.c: 79:             pass_flag = 1;
@@ -1646,8 +1646,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 112:             case 4:
 [e :U 1109 ]
 "113
-[; ;main.c: 113:                 set_time();
-[e ( _set_time ..  ]
+[; ;main.c: 113:                 set_time(key);
+[e ( _set_time (1 _key ]
 "114
 [; ;main.c: 114:                 break;
 [e $U 1103  ]

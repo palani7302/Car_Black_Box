@@ -1,6 +1,6 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"17 car_black_box.c
-[; ;car_black_box.c: 17: extern unsigned char sec, count_eve, ev, total_events, password[4];
+"18 car_black_box.c
+[; ;car_black_box.c: 18: extern unsigned char sec, count_eve, ev, total_events, password[4], clock_reg[3], time[9];
 [v _ev `uc ~T0 @X0 0 e ]
 "40 ./clcd.h
 [; ;./clcd.h: 40: void clcd_print(const unsigned char *data, unsigned char addr);
@@ -11,22 +11,27 @@ Version 4.0 HI-TECH Software Intermediate Code
 "41 ./clcd.h
 [; ;./clcd.h: 41: void clcd_putch(const unsigned char data, unsigned char addr);
 [v _clcd_putch `(v ~T0 @X0 0 ef2`Cuc`uc ]
-"17 car_black_box.c
-[; ;car_black_box.c: 17: extern unsigned char sec, count_eve, ev, total_events, password[4];
+"18 car_black_box.c
+[; ;car_black_box.c: 18: extern unsigned char sec, count_eve, ev, total_events, password[4], clock_reg[3], time[9];
 [v _sec `uc ~T0 @X0 0 e ]
 [v F10430 `(v ~T0 @X0 1 tf1`ul ]
 "203 C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\pic18.h
 [v __delay `JF10430 ~T0 @X0 0 e ]
 [p i __delay ]
-"17 car_black_box.c
-[; ;car_black_box.c: 17: extern unsigned char sec, count_eve, ev, total_events, password[4];
+"18 car_black_box.c
+[; ;car_black_box.c: 18: extern unsigned char sec, count_eve, ev, total_events, password[4], clock_reg[3], time[9];
 [v _password `uc ~T0 @X0 -> 0 `x e ]
 "20 ./eeprom.h
 [; ;./eeprom.h: 20: void read_event(unsigned char *address, unsigned char *data);
 [v _read_event `(v ~T0 @X0 0 ef2`*uc`*uc ]
-"17 car_black_box.c
-[; ;car_black_box.c: 17: extern unsigned char sec, count_eve, ev, total_events, password[4];
+"18 car_black_box.c
+[; ;car_black_box.c: 18: extern unsigned char sec, count_eve, ev, total_events, password[4], clock_reg[3], time[9];
 [v _total_events `uc ~T0 @X0 0 e ]
+[v _time `uc ~T0 @X0 -> 0 `x e ]
+[v _clock_reg `uc ~T0 @X0 -> 0 `x e ]
+"25 ./RTC.h
+[; ;./RTC.h: 25: void write_ds1307(unsigned char address1, unsigned char data);
+[v _write_ds1307 `(v ~T0 @X0 0 ef2`uc`uc ]
 "35487 C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f4580.h
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f4580.h: 35487: extern volatile __bit GIE __attribute__((address(0x7F97)));
 [v _GIE `Vb ~T0 @X0 0 e@32663 ]
@@ -51,8 +56,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "20
 [; ;./uart.h: 20: void putch(unsigned char data);
 [v _putch `(v ~T0 @X0 0 ef1`uc ]
-"17 car_black_box.c
-[; ;car_black_box.c: 17: extern unsigned char sec, count_eve, ev, total_events, password[4];
+"18 car_black_box.c
+[; ;car_black_box.c: 18: extern unsigned char sec, count_eve, ev, total_events, password[4], clock_reg[3], time[9];
 [v _count_eve `uc ~T0 @X0 0 e ]
 "17 ./eeprom.h
 [; ;./eeprom.h: 17: void write_ext_eeprom(unsigned char address1, unsigned char data);
@@ -1338,8 +1343,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "22
 [; ;./car_black_box.h: 22: unsigned char event[16];
 [v _event `uc ~T0 @X0 -> 16 `i e ]
-"19 car_black_box.c
-[; ;car_black_box.c: 19: unsigned char gear = 0, flag = 0, repeated_event = 0;
+"20 car_black_box.c
+[; ;car_black_box.c: 20: unsigned char gear = 0, flag = 0, repeated_event = 0;
 [v _gear `uc ~T0 @X0 1 e ]
 [i _gear
 -> -> 0 `i `uc
@@ -1352,15 +1357,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _repeated_event
 -> -> 0 `i `uc
 ]
-"21
-[; ;car_black_box.c: 21: unsigned char input_pass[4], pass_flag = 0;
+"22
+[; ;car_black_box.c: 22: unsigned char input_pass[4], pass_flag = 0;
 [v _input_pass `uc ~T0 @X0 -> 4 `i e ]
 [v _pass_flag `uc ~T0 @X0 1 e ]
 [i _pass_flag
 -> -> 0 `i `uc
 ]
-"22
-[; ;car_black_box.c: 22: unsigned char ind = 0, count = 0, attempt = 3, new_password = 0, confirm_password = 0;
+"23
+[; ;car_black_box.c: 23: unsigned char ind = 0, count = 0, attempt = 3, new_password = 0, confirm_password = 0;
 [v _ind `uc ~T0 @X0 1 e ]
 [i _ind
 -> -> 0 `i `uc
@@ -1381,8 +1386,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _confirm_password
 -> -> 0 `i `uc
 ]
-"23
-[; ;car_black_box.c: 23: unsigned char ind_1 = 0, ind_2 = 0;
+"24
+[; ;car_black_box.c: 24: unsigned char ind_1 = 0, ind_2 = 0;
 [v _ind_1 `uc ~T0 @X0 1 e ]
 [i _ind_1
 -> -> 0 `i `uc
@@ -1391,14 +1396,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _ind_2
 -> -> 0 `i `uc
 ]
-"24
-[; ;car_black_box.c: 24: unsigned int wait = 0;
+"25
+[; ;car_black_box.c: 25: unsigned int wait = 0;
 [v _wait `ui ~T0 @X0 1 e ]
 [i _wait
 -> -> 0 `i `ui
 ]
-"26
-[; ;car_black_box.c: 26: unsigned char line = 0, star = 0, prekey = 0, pre_key_1 = 0, mode = 0, option = 0;
+"27
+[; ;car_black_box.c: 27: unsigned char line = 0, star = 0, prekey = 0, pre_key_1 = 0, mode = 0, option = 0;
 [v _line `uc ~T0 @X0 1 e ]
 [i _line
 -> -> 0 `i `uc
@@ -1423,8 +1428,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _option
 -> -> 0 `i `uc
 ]
-"28
-[; ;car_black_box.c: 28: unsigned char log_index = 0, event_flag = 0, data[15], index = 0;
+"29
+[; ;car_black_box.c: 29: unsigned char log_index = 0, event_flag = 0, data[15], index = 0;
 [v _log_index `uc ~T0 @X0 1 e ]
 [i _log_index
 -> -> 0 `i `uc
@@ -1438,345 +1443,351 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _index
 -> -> 0 `i `uc
 ]
-"30
-[; ;car_black_box.c: 30: void display_event(unsigned char key) {
+"31
+[; ;car_black_box.c: 31: unsigned char time_flag = 0;
+[v _time_flag `uc ~T0 @X0 1 e ]
+[i _time_flag
+-> -> 0 `i `uc
+]
+"33
+[; ;car_black_box.c: 33: void display_event(unsigned char key) {
 [v _display_event `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _display_event ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-"31
-[; ;car_black_box.c: 31:     if (key == 1 && prekey != 1) {
+"34
+[; ;car_black_box.c: 34:     if (key == 1 && prekey != 1) {
 [e $ ! && == -> _key `i -> 1 `i != -> _prekey `i -> 1 `i 1089  ]
 {
-"32
-[; ;car_black_box.c: 32:         event_flag = 1;
-[e = _event_flag -> -> 1 `i `uc ]
-"33
-[; ;car_black_box.c: 33:         flag = 1;
-[e = _flag -> -> 1 `i `uc ]
-"34
-[; ;car_black_box.c: 34:         gear = 0;
-[e = _gear -> -> 0 `i `uc ]
 "35
-[; ;car_black_box.c: 35:         ev = 0;
-[e = _ev -> -> 0 `i `uc ]
+[; ;car_black_box.c: 35:         event_flag = 1;
+[e = _event_flag -> -> 1 `i `uc ]
 "36
-[; ;car_black_box.c: 36:         prekey = key;
-[e = _prekey _key ]
+[; ;car_black_box.c: 36:         flag = 1;
+[e = _flag -> -> 1 `i `uc ]
 "37
-[; ;car_black_box.c: 37:     }
+[; ;car_black_box.c: 37:         gear = 0;
+[e = _gear -> -> 0 `i `uc ]
+"38
+[; ;car_black_box.c: 38:         ev = 0;
+[e = _ev -> -> 0 `i `uc ]
+"39
+[; ;car_black_box.c: 39:         prekey = key;
+[e = _prekey _key ]
+"40
+[; ;car_black_box.c: 40:     }
 }
 [e :U 1089 ]
-"38
-[; ;car_black_box.c: 38:     if (key == 2) {
+"41
+[; ;car_black_box.c: 41:     if (key == 2) {
 [e $ ! == -> _key `i -> 2 `i 1090  ]
 {
-"39
-[; ;car_black_box.c: 39:         if (gear == 6 && prekey == 2);
+"42
+[; ;car_black_box.c: 42:         if (gear == 6 && prekey == 2);
 [e $ ! && == -> _gear `i -> 6 `i == -> _prekey `i -> 2 `i 1091  ]
 [e $U 1092  ]
-"40
-[; ;car_black_box.c: 40:         else {
+"43
+[; ;car_black_box.c: 43:         else {
 [e :U 1091 ]
 {
-"41
-[; ;car_black_box.c: 41:             event_flag = 1;
-[e = _event_flag -> -> 1 `i `uc ]
-"42
-[; ;car_black_box.c: 42:             flag = 0;
-[e = _flag -> -> 0 `i `uc ]
-"43
-[; ;car_black_box.c: 43:             ev = 0;
-[e = _ev -> -> 0 `i `uc ]
 "44
-[; ;car_black_box.c: 44:             if (++gear >= 6) {
+[; ;car_black_box.c: 44:             event_flag = 1;
+[e = _event_flag -> -> 1 `i `uc ]
+"45
+[; ;car_black_box.c: 45:             flag = 0;
+[e = _flag -> -> 0 `i `uc ]
+"46
+[; ;car_black_box.c: 46:             ev = 0;
+[e = _ev -> -> 0 `i `uc ]
+"47
+[; ;car_black_box.c: 47:             if (++gear >= 6) {
 [e $ ! >= -> =+ _gear -> -> 1 `i `uc `i -> 6 `i 1093  ]
 {
-"45
-[; ;car_black_box.c: 45:                 gear = 6;
+"48
+[; ;car_black_box.c: 48:                 gear = 6;
 [e = _gear -> -> 6 `i `uc ]
-"46
-[; ;car_black_box.c: 46:                 prekey = key;
+"49
+[; ;car_black_box.c: 49:                 prekey = key;
 [e = _prekey _key ]
-"47
-[; ;car_black_box.c: 47:             }
+"50
+[; ;car_black_box.c: 50:             }
 }
 [e :U 1093 ]
-"48
-[; ;car_black_box.c: 48:         }
+"51
+[; ;car_black_box.c: 51:         }
 }
 [e :U 1092 ]
-"49
-[; ;car_black_box.c: 49:     }
+"52
+[; ;car_black_box.c: 52:     }
 }
 [e :U 1090 ]
-"50
-[; ;car_black_box.c: 50:     if (key == 3 && flag == 0 && gear > 1) {
+"53
+[; ;car_black_box.c: 53:     if (key == 3 && flag == 0 && gear > 1) {
 [e $ ! && && == -> _key `i -> 3 `i == -> _flag `i -> 0 `i > -> _gear `i -> 1 `i 1094  ]
 {
-"51
-[; ;car_black_box.c: 51:         if (gear == 1 && prekey == 3);
+"54
+[; ;car_black_box.c: 54:         if (gear == 1 && prekey == 3);
 [e $ ! && == -> _gear `i -> 1 `i == -> _prekey `i -> 3 `i 1095  ]
 [e $U 1096  ]
-"52
-[; ;car_black_box.c: 52:         else {
+"55
+[; ;car_black_box.c: 55:         else {
 [e :U 1095 ]
 {
-"53
-[; ;car_black_box.c: 53:             event_flag = 1;
+"56
+[; ;car_black_box.c: 56:             event_flag = 1;
 [e = _event_flag -> -> 1 `i `uc ]
-"54
-[; ;car_black_box.c: 54:             ev = 0;
+"57
+[; ;car_black_box.c: 57:             ev = 0;
 [e = _ev -> -> 0 `i `uc ]
-"55
-[; ;car_black_box.c: 55:             if (--gear <= 1) {
+"58
+[; ;car_black_box.c: 58:             if (--gear <= 1) {
 [e $ ! <= -> =- _gear -> -> 1 `i `uc `i -> 1 `i 1097  ]
 {
-"56
-[; ;car_black_box.c: 56:                 gear = 1;
+"59
+[; ;car_black_box.c: 59:                 gear = 1;
 [e = _gear -> -> 1 `i `uc ]
-"57
-[; ;car_black_box.c: 57:                 prekey = key;
+"60
+[; ;car_black_box.c: 60:                 prekey = key;
 [e = _prekey _key ]
-"58
-[; ;car_black_box.c: 58:             }
+"61
+[; ;car_black_box.c: 61:             }
 }
 [e :U 1097 ]
-"59
-[; ;car_black_box.c: 59:         }
+"62
+[; ;car_black_box.c: 62:         }
 }
 [e :U 1096 ]
-"60
-[; ;car_black_box.c: 60:     }
+"63
+[; ;car_black_box.c: 63:     }
 }
 [e :U 1094 ]
-"62
-[; ;car_black_box.c: 62:     if (ev == 1 || option != 0) {
+"65
+[; ;car_black_box.c: 65:     if (ev == 1 || option != 0) {
 [e $ ! || == -> _ev `i -> 1 `i != -> _option `i -> 0 `i 1098  ]
 {
-"63
-[; ;car_black_box.c: 63:         clcd_print(menu_eve[option], (0xC0 + (10)));
-[e ( _clcd_print (2 , -> *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
-"64
-[; ;car_black_box.c: 64:         event[9] = menu_eve[option][0];
-[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
-"65
-[; ;car_black_box.c: 65:         event[10] = menu_eve[option][1];
-[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
 "66
-[; ;car_black_box.c: 66:     } else {
+[; ;car_black_box.c: 66:         clcd_print(menu_eve[option], (0xC0 + (10)));
+[e ( _clcd_print (2 , -> *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
+"67
+[; ;car_black_box.c: 67:         event[9] = menu_eve[option][0];
+[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
+"68
+[; ;car_black_box.c: 68:         event[10] = menu_eve[option][1];
+[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
+"69
+[; ;car_black_box.c: 69:     } else {
 }
 [e $U 1099  ]
 [e :U 1098 ]
 {
-"67
-[; ;car_black_box.c: 67:         if (flag == 1) {
+"70
+[; ;car_black_box.c: 70:         if (flag == 1) {
 [e $ ! == -> _flag `i -> 1 `i 1100  ]
 {
-"68
-[; ;car_black_box.c: 68:             clcd_print(signature[7], (0xC0 + (10)));
-[e ( _clcd_print (2 , -> *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
-"69
-[; ;car_black_box.c: 69:             event[9] = signature[7][0];
-[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
-"70
-[; ;car_black_box.c: 70:             event[10] = signature[7][1];
-[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
 "71
-[; ;car_black_box.c: 71:         } else {
+[; ;car_black_box.c: 71:             clcd_print(signature[7], (0xC0 + (10)));
+[e ( _clcd_print (2 , -> *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
+"72
+[; ;car_black_box.c: 72:             event[9] = signature[7][0];
+[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
+"73
+[; ;car_black_box.c: 73:             event[10] = signature[7][1];
+[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _signature * -> -> -> 7 `i `ui `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
+"74
+[; ;car_black_box.c: 74:         } else {
 }
 [e $U 1101  ]
 [e :U 1100 ]
 {
-"72
-[; ;car_black_box.c: 72:             clcd_print(signature[gear], (0xC0 + (10)));
-[e ( _clcd_print (2 , -> *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
-"73
-[; ;car_black_box.c: 73:             event[9] = signature[gear][0];
-[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
-"74
-[; ;car_black_box.c: 74:             event[10] = signature[gear][1];
-[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
 "75
-[; ;car_black_box.c: 75:         }
+[; ;car_black_box.c: 75:             clcd_print(signature[gear], (0xC0 + (10)));
+[e ( _clcd_print (2 , -> *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux `*Cuc -> + -> 192 `i -> 10 `i `uc ]
+"76
+[; ;car_black_box.c: 76:             event[9] = signature[gear][0];
+[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
+"77
+[; ;car_black_box.c: 77:             event[10] = signature[gear][1];
+[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _signature * -> _gear `ux -> -> # *U &U _signature `ui `ux `ui `ux ]
+"78
+[; ;car_black_box.c: 78:         }
 }
 [e :U 1101 ]
-"76
-[; ;car_black_box.c: 76:     }
+"79
+[; ;car_black_box.c: 79:     }
 }
 [e :U 1099 ]
-"78
-[; ;car_black_box.c: 78:     if (event_flag == 1) {
+"81
+[; ;car_black_box.c: 81:     if (event_flag == 1) {
 [e $ ! == -> _event_flag `i -> 1 `i 1102  ]
 {
-"79
-[; ;car_black_box.c: 79:         event_flag = 0;
+"82
+[; ;car_black_box.c: 82:         event_flag = 0;
 [e = _event_flag -> -> 0 `i `uc ]
-"80
-[; ;car_black_box.c: 80:         store_event(event);
+"83
+[; ;car_black_box.c: 83:         store_event(event);
 [e ( _store_event (1 &U _event ]
-"81
-[; ;car_black_box.c: 81:     }
+"84
+[; ;car_black_box.c: 84:     }
 }
 [e :U 1102 ]
-"82
-[; ;car_black_box.c: 82: }
+"85
+[; ;car_black_box.c: 85: }
 [e :UE 1088 ]
 }
-"84
-[; ;car_black_box.c: 84: void display_speed(unsigned short speed) {
+"87
+[; ;car_black_box.c: 87: void display_speed(unsigned short speed) {
 [v _display_speed `(v ~T0 @X0 1 ef1`us ]
 {
 [e :U _display_speed ]
 [v _speed `us ~T0 @X0 1 r1 ]
 [f ]
-"85
-[; ;car_black_box.c: 85:     event[11] = ' ';
-[e = *U + &U _event * -> -> -> 11 `i `ui `ux -> -> # *U &U _event `ui `ux -> -> 32 `ui `uc ]
-"86
-[; ;car_black_box.c: 86:     clcd_putch((speed / 10) + 48, (0xC0 + (14)));
-[e ( _clcd_putch (2 , -> + / -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc -> + -> 192 `i -> 14 `i `uc ]
-"87
-[; ;car_black_box.c: 87:     clcd_putch((speed % 10) + 48, (0xC0 + (15)));
-[e ( _clcd_putch (2 , -> + % -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc -> + -> 192 `i -> 15 `i `uc ]
 "88
-[; ;car_black_box.c: 88:     event[12] = (speed / 10) + 48;
-[e = *U + &U _event * -> -> -> 12 `i `ui `ux -> -> # *U &U _event `ui `ux -> + / -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc ]
+[; ;car_black_box.c: 88:     event[11] = ' ';
+[e = *U + &U _event * -> -> -> 11 `i `ui `ux -> -> # *U &U _event `ui `ux -> -> 32 `ui `uc ]
 "89
-[; ;car_black_box.c: 89:     event[13] = (speed % 10) + 48;
-[e = *U + &U _event * -> -> -> 13 `i `ui `ux -> -> # *U &U _event `ui `ux -> + % -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc ]
+[; ;car_black_box.c: 89:     clcd_putch((speed / 10) + 48, (0xC0 + (14)));
+[e ( _clcd_putch (2 , -> + / -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc -> + -> 192 `i -> 14 `i `uc ]
 "90
-[; ;car_black_box.c: 90: }
+[; ;car_black_box.c: 90:     clcd_putch((speed % 10) + 48, (0xC0 + (15)));
+[e ( _clcd_putch (2 , -> + % -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc -> + -> 192 `i -> 15 `i `uc ]
+"91
+[; ;car_black_box.c: 91:     event[12] = (speed / 10) + 48;
+[e = *U + &U _event * -> -> -> 12 `i `ui `ux -> -> # *U &U _event `ui `ux -> + / -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc ]
+"92
+[; ;car_black_box.c: 92:     event[13] = (speed % 10) + 48;
+[e = *U + &U _event * -> -> -> 13 `i `ui `ux -> -> # *U &U _event `ui `ux -> + % -> _speed `ui -> -> 10 `i `ui -> -> 48 `i `ui `uc ]
+"93
+[; ;car_black_box.c: 93: }
 [e :UE 1103 ]
 }
-"92
-[; ;car_black_box.c: 92: void store_password(unsigned char key, unsigned char *pass) {
+"95
+[; ;car_black_box.c: 95: void store_password(unsigned char key, unsigned char *pass) {
 [v _store_password `(v ~T0 @X0 1 ef2`uc`*uc ]
 {
 [e :U _store_password ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [v _pass `*uc ~T0 @X0 1 r2 ]
 [f ]
-"94
-[; ;car_black_box.c: 94:     if (key == 11) {
+"97
+[; ;car_black_box.c: 97:     if (key == 11) {
 [e $ ! == -> _key `i -> 11 `i 1105  ]
 {
-"95
-[; ;car_black_box.c: 95:         sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"96
-[; ;car_black_box.c: 96:         pass[ind] = '1';
-[e = *U + _pass * -> _ind `ux -> -> # *U _pass `ui `ux -> -> 49 `ui `uc ]
-"97
-[; ;car_black_box.c: 97:         clcd_putch('*', (0xC0 + (ind + 5)));
-[e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 192 `i + -> _ind `i -> 5 `i `uc ]
 "98
-[; ;car_black_box.c: 98:         ind++;
-[e ++ _ind -> -> 1 `i `uc ]
+[; ;car_black_box.c: 98:         sec = 60;
+[e = _sec -> -> 60 `i `uc ]
 "99
-[; ;car_black_box.c: 99:     } else if (key == 12) {
+[; ;car_black_box.c: 99:         pass[ind] = '1';
+[e = *U + _pass * -> _ind `ux -> -> # *U _pass `ui `ux -> -> 49 `ui `uc ]
+"100
+[; ;car_black_box.c: 100:         clcd_putch('*', (0xC0 + (ind + 5)));
+[e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 192 `i + -> _ind `i -> 5 `i `uc ]
+"101
+[; ;car_black_box.c: 101:         ind++;
+[e ++ _ind -> -> 1 `i `uc ]
+"102
+[; ;car_black_box.c: 102:     } else if (key == 12) {
 }
 [e $U 1106  ]
 [e :U 1105 ]
 [e $ ! == -> _key `i -> 12 `i 1107  ]
 {
-"100
-[; ;car_black_box.c: 100:         sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"101
-[; ;car_black_box.c: 101:         pass[ind] = '0';
-[e = *U + _pass * -> _ind `ux -> -> # *U _pass `ui `ux -> -> 48 `ui `uc ]
-"102
-[; ;car_black_box.c: 102:         clcd_putch('*', (0xC0 + (ind + 5)));
-[e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 192 `i + -> _ind `i -> 5 `i `uc ]
 "103
-[; ;car_black_box.c: 103:         ind++;
-[e ++ _ind -> -> 1 `i `uc ]
+[; ;car_black_box.c: 103:         sec = 60;
+[e = _sec -> -> 60 `i `uc ]
 "104
-[; ;car_black_box.c: 104:     }
+[; ;car_black_box.c: 104:         pass[ind] = '0';
+[e = *U + _pass * -> _ind `ux -> -> # *U _pass `ui `ux -> -> 48 `ui `uc ]
+"105
+[; ;car_black_box.c: 105:         clcd_putch('*', (0xC0 + (ind + 5)));
+[e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 192 `i + -> _ind `i -> 5 `i `uc ]
+"106
+[; ;car_black_box.c: 106:         ind++;
+[e ++ _ind -> -> 1 `i `uc ]
+"107
+[; ;car_black_box.c: 107:     }
 }
 [e :U 1107 ]
 [e :U 1106 ]
-"106
-[; ;car_black_box.c: 106:     if (wait++ < 500)
+"109
+[; ;car_black_box.c: 109:     if (wait++ < 500)
 [e $ ! < ++ _wait -> -> 1 `i `ui -> -> 500 `i `ui 1108  ]
-"107
-[; ;car_black_box.c: 107:         clcd_putch('_', (0xC0 + (ind + 5)));
+"110
+[; ;car_black_box.c: 110:         clcd_putch('_', (0xC0 + (ind + 5)));
 [e ( _clcd_putch (2 , -> -> 95 `ui `uc -> + -> 192 `i + -> _ind `i -> 5 `i `uc ]
 [e $U 1109  ]
-"108
-[; ;car_black_box.c: 108:     else if (wait > 500)
+"111
+[; ;car_black_box.c: 111:     else if (wait > 500)
 [e :U 1108 ]
 [e $ ! > _wait -> -> 500 `i `ui 1110  ]
-"109
-[; ;car_black_box.c: 109:         clcd_putch(' ', (0xC0 + (ind + 5)));
+"112
+[; ;car_black_box.c: 112:         clcd_putch(' ', (0xC0 + (ind + 5)));
 [e ( _clcd_putch (2 , -> -> 32 `ui `uc -> + -> 192 `i + -> _ind `i -> 5 `i `uc ]
 [e :U 1110 ]
 [e :U 1109 ]
-"111
-[; ;car_black_box.c: 111:     if (wait == 1000)
+"114
+[; ;car_black_box.c: 114:     if (wait == 1000)
 [e $ ! == _wait -> -> 1000 `i `ui 1111  ]
-"112
-[; ;car_black_box.c: 112:         wait = 0;
+"115
+[; ;car_black_box.c: 115:         wait = 0;
 [e = _wait -> -> 0 `i `ui ]
 [e :U 1111 ]
-"113
-[; ;car_black_box.c: 113: }
+"116
+[; ;car_black_box.c: 116: }
 [e :UE 1104 ]
 }
-"115
-[; ;car_black_box.c: 115: void enter_password(unsigned char key) {
+"118
+[; ;car_black_box.c: 118: void enter_password(unsigned char key) {
 [v _enter_password `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _enter_password ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-"116
-[; ;car_black_box.c: 116:     clcd_print(" Enter Password ", (0x80 + (0)));
+"119
+[; ;car_black_box.c: 119:     clcd_print(" Enter Password ", (0x80 + (0)));
 [e ( _clcd_print (2 , :s 19C -> + -> 128 `i -> 0 `i `uc ]
-"118
-[; ;car_black_box.c: 118:     if (sec == 55) {
+"121
+[; ;car_black_box.c: 121:     if (sec == 55) {
 [e $ ! == -> _sec `i -> 55 `i 1113  ]
 {
-"119
-[; ;car_black_box.c: 119:         clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 20C -> + -> 128 `i -> 0 `i `uc ]
-"120
-[; ;car_black_box.c: 120:         clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 21C -> + -> 192 `i -> 0 `i `uc ]
-"121
-[; ;car_black_box.c: 121:         pass_flag = ind = wait = 0;
-[e = _pass_flag = _ind -> = _wait -> -> 0 `i `ui `uc ]
 "122
-[; ;car_black_box.c: 122:         attempt = 3;
-[e = _attempt -> -> 3 `i `uc ]
+[; ;car_black_box.c: 122:         clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 20C -> + -> 128 `i -> 0 `i `uc ]
+"123
+[; ;car_black_box.c: 123:         clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 21C -> + -> 192 `i -> 0 `i `uc ]
 "124
-[; ;car_black_box.c: 124:         return;
-[e $UE 1112  ]
+[; ;car_black_box.c: 124:         pass_flag = ind = wait = 0;
+[e = _pass_flag = _ind -> = _wait -> -> 0 `i `ui `uc ]
 "125
-[; ;car_black_box.c: 125:     }
+[; ;car_black_box.c: 125:         attempt = 3;
+[e = _attempt -> -> 3 `i `uc ]
+"127
+[; ;car_black_box.c: 127:         return;
+[e $UE 1112  ]
+"128
+[; ;car_black_box.c: 128:     }
 }
 [e :U 1113 ]
-"127
-[; ;car_black_box.c: 127:     if (ind < 4)
+"130
+[; ;car_black_box.c: 130:     if (ind < 4)
 [e $ ! < -> _ind `i -> 4 `i 1114  ]
-"128
-[; ;car_black_box.c: 128:         store_password(key, input_pass);
+"131
+[; ;car_black_box.c: 131:         store_password(key, input_pass);
 [e ( _store_password (2 , _key &U _input_pass ]
 [e :U 1114 ]
-"131
-[; ;car_black_box.c: 131:     if (ind == 4) {
+"134
+[; ;car_black_box.c: 134:     if (ind == 4) {
 [e $ ! == -> _ind `i -> 4 `i 1115  ]
 {
-"132
-[; ;car_black_box.c: 132:         _delay((unsigned long)((300)*(20000000/4000.0)));
+"135
+[; ;car_black_box.c: 135:         _delay((unsigned long)((300)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 300 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"133
-[; ;car_black_box.c: 133:         ind = 0;
+"136
+[; ;car_black_box.c: 136:         ind = 0;
 [e = _ind -> -> 0 `i `uc ]
-"134
-[; ;car_black_box.c: 134:         for (int j = 0; j < 4; j++) {
+"137
+[; ;car_black_box.c: 137:         for (int j = 0; j < 4; j++) {
 {
 [v _j `i ~T0 @X0 1 a ]
 [e = _j -> 0 `i ]
@@ -1784,1072 +1795,1353 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 1117  ]
 [e :U 1116 ]
 {
-"135
-[; ;car_black_box.c: 135:             if (password[j] == input_pass[j]) {
+"138
+[; ;car_black_box.c: 138:             if (password[j] == input_pass[j]) {
 [e $ ! == -> *U + &U _password * -> -> _j `ui `ux -> -> # *U &U _password `ui `ux `i -> *U + &U _input_pass * -> -> _j `ui `ux -> -> # *U &U _input_pass `ui `ux `i 1119  ]
 {
-"136
-[; ;car_black_box.c: 136:                 count++;
+"139
+[; ;car_black_box.c: 139:                 count++;
 [e ++ _count -> -> 1 `i `uc ]
-"137
-[; ;car_black_box.c: 137:             }
+"140
+[; ;car_black_box.c: 140:             }
 }
 [e :U 1119 ]
-"138
-[; ;car_black_box.c: 138:         }
+"141
+[; ;car_black_box.c: 141:         }
 }
 [e ++ _j -> 1 `i ]
 [e $ < _j -> 4 `i 1116  ]
 [e :U 1117 ]
 }
-"142
-[; ;car_black_box.c: 142:         if (count == 4) {
+"145
+[; ;car_black_box.c: 145:         if (count == 4) {
 [e $ ! == -> _count `i -> 4 `i 1120  ]
 {
-"143
-[; ;car_black_box.c: 143:             clcd_print("Correct password", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 22C -> + -> 128 `i -> 0 `i `uc ]
-"144
-[; ;car_black_box.c: 144:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 23C -> + -> 192 `i -> 0 `i `uc ]
-"145
-[; ;car_black_box.c: 145:             _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "146
-[; ;car_black_box.c: 146:             pass_flag = 2;
-[e = _pass_flag -> -> 2 `i `uc ]
+[; ;car_black_box.c: 146:             clcd_print("Correct password", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 22C -> + -> 128 `i -> 0 `i `uc ]
 "147
-[; ;car_black_box.c: 147:             sec = 60;
-[e = _sec -> -> 60 `i `uc ]
+[; ;car_black_box.c: 147:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 23C -> + -> 192 `i -> 0 `i `uc ]
 "148
-[; ;car_black_box.c: 148:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 24C -> + -> 128 `i -> 0 `i `uc ]
+[; ;car_black_box.c: 148:             _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "149
-[; ;car_black_box.c: 149:             ind = mode = count = wait = prekey = pre_key_1 = 0;
-[e = _ind = _mode = _count -> = _wait -> = _prekey = _pre_key_1 -> -> 0 `i `uc `ui `uc ]
+[; ;car_black_box.c: 149:             pass_flag = 2;
+[e = _pass_flag -> -> 2 `i `uc ]
 "150
-[; ;car_black_box.c: 150:             attempt = 3;
-[e = _attempt -> -> 3 `i `uc ]
+[; ;car_black_box.c: 150:             sec = 60;
+[e = _sec -> -> 60 `i `uc ]
 "151
-[; ;car_black_box.c: 151:         }
+[; ;car_black_box.c: 151:             clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 24C -> + -> 128 `i -> 0 `i `uc ]
+"152
+[; ;car_black_box.c: 152:             ind = mode = count = wait = prekey = pre_key_1 = 0;
+[e = _ind = _mode = _count -> = _wait -> = _prekey = _pre_key_1 -> -> 0 `i `uc `ui `uc ]
+"153
+[; ;car_black_box.c: 153:             attempt = 3;
+[e = _attempt -> -> 3 `i `uc ]
+"154
+[; ;car_black_box.c: 154:         }
 }
 [e $U 1121  ]
-"152
-[; ;car_black_box.c: 152:         else if (count < 4) {
+"155
+[; ;car_black_box.c: 155:         else if (count < 4) {
 [e :U 1120 ]
 [e $ ! < -> _count `i -> 4 `i 1122  ]
 {
-"153
-[; ;car_black_box.c: 153:             count = 0;
+"156
+[; ;car_black_box.c: 156:             count = 0;
 [e = _count -> -> 0 `i `uc ]
-"154
-[; ;car_black_box.c: 154:             attempt--;
-[e -- _attempt -> -> 1 `i `uc ]
 "157
-[; ;car_black_box.c: 157:             clcd_print(" Wrong Password ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 25C -> + -> 128 `i -> 0 `i `uc ]
-"158
-[; ;car_black_box.c: 158:             clcd_putch(attempt + 48, (0xC0 + (1)));
-[e ( _clcd_putch (2 , -> + -> _attempt `i -> 48 `i `uc -> + -> 192 `i -> 1 `i `uc ]
-"159
-[; ;car_black_box.c: 159:             clcd_print(" -> attempts  ", (0xC0 + (2)));
-[e ( _clcd_print (2 , :s 26C -> + -> 192 `i -> 2 `i `uc ]
+[; ;car_black_box.c: 157:             attempt--;
+[e -- _attempt -> -> 1 `i `uc ]
 "160
-[; ;car_black_box.c: 160:             _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[; ;car_black_box.c: 160:             clcd_print(" Wrong Password ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 25C -> + -> 128 `i -> 0 `i `uc ]
 "161
-[; ;car_black_box.c: 161:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 27C -> + -> 192 `i -> 0 `i `uc ]
+[; ;car_black_box.c: 161:             clcd_putch(attempt + 48, (0xC0 + (1)));
+[e ( _clcd_putch (2 , -> + -> _attempt `i -> 48 `i `uc -> + -> 192 `i -> 1 `i `uc ]
 "162
-[; ;car_black_box.c: 162:         }
+[; ;car_black_box.c: 162:             clcd_print(" -> attempts  ", (0xC0 + (2)));
+[e ( _clcd_print (2 , :s 26C -> + -> 192 `i -> 2 `i `uc ]
+"163
+[; ;car_black_box.c: 163:             _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"164
+[; ;car_black_box.c: 164:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 27C -> + -> 192 `i -> 0 `i `uc ]
+"165
+[; ;car_black_box.c: 165:         }
 }
 [e :U 1122 ]
 [e :U 1121 ]
-"163
-[; ;car_black_box.c: 163:     }
+"166
+[; ;car_black_box.c: 166:     }
 }
 [e :U 1115 ]
-"165
-[; ;car_black_box.c: 165:     if (attempt == 0) {
+"168
+[; ;car_black_box.c: 168:     if (attempt == 0) {
 [e $ ! == -> _attempt `i -> 0 `i 1123  ]
 {
-"166
-[; ;car_black_box.c: 166:         for (sec = 59; sec != 60;) {
+"169
+[; ;car_black_box.c: 169:         for (sec = 59; sec != 60;) {
 {
 [e = _sec -> -> 59 `i `uc ]
 [e $ != -> _sec `i -> 60 `i 1124  ]
 [e $U 1125  ]
 [e :U 1124 ]
 {
-"167
-[; ;car_black_box.c: 167:             clcd_print(" Attempts over  ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 28C -> + -> 128 `i -> 0 `i `uc ]
-"168
-[; ;car_black_box.c: 168:             clcd_print(" Wait for ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 29C -> + -> 192 `i -> 0 `i `uc ]
-"169
-[; ;car_black_box.c: 169:             clcd_putch(sec / 10 + 48, (0xC0 + (10)));
-[e ( _clcd_putch (2 , -> + / -> _sec `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 10 `i `uc ]
 "170
-[; ;car_black_box.c: 170:             clcd_putch(sec % 10 + 48, (0xC0 + (11)));
-[e ( _clcd_putch (2 , -> + % -> _sec `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 11 `i `uc ]
+[; ;car_black_box.c: 170:             clcd_print(" Attempts over  ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 28C -> + -> 128 `i -> 0 `i `uc ]
 "171
-[; ;car_black_box.c: 171:             clcd_print("sec", (0xC0 + (13)));
-[e ( _clcd_print (2 , :s 30C -> + -> 192 `i -> 13 `i `uc ]
+[; ;car_black_box.c: 171:             clcd_print(" Wait for ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 29C -> + -> 192 `i -> 0 `i `uc ]
 "172
-[; ;car_black_box.c: 172:         }
+[; ;car_black_box.c: 172:             clcd_putch(sec / 10 + 48, (0xC0 + (10)));
+[e ( _clcd_putch (2 , -> + / -> _sec `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 10 `i `uc ]
+"173
+[; ;car_black_box.c: 173:             clcd_putch(sec % 10 + 48, (0xC0 + (11)));
+[e ( _clcd_putch (2 , -> + % -> _sec `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 11 `i `uc ]
+"174
+[; ;car_black_box.c: 174:             clcd_print("sec", (0xC0 + (13)));
+[e ( _clcd_print (2 , :s 30C -> + -> 192 `i -> 13 `i `uc ]
+"175
+[; ;car_black_box.c: 175:         }
 }
 [e $ != -> _sec `i -> 60 `i 1124  ]
 [e :U 1125 ]
 }
-"173
-[; ;car_black_box.c: 173:         clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 31C -> + -> 128 `i -> 0 `i `uc ]
-"174
-[; ;car_black_box.c: 174:         clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 32C -> + -> 192 `i -> 0 `i `uc ]
 "176
-[; ;car_black_box.c: 176:         pass_flag = ind = 0;
-[e = _pass_flag = _ind -> -> 0 `i `uc ]
+[; ;car_black_box.c: 176:         clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 31C -> + -> 128 `i -> 0 `i `uc ]
 "177
-[; ;car_black_box.c: 177:         attempt = 3;
-[e = _attempt -> -> 3 `i `uc ]
-"178
-[; ;car_black_box.c: 178:         return;
-[e $UE 1112  ]
+[; ;car_black_box.c: 177:         clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 32C -> + -> 192 `i -> 0 `i `uc ]
 "179
-[; ;car_black_box.c: 179:     }
+[; ;car_black_box.c: 179:         pass_flag = ind = 0;
+[e = _pass_flag = _ind -> -> 0 `i `uc ]
+"180
+[; ;car_black_box.c: 180:         attempt = 3;
+[e = _attempt -> -> 3 `i `uc ]
+"181
+[; ;car_black_box.c: 181:         return;
+[e $UE 1112  ]
+"182
+[; ;car_black_box.c: 182:     }
 }
 [e :U 1123 ]
-"180
-[; ;car_black_box.c: 180: }
+"183
+[; ;car_black_box.c: 183: }
 [e :UE 1112 ]
 }
-"182
-[; ;car_black_box.c: 182: void menu(unsigned char key) {
+"185
+[; ;car_black_box.c: 185: void menu(unsigned char key) {
 [v _menu `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _menu ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-"184
-[; ;car_black_box.c: 184:     if (key == 11) {
+"187
+[; ;car_black_box.c: 187:     if (key == 11) {
 [e $ ! == -> _key `i -> 11 `i 1128  ]
 {
-"185
-[; ;car_black_box.c: 185:         prekey = 11;
+"188
+[; ;car_black_box.c: 188:         prekey = 11;
 [e = _prekey -> -> 11 `i `uc ]
-"186
-[; ;car_black_box.c: 186:         if (wait++ > 400) {
+"189
+[; ;car_black_box.c: 189:         if (wait++ > 400) {
 [e $ ! > ++ _wait -> -> 1 `i `ui -> -> 400 `i `ui 1129  ]
 {
-"187
-[; ;car_black_box.c: 187:             clcd_print(" Entered into : ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 33C -> + -> 128 `i -> 0 `i `uc ]
-"188
-[; ;car_black_box.c: 188:             clcd_print(menu_opt[mode], (0xC0 + (0)));
-[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> _mode `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 192 `i -> 0 `i `uc ]
-"189
-[; ;car_black_box.c: 189:             _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "190
-[; ;car_black_box.c: 190:             pass_flag = 3 + mode;
-[e = _pass_flag -> + -> 3 `i -> _mode `i `uc ]
+[; ;car_black_box.c: 190:             clcd_print(" Entered into : ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 33C -> + -> 128 `i -> 0 `i `uc ]
 "191
-[; ;car_black_box.c: 191:             if (mode == 0) {
+[; ;car_black_box.c: 191:             clcd_print(menu_opt[mode], (0xC0 + (0)));
+[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> _mode `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 192 `i -> 0 `i `uc ]
+"192
+[; ;car_black_box.c: 192:             _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"193
+[; ;car_black_box.c: 193:             pass_flag = 3 + mode;
+[e = _pass_flag -> + -> 3 `i -> _mode `i `uc ]
+"194
+[; ;car_black_box.c: 194:             if (mode == 0) {
 [e $ ! == -> _mode `i -> 0 `i 1130  ]
 {
-"192
-[; ;car_black_box.c: 192:                 event_flag = ev = 0;
+"195
+[; ;car_black_box.c: 195:                 event_flag = ev = 0;
 [e = _event_flag = _ev -> -> 0 `i `uc ]
-"193
-[; ;car_black_box.c: 193:                 read_event(0x00 + (14 * ((log_index + index) % 10)), data);
+"196
+[; ;car_black_box.c: 196:                 read_event(0x00 + (14 * ((log_index + index) % 10)), data);
 [e ( _read_event (2 , -> + -> 0 `i * -> 14 `i % + -> _log_index `i -> _index `i -> 10 `i `*uc &U _data ]
-"194
-[; ;car_black_box.c: 194:             } else {
+"197
+[; ;car_black_box.c: 197:             } else {
 }
 [e $U 1131  ]
 [e :U 1130 ]
 {
-"195
-[; ;car_black_box.c: 195:                 option = mode;
-[e = _option _mode ]
-"196
-[; ;car_black_box.c: 196:                 event_flag = ev = 1;
-[e = _event_flag = _ev -> -> 1 `i `uc ]
-"197
-[; ;car_black_box.c: 197:                 event[9] = menu_eve[option][0];
-[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
 "198
-[; ;car_black_box.c: 198:                 event[10] = menu_eve[option][1];
-[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
+[; ;car_black_box.c: 198:                 option = mode;
+[e = _option _mode ]
 "199
-[; ;car_black_box.c: 199:             }
+[; ;car_black_box.c: 199:                 event_flag = ev = 1;
+[e = _event_flag = _ev -> -> 1 `i `uc ]
+"200
+[; ;car_black_box.c: 200:                 event[9] = menu_eve[option][0];
+[e = *U + &U _event * -> -> -> 9 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
+"201
+[; ;car_black_box.c: 201:                 event[10] = menu_eve[option][1];
+[e = *U + &U _event * -> -> -> 10 `i `ui `ux -> -> # *U &U _event `ui `ux *U + *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U *U + &U _menu_eve * -> _option `ux -> -> # *U &U _menu_eve `ui `ux `ui `ux ]
+"202
+[; ;car_black_box.c: 202:             }
 }
 [e :U 1131 ]
-"201
-[; ;car_black_box.c: 201:             if (ev = 1 && event_flag == 1 && mode != 3) {
+"204
+[; ;car_black_box.c: 204:             if (ev = 1 && event_flag == 1 && mode != 3) {
 [e $ ! != -> = _ev -> -> && && != -> 1 `i -> 0 `i == -> _event_flag `i -> 1 `i != -> _mode `i -> 3 `i `i `uc `i -> 0 `i 1132  ]
 {
-"202
-[; ;car_black_box.c: 202:                 event_flag = 0;
+"205
+[; ;car_black_box.c: 205:                 event_flag = 0;
 [e = _event_flag -> -> 0 `i `uc ]
-"203
-[; ;car_black_box.c: 203:                 store_event(event);
+"206
+[; ;car_black_box.c: 206:                 store_event(event);
 [e ( _store_event (1 &U _event ]
-"204
-[; ;car_black_box.c: 204:             }
+"207
+[; ;car_black_box.c: 207:             }
 }
 [e :U 1132 ]
-"206
-[; ;car_black_box.c: 206:             line = star = prekey = pre_key_1 = wait = 0;
-[e = _line = _star = _prekey = _pre_key_1 -> = _wait -> -> 0 `i `ui `uc ]
-"207
-[; ;car_black_box.c: 207:             sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"208
-[; ;car_black_box.c: 208:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 34C -> + -> 128 `i -> 0 `i `uc ]
 "209
-[; ;car_black_box.c: 209:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 35C -> + -> 192 `i -> 0 `i `uc ]
+[; ;car_black_box.c: 209:             line = star = prekey = pre_key_1 = wait = 0;
+[e = _line = _star = _prekey = _pre_key_1 -> = _wait -> -> 0 `i `ui `uc ]
 "210
-[; ;car_black_box.c: 210:             return;
-[e $UE 1127  ]
+[; ;car_black_box.c: 210:             sec = 60;
+[e = _sec -> -> 60 `i `uc ]
 "211
-[; ;car_black_box.c: 211:         }
+[; ;car_black_box.c: 211:             clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 34C -> + -> 128 `i -> 0 `i `uc ]
+"212
+[; ;car_black_box.c: 212:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 35C -> + -> 192 `i -> 0 `i `uc ]
+"213
+[; ;car_black_box.c: 213:             return;
+[e $UE 1127  ]
+"214
+[; ;car_black_box.c: 214:         }
 }
 [e :U 1129 ]
-"212
-[; ;car_black_box.c: 212:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
+"215
+[; ;car_black_box.c: 215:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
 }
 [e $U 1133  ]
 [e :U 1128 ]
 [e $ ! && && && != _wait -> -> 0 `i `ui < _wait -> -> 400 `i `ui == -> _key `i -> 255 `i == -> _prekey `i -> 11 `i 1134  ]
 {
-"213
-[; ;car_black_box.c: 213:         sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"214
-[; ;car_black_box.c: 214:         star = 0;
-[e = _star -> -> 0 `i `uc ]
 "216
-[; ;car_black_box.c: 216:         if (pre_key_1 == 11) {
+[; ;car_black_box.c: 216:         sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"217
+[; ;car_black_box.c: 217:         star = 0;
+[e = _star -> -> 0 `i `uc ]
+"219
+[; ;car_black_box.c: 219:         if (pre_key_1 == 11) {
 [e $ ! == -> _pre_key_1 `i -> 11 `i 1135  ]
 {
-"217
-[; ;car_black_box.c: 217:             if (line-- <= 0)
+"220
+[; ;car_black_box.c: 220:             if (line-- <= 0)
 [e $ ! <= -> -- _line -> -> 1 `i `uc `i -> 0 `i 1136  ]
-"218
-[; ;car_black_box.c: 218:                 line = 0;
+"221
+[; ;car_black_box.c: 221:                 line = 0;
 [e = _line -> -> 0 `i `uc ]
 [e :U 1136 ]
-"219
-[; ;car_black_box.c: 219:         }
+"222
+[; ;car_black_box.c: 222:         }
 }
 [e :U 1135 ]
-"220
-[; ;car_black_box.c: 220:         if (mode-- <= 0)
+"223
+[; ;car_black_box.c: 223:         if (mode-- <= 0)
 [e $ ! <= -> -- _mode -> -> 1 `i `uc `i -> 0 `i 1137  ]
-"221
-[; ;car_black_box.c: 221:             mode = 0;
+"224
+[; ;car_black_box.c: 224:             mode = 0;
 [e = _mode -> -> 0 `i `uc ]
 [e :U 1137 ]
-"223
-[; ;car_black_box.c: 223:         pre_key_1 = prekey;
+"226
+[; ;car_black_box.c: 226:         pre_key_1 = prekey;
 [e = _pre_key_1 _prekey ]
-"224
-[; ;car_black_box.c: 224:         wait = 0;
+"227
+[; ;car_black_box.c: 227:         wait = 0;
 [e = _wait -> -> 0 `i `ui ]
-"225
-[; ;car_black_box.c: 225:     }
+"228
+[; ;car_black_box.c: 228:     }
 }
 [e :U 1134 ]
 [e :U 1133 ]
-"228
-[; ;car_black_box.c: 228:     if (key == 12) {
+"231
+[; ;car_black_box.c: 231:     if (key == 12) {
 [e $ ! == -> _key `i -> 12 `i 1138  ]
 {
-"229
-[; ;car_black_box.c: 229:         prekey = 12;
+"232
+[; ;car_black_box.c: 232:         prekey = 12;
 [e = _prekey -> -> 12 `i `uc ]
-"230
-[; ;car_black_box.c: 230:         if (wait++ > 400) {
+"233
+[; ;car_black_box.c: 233:         if (wait++ > 400) {
 [e $ ! > ++ _wait -> -> 1 `i `ui -> -> 400 `i `ui 1139  ]
 {
-"231
-[; ;car_black_box.c: 231:             pass_flag = line = mode = star = 0;
-[e = _pass_flag = _line = _mode = _star -> -> 0 `i `uc ]
-"232
-[; ;car_black_box.c: 232:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 36C -> + -> 128 `i -> 0 `i `uc ]
-"233
-[; ;car_black_box.c: 233:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 37C -> + -> 192 `i -> 0 `i `uc ]
 "234
-[; ;car_black_box.c: 234:             return;
-[e $UE 1127  ]
+[; ;car_black_box.c: 234:             pass_flag = line = mode = star = 0;
+[e = _pass_flag = _line = _mode = _star -> -> 0 `i `uc ]
 "235
-[; ;car_black_box.c: 235:         }
+[; ;car_black_box.c: 235:             clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 36C -> + -> 128 `i -> 0 `i `uc ]
+"236
+[; ;car_black_box.c: 236:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 37C -> + -> 192 `i -> 0 `i `uc ]
+"237
+[; ;car_black_box.c: 237:             return;
+[e $UE 1127  ]
+"238
+[; ;car_black_box.c: 238:         }
 }
 [e :U 1139 ]
-"236
-[; ;car_black_box.c: 236:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 12) {
+"239
+[; ;car_black_box.c: 239:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 12) {
 }
 [e $U 1140  ]
 [e :U 1138 ]
 [e $ ! && && && != _wait -> -> 0 `i `ui < _wait -> -> 400 `i `ui == -> _key `i -> 255 `i == -> _prekey `i -> 12 `i 1141  ]
 {
-"237
-[; ;car_black_box.c: 237:         sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"238
-[; ;car_black_box.c: 238:         star = 1;
-[e = _star -> -> 1 `i `uc ]
 "240
-[; ;car_black_box.c: 240:         if (pre_key_1 == 12) {
+[; ;car_black_box.c: 240:         sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"241
+[; ;car_black_box.c: 241:         star = 1;
+[e = _star -> -> 1 `i `uc ]
+"243
+[; ;car_black_box.c: 243:         if (pre_key_1 == 12) {
 [e $ ! == -> _pre_key_1 `i -> 12 `i 1142  ]
 {
-"241
-[; ;car_black_box.c: 241:             if (line++ >= 3)
+"244
+[; ;car_black_box.c: 244:             if (line++ >= 3)
 [e $ ! >= -> ++ _line -> -> 1 `i `uc `i -> 3 `i 1143  ]
-"242
-[; ;car_black_box.c: 242:                 line = 3;
+"245
+[; ;car_black_box.c: 245:                 line = 3;
 [e = _line -> -> 3 `i `uc ]
 [e :U 1143 ]
-"243
-[; ;car_black_box.c: 243:         }
+"246
+[; ;car_black_box.c: 246:         }
 }
 [e :U 1142 ]
-"245
-[; ;car_black_box.c: 245:         if (mode++ >= 4)
+"248
+[; ;car_black_box.c: 248:         if (mode++ >= 4)
 [e $ ! >= -> ++ _mode -> -> 1 `i `uc `i -> 4 `i 1144  ]
-"246
-[; ;car_black_box.c: 246:             mode = 4;
+"249
+[; ;car_black_box.c: 249:             mode = 4;
 [e = _mode -> -> 4 `i `uc ]
 [e :U 1144 ]
-"248
-[; ;car_black_box.c: 248:         pre_key_1 = prekey;
+"251
+[; ;car_black_box.c: 251:         pre_key_1 = prekey;
 [e = _pre_key_1 _prekey ]
-"249
-[; ;car_black_box.c: 249:         wait = 0;
+"252
+[; ;car_black_box.c: 252:         wait = 0;
 [e = _wait -> -> 0 `i `ui ]
-"250
-[; ;car_black_box.c: 250:     }
+"253
+[; ;car_black_box.c: 253:     }
 }
 [e :U 1141 ]
 [e :U 1140 ]
-"253
-[; ;car_black_box.c: 253:     if (star == 1) {
+"256
+[; ;car_black_box.c: 256:     if (star == 1) {
 [e $ ! == -> _star `i -> 1 `i 1145  ]
 {
-"254
-[; ;car_black_box.c: 254:         clcd_putch(' ', (0x80 + (0)));
+"257
+[; ;car_black_box.c: 257:         clcd_putch(' ', (0x80 + (0)));
 [e ( _clcd_putch (2 , -> -> 32 `ui `uc -> + -> 128 `i -> 0 `i `uc ]
-"255
-[; ;car_black_box.c: 255:         clcd_putch('*', (0xC0 + (0)));
+"258
+[; ;car_black_box.c: 258:         clcd_putch('*', (0xC0 + (0)));
 [e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 192 `i -> 0 `i `uc ]
-"256
-[; ;car_black_box.c: 256:     } else if (star == 0) {
+"259
+[; ;car_black_box.c: 259:     } else if (star == 0) {
 }
 [e $U 1146  ]
 [e :U 1145 ]
 [e $ ! == -> _star `i -> 0 `i 1147  ]
 {
-"257
-[; ;car_black_box.c: 257:         clcd_putch('*', (0x80 + (0)));
+"260
+[; ;car_black_box.c: 260:         clcd_putch('*', (0x80 + (0)));
 [e ( _clcd_putch (2 , -> -> 42 `ui `uc -> + -> 128 `i -> 0 `i `uc ]
-"258
-[; ;car_black_box.c: 258:         clcd_putch(' ', (0xC0 + (0)));
+"261
+[; ;car_black_box.c: 261:         clcd_putch(' ', (0xC0 + (0)));
 [e ( _clcd_putch (2 , -> -> 32 `ui `uc -> + -> 192 `i -> 0 `i `uc ]
-"259
-[; ;car_black_box.c: 259:     }
+"262
+[; ;car_black_box.c: 262:     }
 }
 [e :U 1147 ]
 [e :U 1146 ]
-"261
-[; ;car_black_box.c: 261:     clcd_print(menu_opt[line], (0x80 + (2)));
-[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> _line `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 128 `i -> 2 `i `uc ]
-"262
-[; ;car_black_box.c: 262:     clcd_print(menu_opt[line + 1], (0xC0 + (2)));
-[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> -> + -> _line `i -> 1 `i `ui `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 192 `i -> 2 `i `uc ]
 "264
-[; ;car_black_box.c: 264:     if (sec == 55) {
+[; ;car_black_box.c: 264:     clcd_print(menu_opt[line], (0x80 + (2)));
+[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> _line `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 128 `i -> 2 `i `uc ]
+"265
+[; ;car_black_box.c: 265:     clcd_print(menu_opt[line + 1], (0xC0 + (2)));
+[e ( _clcd_print (2 , -> *U + &U _menu_opt * -> -> + -> _line `i -> 1 `i `ui `ux -> -> # *U &U _menu_opt `ui `ux `*Cuc -> + -> 192 `i -> 2 `i `uc ]
+"267
+[; ;car_black_box.c: 267:     if (sec == 55) {
 [e $ ! == -> _sec `i -> 55 `i 1148  ]
 {
-"265
-[; ;car_black_box.c: 265:         clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 38C -> + -> 128 `i -> 0 `i `uc ]
-"266
-[; ;car_black_box.c: 266:         clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 39C -> + -> 192 `i -> 0 `i `uc ]
-"267
-[; ;car_black_box.c: 267:         option = mode;
-[e = _option _mode ]
 "268
-[; ;car_black_box.c: 268:         pass_flag = line = mode = star = 0;
-[e = _pass_flag = _line = _mode = _star -> -> 0 `i `uc ]
+[; ;car_black_box.c: 268:         clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 38C -> + -> 128 `i -> 0 `i `uc ]
 "269
-[; ;car_black_box.c: 269:         return;
-[e $UE 1127  ]
+[; ;car_black_box.c: 269:         clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 39C -> + -> 192 `i -> 0 `i `uc ]
 "270
-[; ;car_black_box.c: 270:     }
+[; ;car_black_box.c: 270:         pass_flag = line = mode = star = 0;
+[e = _pass_flag = _line = _mode = _star -> -> 0 `i `uc ]
+"271
+[; ;car_black_box.c: 271:         return;
+[e $UE 1127  ]
+"272
+[; ;car_black_box.c: 272:     }
 }
 [e :U 1148 ]
-"271
-[; ;car_black_box.c: 271: }
+"273
+[; ;car_black_box.c: 273: }
 [e :UE 1127 ]
 }
-"273
-[; ;car_black_box.c: 273: void view_log(unsigned char key) {
+"275
+[; ;car_black_box.c: 275: void view_log(unsigned char key) {
 [v _view_log `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _view_log ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-"275
-[; ;car_black_box.c: 275:     if (key == 11) {
+"277
+[; ;car_black_box.c: 277:     if (key == 11) {
 [e $ ! == -> _key `i -> 11 `i 1150  ]
 {
-"276
-[; ;car_black_box.c: 276:         prekey = 11;
-[e = _prekey -> -> 11 `i `uc ]
-"277
-[; ;car_black_box.c: 277:         wait++;
-[e ++ _wait -> -> 1 `i `ui ]
 "278
-[; ;car_black_box.c: 278:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
+[; ;car_black_box.c: 278:         prekey = 11;
+[e = _prekey -> -> 11 `i `uc ]
+"279
+[; ;car_black_box.c: 279:         wait++;
+[e ++ _wait -> -> 1 `i `ui ]
+"280
+[; ;car_black_box.c: 280:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
 }
 [e $U 1151  ]
 [e :U 1150 ]
 [e $ ! && && && != _wait -> -> 0 `i `ui < _wait -> -> 400 `i `ui == -> _key `i -> 255 `i == -> _prekey `i -> 11 `i 1152  ]
 {
-"279
-[; ;car_black_box.c: 279:         if (log_index-- == 0)
+"281
+[; ;car_black_box.c: 281:         if (log_index-- == 0)
 [e $ ! == -> -- _log_index -> -> 1 `i `uc `i -> 0 `i 1153  ]
-"280
-[; ;car_black_box.c: 280:             log_index = (total_events - 1);
+"282
+[; ;car_black_box.c: 282:             log_index = (total_events - 1);
 [e = _log_index -> - -> _total_events `i -> 1 `i `uc ]
 [e :U 1153 ]
-"282
-[; ;car_black_box.c: 282:         wait = 0;
+"284
+[; ;car_black_box.c: 284:         wait = 0;
 [e = _wait -> -> 0 `i `ui ]
-"283
-[; ;car_black_box.c: 283:     }
+"285
+[; ;car_black_box.c: 285:     }
 }
 [e :U 1152 ]
 [e :U 1151 ]
-"286
-[; ;car_black_box.c: 286:     if (key == 12) {
+"288
+[; ;car_black_box.c: 288:     if (key == 12) {
 [e $ ! == -> _key `i -> 12 `i 1154  ]
 {
-"287
-[; ;car_black_box.c: 287:         prekey = 12;
+"289
+[; ;car_black_box.c: 289:         prekey = 12;
 [e = _prekey -> -> 12 `i `uc ]
-"288
-[; ;car_black_box.c: 288:         if (wait++ > 500) {
+"290
+[; ;car_black_box.c: 290:         if (wait++ > 500) {
 [e $ ! > ++ _wait -> -> 1 `i `ui -> -> 500 `i `ui 1155  ]
 {
-"289
-[; ;car_black_box.c: 289:             log_index = wait = 0;
-[e = _log_index -> = _wait -> -> 0 `i `ui `uc ]
-"290
-[; ;car_black_box.c: 290:             sec = 60;
-[e = _sec -> -> 60 `i `uc ]
 "291
-[; ;car_black_box.c: 291:             pass_flag = 2;
-[e = _pass_flag -> -> 2 `i `uc ]
+[; ;car_black_box.c: 291:             log_index = wait = 0;
+[e = _log_index -> = _wait -> -> 0 `i `ui `uc ]
 "292
-[; ;car_black_box.c: 292:             clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 40C -> + -> 128 `i -> 0 `i `uc ]
+[; ;car_black_box.c: 292:             sec = 60;
+[e = _sec -> -> 60 `i `uc ]
 "293
-[; ;car_black_box.c: 293:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 41C -> + -> 192 `i -> 0 `i `uc ]
+[; ;car_black_box.c: 293:             pass_flag = 2;
+[e = _pass_flag -> -> 2 `i `uc ]
 "294
-[; ;car_black_box.c: 294:             return;
-[e $UE 1149  ]
+[; ;car_black_box.c: 294:             clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 40C -> + -> 128 `i -> 0 `i `uc ]
 "295
-[; ;car_black_box.c: 295:         }
+[; ;car_black_box.c: 295:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 41C -> + -> 192 `i -> 0 `i `uc ]
+"296
+[; ;car_black_box.c: 296:             return;
+[e $UE 1149  ]
+"297
+[; ;car_black_box.c: 297:         }
 }
 [e :U 1155 ]
-"296
-[; ;car_black_box.c: 296:     } else if (wait != 0 && wait < 500 && key == 0xFF && prekey == 12) {
+"298
+[; ;car_black_box.c: 298:     } else if (wait != 0 && wait < 500 && key == 0xFF && prekey == 12) {
 }
 [e $U 1156  ]
 [e :U 1154 ]
 [e $ ! && && && != _wait -> -> 0 `i `ui < _wait -> -> 500 `i `ui == -> _key `i -> 255 `i == -> _prekey `i -> 12 `i 1157  ]
 {
-"297
-[; ;car_black_box.c: 297:         if (++log_index > (total_events - 1))
+"299
+[; ;car_black_box.c: 299:         if (++log_index > (total_events - 1))
 [e $ ! > -> =+ _log_index -> -> 1 `i `uc `i - -> _total_events `i -> 1 `i 1158  ]
-"298
-[; ;car_black_box.c: 298:             log_index = 0;
+"300
+[; ;car_black_box.c: 300:             log_index = 0;
 [e = _log_index -> -> 0 `i `uc ]
 [e :U 1158 ]
-"300
-[; ;car_black_box.c: 300:         wait = 0;
+"302
+[; ;car_black_box.c: 302:         wait = 0;
 [e = _wait -> -> 0 `i `ui ]
-"301
-[; ;car_black_box.c: 301:     }
+"303
+[; ;car_black_box.c: 303:     }
 }
 [e :U 1157 ]
 [e :U 1156 ]
-"303
-[; ;car_black_box.c: 303:     clcd_print("Logs :-         ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 42C -> + -> 128 `i -> 0 `i `uc ]
-"304
-[; ;car_black_box.c: 304:     clcd_putch(log_index + 48, (0xC0 + (0)));
-[e ( _clcd_putch (2 , -> + -> _log_index `i -> 48 `i `uc -> + -> 192 `i -> 0 `i `uc ]
 "305
-[; ;car_black_box.c: 305:     read_event(0x00 + (14 * ((log_index + index) % 10)), data);
-[e ( _read_event (2 , -> + -> 0 `i * -> 14 `i % + -> _log_index `i -> _index `i -> 10 `i `*uc &U _data ]
+[; ;car_black_box.c: 305:     clcd_print("Logs :-         ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 42C -> + -> 128 `i -> 0 `i `uc ]
 "306
-[; ;car_black_box.c: 306:     clcd_print(data, (0xC0 + (2)));
-[e ( _clcd_print (2 , -> &U _data `*Cuc -> + -> 192 `i -> 2 `i `uc ]
+[; ;car_black_box.c: 306:     clcd_putch(log_index + 48, (0xC0 + (0)));
+[e ( _clcd_putch (2 , -> + -> _log_index `i -> 48 `i `uc -> + -> 192 `i -> 0 `i `uc ]
 "307
-[; ;car_black_box.c: 307: }
+[; ;car_black_box.c: 307:     read_event(0x00 + (14 * ((log_index + index) % 10)), data);
+[e ( _read_event (2 , -> + -> 0 `i * -> 14 `i % + -> _log_index `i -> _index `i -> 10 `i `*uc &U _data ]
+"308
+[; ;car_black_box.c: 308:     clcd_print(data, (0xC0 + (2)));
+[e ( _clcd_print (2 , -> &U _data `*Cuc -> + -> 192 `i -> 2 `i `uc ]
+"309
+[; ;car_black_box.c: 309: }
 [e :UE 1149 ]
 }
-"309
-[; ;car_black_box.c: 309: void set_time() {
-[v _set_time `(v ~T0 @X0 1 ef ]
+"311
+[; ;car_black_box.c: 311: void set_time(unsigned char key) {
+[v _set_time `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _set_time ]
+[v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-"310
-[; ;car_black_box.c: 310:     clcd_putch('2', (0xC0 + (15)));
-[e ( _clcd_putch (2 , -> -> 50 `ui `uc -> + -> 192 `i -> 15 `i `uc ]
-"311
-[; ;car_black_box.c: 311:     _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"312
+[; ;car_black_box.c: 312:     clcd_print("    Set Time    ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 43C -> + -> 128 `i -> 0 `i `uc ]
 "313
-[; ;car_black_box.c: 313:     mode = wait = 0;
-[e = _mode -> = _wait -> -> 0 `i `ui `uc ]
+[; ;car_black_box.c: 313:     if (time_flag == 0) {
+[e $ ! == -> _time_flag `i -> 0 `i 1160  ]
+{
 "314
-[; ;car_black_box.c: 314:     pass_flag = 2;
-[e = _pass_flag -> -> 2 `i `uc ]
+[; ;car_black_box.c: 314:         if (sec % 2) {
+[e $ ! != % -> _sec `i -> 2 `i -> 0 `i 1161  ]
+{
 "315
-[; ;car_black_box.c: 315:     sec = 60;
-[e = _sec -> -> 60 `i `uc ]
+[; ;car_black_box.c: 315:             clcd_print(time, (0xC0 + (2)));
+[e ( _clcd_print (2 , -> &U _time `*Cuc -> + -> 192 `i -> 2 `i `uc ]
 "316
-[; ;car_black_box.c: 316: }
+[; ;car_black_box.c: 316:         } else {
+}
+[e $U 1162  ]
+[e :U 1161 ]
+{
+"317
+[; ;car_black_box.c: 317:             clcd_print("  ", (0xC0 + (8)));
+[e ( _clcd_print (2 , :s 44C -> + -> 192 `i -> 8 `i `uc ]
+"318
+[; ;car_black_box.c: 318:         }
+}
+[e :U 1162 ]
+"319
+[; ;car_black_box.c: 319:     }
+}
+[e :U 1160 ]
+"320
+[; ;car_black_box.c: 320:     if (time_flag == 1) {
+[e $ ! == -> _time_flag `i -> 1 `i 1163  ]
+{
+"321
+[; ;car_black_box.c: 321:         if (sec % 2) {
+[e $ ! != % -> _sec `i -> 2 `i -> 0 `i 1164  ]
+{
+"322
+[; ;car_black_box.c: 322:             clcd_print(time, (0xC0 + (2)));
+[e ( _clcd_print (2 , -> &U _time `*Cuc -> + -> 192 `i -> 2 `i `uc ]
+"323
+[; ;car_black_box.c: 323:         } else {
+}
+[e $U 1165  ]
+[e :U 1164 ]
+{
+"324
+[; ;car_black_box.c: 324:             clcd_print("  ", (0xC0 + (5)));
+[e ( _clcd_print (2 , :s 45C -> + -> 192 `i -> 5 `i `uc ]
+"325
+[; ;car_black_box.c: 325:         }
+}
+[e :U 1165 ]
+"326
+[; ;car_black_box.c: 326:     }
+}
+[e :U 1163 ]
+"327
+[; ;car_black_box.c: 327:     if (time_flag == 2) {
+[e $ ! == -> _time_flag `i -> 2 `i 1166  ]
+{
+"328
+[; ;car_black_box.c: 328:         if (sec % 2) {
+[e $ ! != % -> _sec `i -> 2 `i -> 0 `i 1167  ]
+{
+"329
+[; ;car_black_box.c: 329:             clcd_print(time, (0xC0 + (2)));
+[e ( _clcd_print (2 , -> &U _time `*Cuc -> + -> 192 `i -> 2 `i `uc ]
+"330
+[; ;car_black_box.c: 330:         } else {
+}
+[e $U 1168  ]
+[e :U 1167 ]
+{
+"331
+[; ;car_black_box.c: 331:             clcd_print("  ", (0xC0 + (2)));
+[e ( _clcd_print (2 , :s 46C -> + -> 192 `i -> 2 `i `uc ]
+"332
+[; ;car_black_box.c: 332:         }
+}
+[e :U 1168 ]
+"333
+[; ;car_black_box.c: 333:     }
+}
+[e :U 1166 ]
+"335
+[; ;car_black_box.c: 335:     if (key == 11) {
+[e $ ! == -> _key `i -> 11 `i 1169  ]
+{
+"336
+[; ;car_black_box.c: 336:         prekey = 11;
+[e = _prekey -> -> 11 `i `uc ]
+"337
+[; ;car_black_box.c: 337:         if (wait++ > 400) {
+[e $ ! > ++ _wait -> -> 1 `i `ui -> -> 400 `i `ui 1170  ]
+{
+"338
+[; ;car_black_box.c: 338:             clock_reg[0] = ((time[0] - 48) << 4) | (time[1] - 48);
+[e = *U + &U _clock_reg * -> -> -> 0 `i `ui `ux -> -> # *U &U _clock_reg `ui `ux -> | << - -> *U + &U _time * -> -> -> 0 `i `ui `ux -> -> # *U &U _time `ui `ux `i -> 48 `i -> 4 `i - -> *U + &U _time * -> -> -> 1 `i `ui `ux -> -> # *U &U _time `ui `ux `i -> 48 `i `uc ]
+"339
+[; ;car_black_box.c: 339:             clock_reg[1] = ((time[3] - 48) << 4) | (time[4] - 48);
+[e = *U + &U _clock_reg * -> -> -> 1 `i `ui `ux -> -> # *U &U _clock_reg `ui `ux -> | << - -> *U + &U _time * -> -> -> 3 `i `ui `ux -> -> # *U &U _time `ui `ux `i -> 48 `i -> 4 `i - -> *U + &U _time * -> -> -> 4 `i `ui `ux -> -> # *U &U _time `ui `ux `i -> 48 `i `uc ]
+"340
+[; ;car_black_box.c: 340:             clock_reg[2] = ((time[6] - 48) << 4) | (time[7] - 48);
+[e = *U + &U _clock_reg * -> -> -> 2 `i `ui `ux -> -> # *U &U _clock_reg `ui `ux -> | << - -> *U + &U _time * -> -> -> 6 `i `ui `ux -> -> # *U &U _time `ui `ux `i -> 48 `i -> 4 `i - -> *U + &U _time * -> -> -> 7 `i `ui `ux -> -> # *U &U _time `ui `ux `i -> 48 `i `uc ]
+"341
+[; ;car_black_box.c: 341:             write_ds1307(0x02, clock_reg[0]);
+[e ( _write_ds1307 (2 , -> -> 2 `i `uc *U + &U _clock_reg * -> -> -> 0 `i `ui `ux -> -> # *U &U _clock_reg `ui `ux ]
+"342
+[; ;car_black_box.c: 342:             write_ds1307(0x01, clock_reg[1]);
+[e ( _write_ds1307 (2 , -> -> 1 `i `uc *U + &U _clock_reg * -> -> -> 1 `i `ui `ux -> -> # *U &U _clock_reg `ui `ux ]
+"343
+[; ;car_black_box.c: 343:             write_ds1307(0x00, clock_reg[2]);
+[e ( _write_ds1307 (2 , -> -> 0 `i `uc *U + &U _clock_reg * -> -> -> 2 `i `ui `ux -> -> # *U &U _clock_reg `ui `ux ]
+"344
+[; ;car_black_box.c: 344:             clcd_print("  Time updated  ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 47C -> + -> 192 `i -> 0 `i `uc ]
+"345
+[; ;car_black_box.c: 345:             _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"346
+[; ;car_black_box.c: 346:             mode = wait = time_flag = 0;
+[e = _mode -> = _wait -> = _time_flag -> -> 0 `i `uc `ui `uc ]
+"347
+[; ;car_black_box.c: 347:             pass_flag = 2;
+[e = _pass_flag -> -> 2 `i `uc ]
+"348
+[; ;car_black_box.c: 348:             sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"349
+[; ;car_black_box.c: 349:             return;
+[e $UE 1159  ]
+"350
+[; ;car_black_box.c: 350:         }
+}
+[e :U 1170 ]
+"351
+[; ;car_black_box.c: 351:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
+}
+[e $U 1171  ]
+[e :U 1169 ]
+[e $ ! && && && != _wait -> -> 0 `i `ui < _wait -> -> 400 `i `ui == -> _key `i -> 255 `i == -> _prekey `i -> 11 `i 1172  ]
+{
+"352
+[; ;car_black_box.c: 352:         if (time_flag == 0) {
+[e $ ! == -> _time_flag `i -> 0 `i 1173  ]
+{
+"353
+[; ;car_black_box.c: 353:             if (time[7]++ == '9') {
+[e $ ! == -> ++ *U + &U _time * -> -> -> 7 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 1 `i `uc `ui -> 57 `ui 1174  ]
+{
+"354
+[; ;car_black_box.c: 354:                 time[7] = '0';
+[e = *U + &U _time * -> -> -> 7 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+"355
+[; ;car_black_box.c: 355:                 if (time[6]++ == '5')
+[e $ ! == -> ++ *U + &U _time * -> -> -> 6 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 1 `i `uc `ui -> 53 `ui 1175  ]
+"356
+[; ;car_black_box.c: 356:                     time[6] = '0';
+[e = *U + &U _time * -> -> -> 6 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+[e :U 1175 ]
+"357
+[; ;car_black_box.c: 357:             }
+}
+[e :U 1174 ]
+"358
+[; ;car_black_box.c: 358:         } else if (time_flag == 1) {
+}
+[e $U 1176  ]
+[e :U 1173 ]
+[e $ ! == -> _time_flag `i -> 1 `i 1177  ]
+{
+"359
+[; ;car_black_box.c: 359:             if (time[4]++ == '9') {
+[e $ ! == -> ++ *U + &U _time * -> -> -> 4 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 1 `i `uc `ui -> 57 `ui 1178  ]
+{
+"360
+[; ;car_black_box.c: 360:                 time[4] = '0';
+[e = *U + &U _time * -> -> -> 4 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+"361
+[; ;car_black_box.c: 361:                 if (time[3]++ == '5')
+[e $ ! == -> ++ *U + &U _time * -> -> -> 3 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 1 `i `uc `ui -> 53 `ui 1179  ]
+"362
+[; ;car_black_box.c: 362:                     time[3] = '0';
+[e = *U + &U _time * -> -> -> 3 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+[e :U 1179 ]
+"363
+[; ;car_black_box.c: 363:             }
+}
+[e :U 1178 ]
+"364
+[; ;car_black_box.c: 364:         } else if (time_flag == 2) {
+}
+[e $U 1180  ]
+[e :U 1177 ]
+[e $ ! == -> _time_flag `i -> 2 `i 1181  ]
+{
+"365
+[; ;car_black_box.c: 365:             if (time[1]++ == '9') {
+[e $ ! == -> ++ *U + &U _time * -> -> -> 1 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 1 `i `uc `ui -> 57 `ui 1182  ]
+{
+"366
+[; ;car_black_box.c: 366:                 time[1] = '0';
+[e = *U + &U _time * -> -> -> 1 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+"367
+[; ;car_black_box.c: 367:                 time[0]++;
+[e ++ *U + &U _time * -> -> -> 0 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 1 `i `uc ]
+"368
+[; ;car_black_box.c: 368:             } else if (time[1] == '4' && time[0] == '2') {
+}
+[e $U 1183  ]
+[e :U 1182 ]
+[e $ ! && == -> *U + &U _time * -> -> -> 1 `i `ui `ux -> -> # *U &U _time `ui `ux `ui -> 52 `ui == -> *U + &U _time * -> -> -> 0 `i `ui `ux -> -> # *U &U _time `ui `ux `ui -> 50 `ui 1184  ]
+{
+"369
+[; ;car_black_box.c: 369:                 time[0] = '0';
+[e = *U + &U _time * -> -> -> 0 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+"370
+[; ;car_black_box.c: 370:                 time[1] = '0';
+[e = *U + &U _time * -> -> -> 1 `i `ui `ux -> -> # *U &U _time `ui `ux -> -> 48 `ui `uc ]
+"371
+[; ;car_black_box.c: 371:             }
+}
+[e :U 1184 ]
+[e :U 1183 ]
+"372
+[; ;car_black_box.c: 372:         }
+}
+[e :U 1181 ]
+[e :U 1180 ]
+[e :U 1176 ]
+"373
+[; ;car_black_box.c: 373:         wait = 0;
+[e = _wait -> -> 0 `i `ui ]
+"374
+[; ;car_black_box.c: 374:     }
+}
+[e :U 1172 ]
+[e :U 1171 ]
+"376
+[; ;car_black_box.c: 376:     if (key == 12) {
+[e $ ! == -> _key `i -> 12 `i 1185  ]
+{
+"377
+[; ;car_black_box.c: 377:         prekey = 12;
+[e = _prekey -> -> 12 `i `uc ]
+"378
+[; ;car_black_box.c: 378:         if (wait++ > 400) {
+[e $ ! > ++ _wait -> -> 1 `i `ui -> -> 400 `i `ui 1186  ]
+{
+"379
+[; ;car_black_box.c: 379:             mode = wait = time_flag = 0;
+[e = _mode -> = _wait -> = _time_flag -> -> 0 `i `uc `ui `uc ]
+"380
+[; ;car_black_box.c: 380:             pass_flag = 2;
+[e = _pass_flag -> -> 2 `i `uc ]
+"381
+[; ;car_black_box.c: 381:             sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"382
+[; ;car_black_box.c: 382:             return;
+[e $UE 1159  ]
+"383
+[; ;car_black_box.c: 383:         }
+}
+[e :U 1186 ]
+"384
+[; ;car_black_box.c: 384:     } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 12) {
+}
+[e $U 1187  ]
+[e :U 1185 ]
+[e $ ! && && && != _wait -> -> 0 `i `ui < _wait -> -> 400 `i `ui == -> _key `i -> 255 `i == -> _prekey `i -> 12 `i 1188  ]
+{
+"385
+[; ;car_black_box.c: 385:         if (time_flag++ == 2)
+[e $ ! == -> ++ _time_flag -> -> 1 `i `uc `i -> 2 `i 1189  ]
+"386
+[; ;car_black_box.c: 386:             time_flag = 0;
+[e = _time_flag -> -> 0 `i `uc ]
+[e :U 1189 ]
+"387
+[; ;car_black_box.c: 387:         wait = 0;
+[e = _wait -> -> 0 `i `ui ]
+"388
+[; ;car_black_box.c: 388:     }
+}
+[e :U 1188 ]
+[e :U 1187 ]
+"389
+[; ;car_black_box.c: 389: }
 [e :UE 1159 ]
 }
-"318
-[; ;car_black_box.c: 318: void download_log() {
+"391
+[; ;car_black_box.c: 391: void download_log() {
 [v _download_log `(v ~T0 @X0 1 ef ]
 {
 [e :U _download_log ]
 [f ]
-"319
-[; ;car_black_box.c: 319:     clcd_print("Downloading...  ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 43C -> + -> 128 `i -> 0 `i `uc ]
-"320
-[; ;car_black_box.c: 320:     clcd_putch(total_events/10 + 48, (0xC0 + (5)));
+"392
+[; ;car_black_box.c: 392:     clcd_print("Downloading...  ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 48C -> + -> 128 `i -> 0 `i `uc ]
+"393
+[; ;car_black_box.c: 393:     clcd_putch(total_events / 10 + 48, (0xC0 + (5)));
 [e ( _clcd_putch (2 , -> + / -> _total_events `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 5 `i `uc ]
-"321
-[; ;car_black_box.c: 321:     clcd_putch(total_events%10 + 48, (0xC0 + (6)));
+"394
+[; ;car_black_box.c: 394:     clcd_putch(total_events % 10 + 48, (0xC0 + (6)));
 [e ( _clcd_putch (2 , -> + % -> _total_events `i -> 10 `i -> 48 `i `uc -> + -> 192 `i -> 6 `i `uc ]
-"322
-[; ;car_black_box.c: 322:     clcd_putch('3', (0xC0 + (15)));
+"395
+[; ;car_black_box.c: 395:     clcd_putch('3', (0xC0 + (15)));
 [e ( _clcd_putch (2 , -> -> 51 `ui `uc -> + -> 192 `i -> 15 `i `uc ]
-"323
-[; ;car_black_box.c: 323:     _delay((unsigned long)((1000)*(20000000/4000.0)));
+"396
+[; ;car_black_box.c: 396:     _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"326
-[; ;car_black_box.c: 326:     GIE = 0;
+"399
+[; ;car_black_box.c: 399:     GIE = 0;
 [e = _GIE -> -> 0 `i `b ]
-"327
-[; ;car_black_box.c: 327:     PEIE = 0;
+"400
+[; ;car_black_box.c: 400:     PEIE = 0;
 [e = _PEIE -> -> 0 `i `b ]
-"328
-[; ;car_black_box.c: 328:     TMR0IE = 0;
+"401
+[; ;car_black_box.c: 401:     TMR0IE = 0;
 [e = _TMR0IE -> -> 0 `i `b ]
-"329
-[; ;car_black_box.c: 329:     TMR0IF = 0;
+"402
+[; ;car_black_box.c: 402:     TMR0IF = 0;
 [e = _TMR0IF -> -> 0 `i `b ]
-"330
-[; ;car_black_box.c: 330:     TMR0ON = 0;
+"403
+[; ;car_black_box.c: 403:     TMR0ON = 0;
 [e = _TMR0ON -> -> 0 `i `b ]
-"332
-[; ;car_black_box.c: 332:     init_uart();
+"405
+[; ;car_black_box.c: 405:     init_uart();
 [e ( _init_uart ..  ]
-"334
-[; ;car_black_box.c: 334:     puts("#   TIME   EV SP\n\r");
-[e ( _puts (1 :s 44C ]
-"335
-[; ;car_black_box.c: 335:     for ( unsigned char i = 0; i < total_events; i++ )
+"407
+[; ;car_black_box.c: 407:     puts("#   TIME   EV SP\n\r");
+[e ( _puts (1 :s 49C ]
+"408
+[; ;car_black_box.c: 408:     for (unsigned char i = 0; i < total_events; i++) {
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $U 1164  ]
-[e :U 1161 ]
-"336
-[; ;car_black_box.c: 336:     {
+[e $U 1194  ]
+[e :U 1191 ]
 {
-"337
-[; ;car_black_box.c: 337:         putch(((log_index+index)%10)/10+48);
+"409
+[; ;car_black_box.c: 409:         putch(((log_index + index) % 10) / 10 + 48);
 [e ( _putch (1 -> + / % + -> _log_index `i -> _index `i -> 10 `i -> 10 `i -> 48 `i `uc ]
-"338
-[; ;car_black_box.c: 338:         puts("\n\r");
-[e ( _puts (1 :s 45C ]
-"339
-[; ;car_black_box.c: 339:     }
+"410
+[; ;car_black_box.c: 410:         puts("\n\r");
+[e ( _puts (1 :s 50C ]
+"411
+[; ;car_black_box.c: 411:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e :U 1164 ]
-[e $ < -> _i `i -> _total_events `i 1161  ]
-[e :U 1162 ]
+[e :U 1194 ]
+[e $ < -> _i `i -> _total_events `i 1191  ]
+[e :U 1192 ]
 }
-"342
-[; ;car_black_box.c: 342:     GIE = 1;
+"414
+[; ;car_black_box.c: 414:     GIE = 1;
 [e = _GIE -> -> 1 `i `b ]
-"343
-[; ;car_black_box.c: 343:     PEIE = 1;
+"415
+[; ;car_black_box.c: 415:     PEIE = 1;
 [e = _PEIE -> -> 1 `i `b ]
-"344
-[; ;car_black_box.c: 344:     TMR0IE = 1;
+"416
+[; ;car_black_box.c: 416:     TMR0IE = 1;
 [e = _TMR0IE -> -> 1 `i `b ]
-"345
-[; ;car_black_box.c: 345:     TMR0IF = 0;
+"417
+[; ;car_black_box.c: 417:     TMR0IF = 0;
 [e = _TMR0IF -> -> 0 `i `b ]
-"346
-[; ;car_black_box.c: 346:     TMR0ON = 1;
+"418
+[; ;car_black_box.c: 418:     TMR0ON = 1;
 [e = _TMR0ON -> -> 1 `i `b ]
-"348
-[; ;car_black_box.c: 348:     pass_flag = 2;
+"420
+[; ;car_black_box.c: 420:     pass_flag = 2;
 [e = _pass_flag -> -> 2 `i `uc ]
-"349
-[; ;car_black_box.c: 349:     mode = wait = 0;
+"421
+[; ;car_black_box.c: 421:     mode = wait = 0;
 [e = _mode -> = _wait -> -> 0 `i `ui `uc ]
-"350
-[; ;car_black_box.c: 350:     sec = 60;
+"422
+[; ;car_black_box.c: 422:     sec = 60;
 [e = _sec -> -> 60 `i `uc ]
-"351
-[; ;car_black_box.c: 351:     return;
-[e $UE 1160  ]
-"352
-[; ;car_black_box.c: 352: }
-[e :UE 1160 ]
+"423
+[; ;car_black_box.c: 423:     return;
+[e $UE 1190  ]
+"424
+[; ;car_black_box.c: 424: }
+[e :UE 1190 ]
 }
-"354
-[; ;car_black_box.c: 354: void clear_log() {
+"426
+[; ;car_black_box.c: 426: void clear_log() {
 [v _clear_log `(v ~T0 @X0 1 ef ]
 {
 [e :U _clear_log ]
 [f ]
-"355
-[; ;car_black_box.c: 355:     clcd_putch('4', (0xC0 + (15)));
+"427
+[; ;car_black_box.c: 427:     clcd_putch('4', (0xC0 + (15)));
 [e ( _clcd_putch (2 , -> -> 52 `ui `uc -> + -> 192 `i -> 15 `i `uc ]
-"356
-[; ;car_black_box.c: 356:     count_eve = total_events = log_index = index = mode = wait = 0;
+"428
+[; ;car_black_box.c: 428:     count_eve = total_events = log_index = index = mode = wait = 0;
 [e = _count_eve = _total_events = _log_index = _index = _mode -> = _wait -> -> 0 `i `ui `uc ]
-"357
-[; ;car_black_box.c: 357:     store_event(event);
+"429
+[; ;car_black_box.c: 429:     store_event(event);
 [e ( _store_event (1 &U _event ]
-"358
-[; ;car_black_box.c: 358:     event_flag = 0;
+"430
+[; ;car_black_box.c: 430:     event_flag = 0;
 [e = _event_flag -> -> 0 `i `uc ]
-"359
-[; ;car_black_box.c: 359:     clcd_print("  Logs cleared  ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 46C -> + -> 128 `i -> 0 `i `uc ]
-"360
-[; ;car_black_box.c: 360:     _delay((unsigned long)((1000)*(20000000/4000.0)));
+"431
+[; ;car_black_box.c: 431:     clcd_print("  Logs cleared  ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 51C -> + -> 128 `i -> 0 `i `uc ]
+"432
+[; ;car_black_box.c: 432:     _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"361
-[; ;car_black_box.c: 361:     clcd_putch(count_eve + 48, (0xC0 + (10)));
+"433
+[; ;car_black_box.c: 433:     clcd_putch(count_eve + 48, (0xC0 + (10)));
 [e ( _clcd_putch (2 , -> + -> _count_eve `i -> 48 `i `uc -> + -> 192 `i -> 10 `i `uc ]
-"362
-[; ;car_black_box.c: 362:     _delay((unsigned long)((1000)*(20000000/4000.0)));
+"434
+[; ;car_black_box.c: 434:     _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"364
-[; ;car_black_box.c: 364:     pass_flag = 2;
+"436
+[; ;car_black_box.c: 436:     pass_flag = 2;
 [e = _pass_flag -> -> 2 `i `uc ]
-"365
-[; ;car_black_box.c: 365:     sec = 60;
+"437
+[; ;car_black_box.c: 437:     sec = 60;
 [e = _sec -> -> 60 `i `uc ]
-"366
-[; ;car_black_box.c: 366: }
-[e :UE 1165 ]
+"438
+[; ;car_black_box.c: 438: }
+[e :UE 1195 ]
 }
-"368
-[; ;car_black_box.c: 368: void change_password(unsigned char key) {
+"440
+[; ;car_black_box.c: 440: void change_password(unsigned char key) {
 [v _change_password `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _change_password ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-"369
-[; ;car_black_box.c: 369:     if (sec == 55) {
-[e $ ! == -> _sec `i -> 55 `i 1167  ]
-{
-"370
-[; ;car_black_box.c: 370:         clcd_print("                ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 47C -> + -> 128 `i -> 0 `i `uc ]
-"371
-[; ;car_black_box.c: 371:         clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 48C -> + -> 192 `i -> 0 `i `uc ]
-"372
-[; ;car_black_box.c: 372:         ind = mode = wait = 0;
-[e = _ind = _mode -> = _wait -> -> 0 `i `ui `uc ]
-"373
-[; ;car_black_box.c: 373:         pass_flag = 2;
-[e = _pass_flag -> -> 2 `i `uc ]
-"374
-[; ;car_black_box.c: 374:         sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"375
-[; ;car_black_box.c: 375:         return;
-[e $UE 1166  ]
-"376
-[; ;car_black_box.c: 376:     }
-}
-[e :U 1167 ]
-"378
-[; ;car_black_box.c: 378:     if (ind < 4 && new_password == 0 && confirm_password == 0) {
-[e $ ! && && < -> _ind `i -> 4 `i == -> _new_password `i -> 0 `i == -> _confirm_password `i -> 0 `i 1168  ]
-{
-"379
-[; ;car_black_box.c: 379:         store_password(key, input_pass);
-[e ( _store_password (2 , _key &U _input_pass ]
-"380
-[; ;car_black_box.c: 380:         clcd_print("Current Password", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 49C -> + -> 128 `i -> 0 `i `uc ]
-"381
-[; ;car_black_box.c: 381:     }
-}
-[e :U 1168 ]
-"384
-[; ;car_black_box.c: 384:     if (ind == 4 && new_password == 0 && confirm_password == 0) {
-[e $ ! && && == -> _ind `i -> 4 `i == -> _new_password `i -> 0 `i == -> _confirm_password `i -> 0 `i 1169  ]
-{
-"385
-[; ;car_black_box.c: 385:         _delay((unsigned long)((100)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"386
-[; ;car_black_box.c: 386:         for (int j = 0; j < 4; j++) {
-{
-[v _j `i ~T0 @X0 1 a ]
-[e = _j -> 0 `i ]
-[e $ < _j -> 4 `i 1170  ]
-[e $U 1171  ]
-[e :U 1170 ]
-{
-"387
-[; ;car_black_box.c: 387:             if (password[j] == input_pass[j]) {
-[e $ ! == -> *U + &U _password * -> -> _j `ui `ux -> -> # *U &U _password `ui `ux `i -> *U + &U _input_pass * -> -> _j `ui `ux -> -> # *U &U _input_pass `ui `ux `i 1173  ]
-{
-"388
-[; ;car_black_box.c: 388:                 count++;
-[e ++ _count -> -> 1 `i `uc ]
-"389
-[; ;car_black_box.c: 389:             }
-}
-[e :U 1173 ]
-"390
-[; ;car_black_box.c: 390:         }
-}
-[e ++ _j -> 1 `i ]
-[e $ < _j -> 4 `i 1170  ]
-[e :U 1171 ]
-}
-"392
-[; ;car_black_box.c: 392:         if (count == 4) {
-[e $ ! == -> _count `i -> 4 `i 1174  ]
-{
-"393
-[; ;car_black_box.c: 393:             clcd_print("Password Matched", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 50C -> + -> 128 `i -> 0 `i `uc ]
-"394
-[; ;car_black_box.c: 394:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 51C -> + -> 192 `i -> 0 `i `uc ]
-"395
-[; ;car_black_box.c: 395:             _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"396
-[; ;car_black_box.c: 396:             count = ind = wait = key = 0;
-[e = _count = _ind -> = _wait -> = _key -> -> 0 `i `uc `ui `uc ]
-"397
-[; ;car_black_box.c: 397:             sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"398
-[; ;car_black_box.c: 398:             new_password = 1;
-[e = _new_password -> -> 1 `i `uc ]
-"399
-[; ;car_black_box.c: 399:             attempt = 3;
-[e = _attempt -> -> 3 `i `uc ]
-"400
-[; ;car_black_box.c: 400:         } else if (count < 4) {
-}
-[e $U 1175  ]
-[e :U 1174 ]
-[e $ ! < -> _count `i -> 4 `i 1176  ]
-{
-"401
-[; ;car_black_box.c: 401:             count = ind = wait = 0;
-[e = _count = _ind -> = _wait -> -> 0 `i `ui `uc ]
-"402
-[; ;car_black_box.c: 402:             attempt--;
-[e -- _attempt -> -> 1 `i `uc ]
-"404
-[; ;car_black_box.c: 404:             clcd_print(" Wrong Password ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 52C -> + -> 128 `i -> 0 `i `uc ]
-"405
-[; ;car_black_box.c: 405:             clcd_putch(attempt + 48, (0xC0 + (1)));
-[e ( _clcd_putch (2 , -> + -> _attempt `i -> 48 `i `uc -> + -> 192 `i -> 1 `i `uc ]
-"406
-[; ;car_black_box.c: 406:             clcd_print(" -> attempts  ", (0xC0 + (2)));
-[e ( _clcd_print (2 , :s 53C -> + -> 192 `i -> 2 `i `uc ]
-"407
-[; ;car_black_box.c: 407:             _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"408
-[; ;car_black_box.c: 408:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 54C -> + -> 192 `i -> 0 `i `uc ]
-"409
-[; ;car_black_box.c: 409:         }
-}
-[e :U 1176 ]
-[e :U 1175 ]
-"410
-[; ;car_black_box.c: 410:     }
-}
-[e :U 1169 ]
-"411
-[; ;car_black_box.c: 411:     if (attempt == 0) {
-[e $ ! == -> _attempt `i -> 0 `i 1177  ]
-{
-"412
-[; ;car_black_box.c: 412:         clcd_print(" Attempts over  ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 55C -> + -> 192 `i -> 0 `i `uc ]
-"413
-[; ;car_black_box.c: 413:         _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"414
-[; ;car_black_box.c: 414:         ind = mode = wait = 0;
-[e = _ind = _mode -> = _wait -> -> 0 `i `ui `uc ]
-"415
-[; ;car_black_box.c: 415:         pass_flag = 2;
-[e = _pass_flag -> -> 2 `i `uc ]
-"416
-[; ;car_black_box.c: 416:         sec = 60;
-[e = _sec -> -> 60 `i `uc ]
-"417
-[; ;car_black_box.c: 417:         return;
-[e $UE 1166  ]
-"418
-[; ;car_black_box.c: 418:     }
-}
-[e :U 1177 ]
-"420
-[; ;car_black_box.c: 420:     if (new_password == 1) {
-[e $ ! == -> _new_password `i -> 1 `i 1178  ]
-{
-"421
-[; ;car_black_box.c: 421:         clcd_print("  New Password ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 56C -> + -> 128 `i -> 0 `i `uc ]
-"422
-[; ;car_black_box.c: 422:         if (ind < 4) {
-[e $ ! < -> _ind `i -> 4 `i 1179  ]
-{
-"423
-[; ;car_black_box.c: 423:             store_password(key, password);
-[e ( _store_password (2 , _key &U _password ]
-"424
-[; ;car_black_box.c: 424:         } else {
-}
-[e $U 1180  ]
-[e :U 1179 ]
-{
-"425
-[; ;car_black_box.c: 425:             _delay((unsigned long)((100)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"426
-[; ;car_black_box.c: 426:             new_password = ind = key = 0;
-[e = _new_password = _ind = _key -> -> 0 `i `uc ]
-"427
-[; ;car_black_box.c: 427:             confirm_password = 1;
-[e = _confirm_password -> -> 1 `i `uc ]
-"428
-[; ;car_black_box.c: 428:             clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 57C -> + -> 192 `i -> 0 `i `uc ]
-"429
-[; ;car_black_box.c: 429:         }
-}
-[e :U 1180 ]
-"430
-[; ;car_black_box.c: 430:     }
-}
-[e :U 1178 ]
-"432
-[; ;car_black_box.c: 432:     if (confirm_password == 1) {
-[e $ ! == -> _confirm_password `i -> 1 `i 1181  ]
-{
-"433
-[; ;car_black_box.c: 433:         clcd_print("Confirm Password", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 58C -> + -> 128 `i -> 0 `i `uc ]
-"434
-[; ;car_black_box.c: 434:         if (ind < 4)
-[e $ ! < -> _ind `i -> 4 `i 1182  ]
-"435
-[; ;car_black_box.c: 435:             store_password(key, input_pass);
-[e ( _store_password (2 , _key &U _input_pass ]
-[e :U 1182 ]
-"437
-[; ;car_black_box.c: 437:         if (ind == 4) {
-[e $ ! == -> _ind `i -> 4 `i 1183  ]
-{
-"438
-[; ;car_black_box.c: 438:             _delay((unsigned long)((100)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"440
-[; ;car_black_box.c: 440:             for (int j = 0; j < 4; j++) {
-{
-[v _j `i ~T0 @X0 1 a ]
-[e = _j -> 0 `i ]
-[e $ < _j -> 4 `i 1184  ]
-[e $U 1185  ]
-[e :U 1184 ]
-{
 "441
-[; ;car_black_box.c: 441:                 if (password[j] == input_pass[j]) {
-[e $ ! == -> *U + &U _password * -> -> _j `ui `ux -> -> # *U &U _password `ui `ux `i -> *U + &U _input_pass * -> -> _j `ui `ux -> -> # *U &U _input_pass `ui `ux `i 1187  ]
+[; ;car_black_box.c: 441:     if (sec == 55) {
+[e $ ! == -> _sec `i -> 55 `i 1197  ]
 {
 "442
-[; ;car_black_box.c: 442:                     count++;
-[e ++ _count -> -> 1 `i `uc ]
+[; ;car_black_box.c: 442:         clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 52C -> + -> 128 `i -> 0 `i `uc ]
 "443
-[; ;car_black_box.c: 443:                 }
-}
-[e :U 1187 ]
+[; ;car_black_box.c: 443:         clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 53C -> + -> 192 `i -> 0 `i `uc ]
 "444
-[; ;car_black_box.c: 444:             }
+[; ;car_black_box.c: 444:         ind = mode = wait = 0;
+[e = _ind = _mode -> = _wait -> -> 0 `i `ui `uc ]
+"445
+[; ;car_black_box.c: 445:         pass_flag = 2;
+[e = _pass_flag -> -> 2 `i `uc ]
+"446
+[; ;car_black_box.c: 446:         sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"447
+[; ;car_black_box.c: 447:         return;
+[e $UE 1196  ]
+"448
+[; ;car_black_box.c: 448:     }
+}
+[e :U 1197 ]
+"450
+[; ;car_black_box.c: 450:     if (ind < 4 && new_password == 0 && confirm_password == 0) {
+[e $ ! && && < -> _ind `i -> 4 `i == -> _new_password `i -> 0 `i == -> _confirm_password `i -> 0 `i 1198  ]
+{
+"451
+[; ;car_black_box.c: 451:         store_password(key, input_pass);
+[e ( _store_password (2 , _key &U _input_pass ]
+"452
+[; ;car_black_box.c: 452:         clcd_print("Current Password", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 54C -> + -> 128 `i -> 0 `i `uc ]
+"453
+[; ;car_black_box.c: 453:     }
+}
+[e :U 1198 ]
+"456
+[; ;car_black_box.c: 456:     if (ind == 4 && new_password == 0 && confirm_password == 0) {
+[e $ ! && && == -> _ind `i -> 4 `i == -> _new_password `i -> 0 `i == -> _confirm_password `i -> 0 `i 1199  ]
+{
+"457
+[; ;car_black_box.c: 457:         _delay((unsigned long)((100)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"458
+[; ;car_black_box.c: 458:         for (int j = 0; j < 4; j++) {
+{
+[v _j `i ~T0 @X0 1 a ]
+[e = _j -> 0 `i ]
+[e $ < _j -> 4 `i 1200  ]
+[e $U 1201  ]
+[e :U 1200 ]
+{
+"459
+[; ;car_black_box.c: 459:             if (password[j] == input_pass[j]) {
+[e $ ! == -> *U + &U _password * -> -> _j `ui `ux -> -> # *U &U _password `ui `ux `i -> *U + &U _input_pass * -> -> _j `ui `ux -> -> # *U &U _input_pass `ui `ux `i 1203  ]
+{
+"460
+[; ;car_black_box.c: 460:                 count++;
+[e ++ _count -> -> 1 `i `uc ]
+"461
+[; ;car_black_box.c: 461:             }
+}
+[e :U 1203 ]
+"462
+[; ;car_black_box.c: 462:         }
 }
 [e ++ _j -> 1 `i ]
-[e $ < _j -> 4 `i 1184  ]
-[e :U 1185 ]
+[e $ < _j -> 4 `i 1200  ]
+[e :U 1201 ]
 }
-"446
-[; ;car_black_box.c: 446:             if (count == 4) {
-[e $ ! == -> _count `i -> 4 `i 1188  ]
+"464
+[; ;car_black_box.c: 464:         if (count == 4) {
+[e $ ! == -> _count `i -> 4 `i 1204  ]
 {
-"447
-[; ;car_black_box.c: 447:                 clcd_print("Password Matched", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 59C -> + -> 128 `i -> 0 `i `uc ]
-"448
-[; ;car_black_box.c: 448:                 clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 60C -> + -> 192 `i -> 0 `i `uc ]
-"449
-[; ;car_black_box.c: 449:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+"465
+[; ;car_black_box.c: 465:             clcd_print("Password Matched", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 55C -> + -> 128 `i -> 0 `i `uc ]
+"466
+[; ;car_black_box.c: 466:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 56C -> + -> 192 `i -> 0 `i `uc ]
+"467
+[; ;car_black_box.c: 467:             _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"450
-[; ;car_black_box.c: 450:                 clcd_print("Password changed", (0x80 + (0)));
+"468
+[; ;car_black_box.c: 468:             count = ind = wait = key = 0;
+[e = _count = _ind -> = _wait -> = _key -> -> 0 `i `uc `ui `uc ]
+"469
+[; ;car_black_box.c: 469:             sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"470
+[; ;car_black_box.c: 470:             new_password = 1;
+[e = _new_password -> -> 1 `i `uc ]
+"471
+[; ;car_black_box.c: 471:             attempt = 3;
+[e = _attempt -> -> 3 `i `uc ]
+"472
+[; ;car_black_box.c: 472:         } else if (count < 4) {
+}
+[e $U 1205  ]
+[e :U 1204 ]
+[e $ ! < -> _count `i -> 4 `i 1206  ]
+{
+"473
+[; ;car_black_box.c: 473:             count = ind = wait = 0;
+[e = _count = _ind -> = _wait -> -> 0 `i `ui `uc ]
+"474
+[; ;car_black_box.c: 474:             attempt--;
+[e -- _attempt -> -> 1 `i `uc ]
+"476
+[; ;car_black_box.c: 476:             clcd_print(" Wrong Password ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 57C -> + -> 128 `i -> 0 `i `uc ]
+"477
+[; ;car_black_box.c: 477:             clcd_putch(attempt + 48, (0xC0 + (1)));
+[e ( _clcd_putch (2 , -> + -> _attempt `i -> 48 `i `uc -> + -> 192 `i -> 1 `i `uc ]
+"478
+[; ;car_black_box.c: 478:             clcd_print(" -> attempts  ", (0xC0 + (2)));
+[e ( _clcd_print (2 , :s 58C -> + -> 192 `i -> 2 `i `uc ]
+"479
+[; ;car_black_box.c: 479:             _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"480
+[; ;car_black_box.c: 480:             clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 59C -> + -> 192 `i -> 0 `i `uc ]
+"481
+[; ;car_black_box.c: 481:         }
+}
+[e :U 1206 ]
+[e :U 1205 ]
+"482
+[; ;car_black_box.c: 482:     }
+}
+[e :U 1199 ]
+"483
+[; ;car_black_box.c: 483:     if (attempt == 0) {
+[e $ ! == -> _attempt `i -> 0 `i 1207  ]
+{
+"484
+[; ;car_black_box.c: 484:         clcd_print(" Attempts over  ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 60C -> + -> 192 `i -> 0 `i `uc ]
+"485
+[; ;car_black_box.c: 485:         _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"486
+[; ;car_black_box.c: 486:         ind = mode = wait = 0;
+[e = _ind = _mode -> = _wait -> -> 0 `i `ui `uc ]
+"487
+[; ;car_black_box.c: 487:         pass_flag = 2;
+[e = _pass_flag -> -> 2 `i `uc ]
+"488
+[; ;car_black_box.c: 488:         sec = 60;
+[e = _sec -> -> 60 `i `uc ]
+"489
+[; ;car_black_box.c: 489:         return;
+[e $UE 1196  ]
+"490
+[; ;car_black_box.c: 490:     }
+}
+[e :U 1207 ]
+"492
+[; ;car_black_box.c: 492:     if (new_password == 1) {
+[e $ ! == -> _new_password `i -> 1 `i 1208  ]
+{
+"493
+[; ;car_black_box.c: 493:         clcd_print("  New Password  ", (0x80 + (0)));
 [e ( _clcd_print (2 , :s 61C -> + -> 128 `i -> 0 `i `uc ]
-"451
-[; ;car_black_box.c: 451:                 clcd_print("  Successfully  ", (0xC0 + (0)));
+"494
+[; ;car_black_box.c: 494:         if (ind < 4) {
+[e $ ! < -> _ind `i -> 4 `i 1209  ]
+{
+"495
+[; ;car_black_box.c: 495:             store_password(key, password);
+[e ( _store_password (2 , _key &U _password ]
+"496
+[; ;car_black_box.c: 496:         } else {
+}
+[e $U 1210  ]
+[e :U 1209 ]
+{
+"497
+[; ;car_black_box.c: 497:             _delay((unsigned long)((100)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"498
+[; ;car_black_box.c: 498:             new_password = ind = key = 0;
+[e = _new_password = _ind = _key -> -> 0 `i `uc ]
+"499
+[; ;car_black_box.c: 499:             confirm_password = 1;
+[e = _confirm_password -> -> 1 `i `uc ]
+"500
+[; ;car_black_box.c: 500:             clcd_print("                ", (0xC0 + (0)));
 [e ( _clcd_print (2 , :s 62C -> + -> 192 `i -> 0 `i `uc ]
-"453
-[; ;car_black_box.c: 453:                 for ( unsigned char i = 0; i < 4; i++ )
+"501
+[; ;car_black_box.c: 501:         }
+}
+[e :U 1210 ]
+"502
+[; ;car_black_box.c: 502:     }
+}
+[e :U 1208 ]
+"504
+[; ;car_black_box.c: 504:     if (confirm_password == 1) {
+[e $ ! == -> _confirm_password `i -> 1 `i 1211  ]
+{
+"505
+[; ;car_black_box.c: 505:         clcd_print("Confirm Password", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 63C -> + -> 128 `i -> 0 `i `uc ]
+"506
+[; ;car_black_box.c: 506:         if (ind < 4)
+[e $ ! < -> _ind `i -> 4 `i 1212  ]
+"507
+[; ;car_black_box.c: 507:             store_password(key, input_pass);
+[e ( _store_password (2 , _key &U _input_pass ]
+[e :U 1212 ]
+"509
+[; ;car_black_box.c: 509:         if (ind == 4) {
+[e $ ! == -> _ind `i -> 4 `i 1213  ]
+{
+"510
+[; ;car_black_box.c: 510:             _delay((unsigned long)((100)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"512
+[; ;car_black_box.c: 512:             for (int j = 0; j < 4; j++) {
+{
+[v _j `i ~T0 @X0 1 a ]
+[e = _j -> 0 `i ]
+[e $ < _j -> 4 `i 1214  ]
+[e $U 1215  ]
+[e :U 1214 ]
+{
+"513
+[; ;car_black_box.c: 513:                 if (password[j] == input_pass[j]) {
+[e $ ! == -> *U + &U _password * -> -> _j `ui `ux -> -> # *U &U _password `ui `ux `i -> *U + &U _input_pass * -> -> _j `ui `ux -> -> # *U &U _input_pass `ui `ux `i 1217  ]
+{
+"514
+[; ;car_black_box.c: 514:                     count++;
+[e ++ _count -> -> 1 `i `uc ]
+"515
+[; ;car_black_box.c: 515:                 }
+}
+[e :U 1217 ]
+"516
+[; ;car_black_box.c: 516:             }
+}
+[e ++ _j -> 1 `i ]
+[e $ < _j -> 4 `i 1214  ]
+[e :U 1215 ]
+}
+"518
+[; ;car_black_box.c: 518:             if (count == 4) {
+[e $ ! == -> _count `i -> 4 `i 1218  ]
+{
+"519
+[; ;car_black_box.c: 519:                 clcd_print("Password Matched", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 64C -> + -> 128 `i -> 0 `i `uc ]
+"520
+[; ;car_black_box.c: 520:                 clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 65C -> + -> 192 `i -> 0 `i `uc ]
+"521
+[; ;car_black_box.c: 521:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"522
+[; ;car_black_box.c: 522:                 clcd_print("Password changed", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 66C -> + -> 128 `i -> 0 `i `uc ]
+"523
+[; ;car_black_box.c: 523:                 clcd_print("  Successfully  ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 67C -> + -> 192 `i -> 0 `i `uc ]
+"525
+[; ;car_black_box.c: 525:                 for (unsigned char i = 0; i < 4; i++) {
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 4 `i 1189  ]
-[e $U 1190  ]
-[e :U 1189 ]
-"454
-[; ;car_black_box.c: 454:                 {
+[e $ < -> _i `i -> 4 `i 1219  ]
+[e $U 1220  ]
+[e :U 1219 ]
 {
-"455
-[; ;car_black_box.c: 455:                     write_ext_eeprom(0xAA + i, password[i]);
+"526
+[; ;car_black_box.c: 526:                     write_ext_eeprom(0xAA + i, password[i]);
 [e ( _write_ext_eeprom (2 , -> + -> 170 `i -> _i `i `uc *U + &U _password * -> _i `ux -> -> # *U &U _password `ui `ux ]
-"456
-[; ;car_black_box.c: 456:                 }
+"527
+[; ;car_black_box.c: 527:                 }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 4 `i 1189  ]
-[e :U 1190 ]
+[e $ < -> _i `i -> 4 `i 1219  ]
+[e :U 1220 ]
 }
-"458
-[; ;car_black_box.c: 458:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+"529
+[; ;car_black_box.c: 529:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"459
-[; ;car_black_box.c: 459:                 count = ind = new_password = confirm_password = mode = wait = 0;
+"530
+[; ;car_black_box.c: 530:                 clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 68C -> + -> 128 `i -> 0 `i `uc ]
+"531
+[; ;car_black_box.c: 531:                 clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 69C -> + -> 192 `i -> 0 `i `uc ]
+"532
+[; ;car_black_box.c: 532:                 count = ind = new_password = confirm_password = mode = wait = 0;
 [e = _count = _ind = _new_password = _confirm_password = _mode -> = _wait -> -> 0 `i `ui `uc ]
-"460
-[; ;car_black_box.c: 460:                 attempt = 3;
+"533
+[; ;car_black_box.c: 533:                 attempt = 3;
 [e = _attempt -> -> 3 `i `uc ]
-"461
-[; ;car_black_box.c: 461:                 pass_flag = 2;
+"534
+[; ;car_black_box.c: 534:                 pass_flag = 2;
 [e = _pass_flag -> -> 2 `i `uc ]
-"462
-[; ;car_black_box.c: 462:                 sec = 60;
+"535
+[; ;car_black_box.c: 535:                 sec = 60;
 [e = _sec -> -> 60 `i `uc ]
-"463
-[; ;car_black_box.c: 463:                 return;
-[e $UE 1166  ]
-"464
-[; ;car_black_box.c: 464:             } else if (count < 4) {
+"536
+[; ;car_black_box.c: 536:                 return;
+[e $UE 1196  ]
+"537
+[; ;car_black_box.c: 537:             } else if (count < 4) {
 }
-[e $U 1192  ]
-[e :U 1188 ]
-[e $ ! < -> _count `i -> 4 `i 1193  ]
+[e $U 1222  ]
+[e :U 1218 ]
+[e $ ! < -> _count `i -> 4 `i 1223  ]
 {
-"465
-[; ;car_black_box.c: 465:                 clcd_print(" Wrong Password ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 63C -> + -> 128 `i -> 0 `i `uc ]
-"466
-[; ;car_black_box.c: 466:                 clcd_print("                ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 64C -> + -> 192 `i -> 0 `i `uc ]
-"467
-[; ;car_black_box.c: 467:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+"538
+[; ;car_black_box.c: 538:                 clcd_print(" Wrong Password ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 70C -> + -> 128 `i -> 0 `i `uc ]
+"539
+[; ;car_black_box.c: 539:                 clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 71C -> + -> 192 `i -> 0 `i `uc ]
+"540
+[; ;car_black_box.c: 540:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"468
-[; ;car_black_box.c: 468:                 clcd_print("  Password Not  ", (0x80 + (0)));
-[e ( _clcd_print (2 , :s 65C -> + -> 128 `i -> 0 `i `uc ]
-"469
-[; ;car_black_box.c: 469:                 clcd_print("     Changed    ", (0xC0 + (0)));
-[e ( _clcd_print (2 , :s 66C -> + -> 192 `i -> 0 `i `uc ]
-"470
-[; ;car_black_box.c: 470:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+"541
+[; ;car_black_box.c: 541:                 clcd_print("  Password Not  ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 72C -> + -> 128 `i -> 0 `i `uc ]
+"542
+[; ;car_black_box.c: 542:                 clcd_print("     Changed    ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 73C -> + -> 192 `i -> 0 `i `uc ]
+"543
+[; ;car_black_box.c: 543:                 _delay((unsigned long)((1000)*(20000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"471
-[; ;car_black_box.c: 471:                 count = ind = new_password = confirm_password = mode = wait = 0;
+"544
+[; ;car_black_box.c: 544:                 clcd_print("                ", (0x80 + (0)));
+[e ( _clcd_print (2 , :s 74C -> + -> 128 `i -> 0 `i `uc ]
+"545
+[; ;car_black_box.c: 545:                 clcd_print("                ", (0xC0 + (0)));
+[e ( _clcd_print (2 , :s 75C -> + -> 192 `i -> 0 `i `uc ]
+"546
+[; ;car_black_box.c: 546:                 count = ind = new_password = confirm_password = mode = wait = 0;
 [e = _count = _ind = _new_password = _confirm_password = _mode -> = _wait -> -> 0 `i `ui `uc ]
-"472
-[; ;car_black_box.c: 472:                 attempt = 3;
+"547
+[; ;car_black_box.c: 547:                 attempt = 3;
 [e = _attempt -> -> 3 `i `uc ]
-"473
-[; ;car_black_box.c: 473:                 pass_flag = 2;
+"548
+[; ;car_black_box.c: 548:                 pass_flag = 2;
 [e = _pass_flag -> -> 2 `i `uc ]
-"474
-[; ;car_black_box.c: 474:                 sec = 60;
+"549
+[; ;car_black_box.c: 549:                 sec = 60;
 [e = _sec -> -> 60 `i `uc ]
-"475
-[; ;car_black_box.c: 475:                 return;
-[e $UE 1166  ]
-"476
-[; ;car_black_box.c: 476:             }
+"550
+[; ;car_black_box.c: 550:                 return;
+[e $UE 1196  ]
+"551
+[; ;car_black_box.c: 551:             }
 }
-[e :U 1193 ]
-[e :U 1192 ]
-"477
-[; ;car_black_box.c: 477:         }
+[e :U 1223 ]
+[e :U 1222 ]
+"552
+[; ;car_black_box.c: 552:         }
 }
-[e :U 1183 ]
-"478
-[; ;car_black_box.c: 478:     }
+[e :U 1213 ]
+"553
+[; ;car_black_box.c: 553:     }
 }
-[e :U 1181 ]
-"479
-[; ;car_black_box.c: 479: }
-[e :UE 1166 ]
+[e :U 1211 ]
+"554
+[; ;car_black_box.c: 554: }
+[e :UE 1196 ]
 }
 [a 22C 67 111 114 114 101 99 116 32 112 97 115 115 119 111 114 100 0 ]
-[a 49C 67 117 114 114 101 110 116 32 80 97 115 115 119 111 114 100 0 ]
-[a 58C 67 111 110 102 105 114 109 32 80 97 115 115 119 111 114 100 0 ]
-[a 50C 80 97 115 115 119 111 114 100 32 77 97 116 99 104 101 100 0 ]
-[a 59C 80 97 115 115 119 111 114 100 32 77 97 116 99 104 101 100 0 ]
-[a 61C 80 97 115 115 119 111 114 100 32 99 104 97 110 103 101 100 0 ]
+[a 54C 67 117 114 114 101 110 116 32 80 97 115 115 119 111 114 100 0 ]
+[a 63C 67 111 110 102 105 114 109 32 80 97 115 115 119 111 114 100 0 ]
+[a 55C 80 97 115 115 119 111 114 100 32 77 97 116 99 104 101 100 0 ]
+[a 64C 80 97 115 115 119 111 114 100 32 77 97 116 99 104 101 100 0 ]
+[a 66C 80 97 115 115 119 111 114 100 32 99 104 97 110 103 101 100 0 ]
 [a 30C 115 101 99 0 ]
 [a 15C 83 84 0 ]
 [a 7C 71 82 0 ]
@@ -2865,24 +3157,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 3C 71 49 0 ]
 [a 29C 32 87 97 105 116 32 102 111 114 32 0 ]
 [a 11C 68 111 119 110 108 111 97 100 32 108 111 103 32 0 ]
-[a 56C 32 32 78 101 119 32 80 97 115 115 119 111 114 100 32 0 ]
 [a 19C 32 69 110 116 101 114 32 80 97 115 115 119 111 114 100 32 0 ]
 [a 25C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
-[a 52C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
-[a 63C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
+[a 57C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
+[a 70C 32 87 114 111 110 103 32 80 97 115 115 119 111 114 100 32 0 ]
 [a 8C 67 32 0 ]
 [a 33C 32 69 110 116 101 114 101 100 32 105 110 116 111 32 58 32 0 ]
-[a 62C 32 32 83 117 99 99 101 115 115 102 117 108 108 121 32 32 0 ]
-[a 65C 32 32 80 97 115 115 119 111 114 100 32 78 111 116 32 32 0 ]
+[a 67C 32 32 83 117 99 99 101 115 115 102 117 108 108 121 32 32 0 ]
+[a 72C 32 32 80 97 115 115 119 111 114 100 32 78 111 116 32 32 0 ]
 [a 26C 32 45 62 32 97 116 116 101 109 112 116 115 32 32 0 ]
-[a 53C 32 45 62 32 97 116 116 101 109 112 116 115 32 32 0 ]
+[a 58C 32 45 62 32 97 116 116 101 109 112 116 115 32 32 0 ]
 [a 13C 67 104 97 110 103 101 32 112 97 115 115 32 32 0 ]
 [a 28C 32 65 116 116 101 109 112 116 115 32 111 118 101 114 32 32 0 ]
-[a 55C 32 65 116 116 101 109 112 116 115 32 111 118 101 114 32 32 0 ]
-[a 46C 32 32 76 111 103 115 32 99 108 101 97 114 101 100 32 32 0 ]
-[a 43C 68 111 119 110 108 111 97 100 105 110 103 46 46 46 32 32 0 ]
+[a 60C 32 65 116 116 101 109 112 116 115 32 111 118 101 114 32 32 0 ]
+[a 61C 32 32 78 101 119 32 80 97 115 115 119 111 114 100 32 32 0 ]
+[a 47C 32 32 84 105 109 101 32 117 112 100 97 116 101 100 32 32 0 ]
+[a 51C 32 32 76 111 103 115 32 99 108 101 97 114 101 100 32 32 0 ]
+[a 48C 68 111 119 110 108 111 97 100 105 110 103 46 46 46 32 32 0 ]
 [a 12C 67 108 101 97 114 32 108 111 103 32 32 32 32 0 ]
-[a 66C 32 32 32 32 32 67 104 97 110 103 101 100 32 32 32 32 0 ]
+[a 43C 32 32 32 32 83 101 116 32 84 105 109 101 32 32 32 32 0 ]
+[a 73C 32 32 32 32 32 67 104 97 110 103 101 100 32 32 32 32 0 ]
 [a 9C 86 105 101 119 32 108 111 103 32 32 32 32 32 0 ]
 [a 10C 83 101 116 32 116 105 109 101 32 32 32 32 32 0 ]
 [a 42C 76 111 103 115 32 58 45 32 32 32 32 32 32 32 32 32 0 ]
@@ -2901,12 +3195,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 39C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 40C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 41C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 47C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 48C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 51C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 54C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 57C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 60C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 64C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 44C 35 32 32 32 84 73 77 69 32 32 32 69 86 32 83 80 10 13 0 ]
-[a 45C 10 13 0 ]
+[a 52C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 53C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 56C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 59C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 62C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 65C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 68C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 69C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 71C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 74C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 75C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 44C 32 32 0 ]
+[a 45C 32 32 0 ]
+[a 46C 32 32 0 ]
+[a 49C 35 32 32 32 84 73 77 69 32 32 32 69 86 32 83 80 10 13 0 ]
+[a 50C 10 13 0 ]

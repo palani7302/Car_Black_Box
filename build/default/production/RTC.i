@@ -17941,7 +17941,7 @@ void init_ds1307(void)
 
 
  dummy = read_ds1307(0x02);
- write_ds1307(0x02, dummy | 0x40);
+ write_ds1307(0x02, dummy & 0xBF);
 # 43 "RTC.c"
  write_ds1307(0x07, 0x93);
 

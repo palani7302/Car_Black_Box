@@ -17928,7 +17928,7 @@ void store_password(unsigned char key, unsigned char *pass);
 void enter_password(unsigned char );
 void menu(unsigned char );
 void view_log(unsigned char );
-void set_time();
+void set_time(unsigned char );
 void download_log();
 void clear_log();
 void change_password(unsigned char );
@@ -17967,8 +17967,15 @@ unsigned char getch();
 unsigned char getche();
 # 15 "car_black_box.c" 2
 
+# 1 "./RTC.h" 1
+# 25 "./RTC.h"
+void write_ds1307(unsigned char address1, unsigned char data);
+unsigned char read_ds1307(unsigned char address1);
+void init_ds1307(void);
+# 16 "car_black_box.c" 2
 
-extern unsigned char sec, count_eve, ev, total_events, password[4];
+
+extern unsigned char sec, count_eve, ev, total_events, password[4], clock_reg[3], time[9];
 
 unsigned char gear = 0, flag = 0, repeated_event = 0;
 
@@ -17980,6 +17987,8 @@ unsigned int wait = 0;
 unsigned char line = 0, star = 0, prekey = 0, pre_key_1 = 0, mode = 0, option = 0;
 
 unsigned char log_index = 0, event_flag = 0, data[15], index = 0;
+
+unsigned char time_flag = 0;
 
 void display_event(unsigned char key) {
     if (key == 1 && prekey != 1) {
@@ -18218,7 +18227,6 @@ void menu(unsigned char key) {
     if (sec == 55) {
         clcd_print("                ", (0x80 + (0)));
         clcd_print("                ", (0xC0 + (0)));
-        option = mode;
         pass_flag = line = mode = star = 0;
         return;
     }
@@ -18260,19 +18268,90 @@ void view_log(unsigned char key) {
     clcd_print(data, (0xC0 + (2)));
 }
 
-void set_time() {
-    clcd_putch('2', (0xC0 + (15)));
-    _delay((unsigned long)((1000)*(20000000/4000.0)));
+void set_time(unsigned char key) {
+    clcd_print("    Set Time    ", (0x80 + (0)));
+    if (time_flag == 0) {
+        if (sec % 2) {
+            clcd_print(time, (0xC0 + (2)));
+        } else {
+            clcd_print("  ", (0xC0 + (8)));
+        }
+    }
+    if (time_flag == 1) {
+        if (sec % 2) {
+            clcd_print(time, (0xC0 + (2)));
+        } else {
+            clcd_print("  ", (0xC0 + (5)));
+        }
+    }
+    if (time_flag == 2) {
+        if (sec % 2) {
+            clcd_print(time, (0xC0 + (2)));
+        } else {
+            clcd_print("  ", (0xC0 + (2)));
+        }
+    }
 
-    mode = wait = 0;
-    pass_flag = 2;
-    sec = 60;
+    if (key == 11) {
+        prekey = 11;
+        if (wait++ > 400) {
+            clock_reg[0] = ((time[0] - 48) << 4) | (time[1] - 48);
+            clock_reg[1] = ((time[3] - 48) << 4) | (time[4] - 48);
+            clock_reg[2] = ((time[6] - 48) << 4) | (time[7] - 48);
+            write_ds1307(0x02, clock_reg[0]);
+            write_ds1307(0x01, clock_reg[1]);
+            write_ds1307(0x00, clock_reg[2]);
+            clcd_print("  Time updated  ", (0xC0 + (0)));
+            _delay((unsigned long)((1000)*(20000000/4000.0)));
+            mode = wait = time_flag = 0;
+            pass_flag = 2;
+            sec = 60;
+            return;
+        }
+    } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 11) {
+        if (time_flag == 0) {
+            if (time[7]++ == '9') {
+                time[7] = '0';
+                if (time[6]++ == '5')
+                    time[6] = '0';
+            }
+        } else if (time_flag == 1) {
+            if (time[4]++ == '9') {
+                time[4] = '0';
+                if (time[3]++ == '5')
+                    time[3] = '0';
+            }
+        } else if (time_flag == 2) {
+            if (time[1]++ == '9') {
+                time[1] = '0';
+                time[0]++;
+            } else if (time[1] == '4' && time[0] == '2') {
+                time[0] = '0';
+                time[1] = '0';
+            }
+        }
+        wait = 0;
+    }
+
+    if (key == 12) {
+        prekey = 12;
+        if (wait++ > 400) {
+            mode = wait = time_flag = 0;
+            pass_flag = 2;
+            sec = 60;
+            return;
+        }
+    } else if (wait != 0 && wait < 400 && key == 0xFF && prekey == 12) {
+        if (time_flag++ == 2)
+            time_flag = 0;
+        wait = 0;
+    }
 }
 
 void download_log() {
     clcd_print("Downloading...  ", (0x80 + (0)));
-    clcd_putch(total_events/10 + 48, (0xC0 + (5)));
-    clcd_putch(total_events%10 + 48, (0xC0 + (6)));
+    clcd_putch(total_events / 10 + 48, (0xC0 + (5)));
+    clcd_putch(total_events % 10 + 48, (0xC0 + (6)));
     clcd_putch('3', (0xC0 + (15)));
     _delay((unsigned long)((1000)*(20000000/4000.0)));
 
@@ -18286,9 +18365,8 @@ void download_log() {
     init_uart();
 
     puts("#   TIME   EV SP\n\r");
-    for ( unsigned char i = 0; i < total_events; i++ )
-    {
-        putch(((log_index+index)%10)/10+48);
+    for (unsigned char i = 0; i < total_events; i++) {
+        putch(((log_index + index) % 10) / 10 + 48);
         puts("\n\r");
     }
 
@@ -18372,7 +18450,7 @@ void change_password(unsigned char key) {
     }
 
     if (new_password == 1) {
-        clcd_print("  New Password ", (0x80 + (0)));
+        clcd_print("  New Password  ", (0x80 + (0)));
         if (ind < 4) {
             store_password(key, password);
         } else {
@@ -18404,12 +18482,13 @@ void change_password(unsigned char key) {
                 clcd_print("Password changed", (0x80 + (0)));
                 clcd_print("  Successfully  ", (0xC0 + (0)));
 
-                for ( unsigned char i = 0; i < 4; i++ )
-                {
+                for (unsigned char i = 0; i < 4; i++) {
                     write_ext_eeprom(0xAA + i, password[i]);
                 }
 
                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+                clcd_print("                ", (0x80 + (0)));
+                clcd_print("                ", (0xC0 + (0)));
                 count = ind = new_password = confirm_password = mode = wait = 0;
                 attempt = 3;
                 pass_flag = 2;
@@ -18422,6 +18501,8 @@ void change_password(unsigned char key) {
                 clcd_print("  Password Not  ", (0x80 + (0)));
                 clcd_print("     Changed    ", (0xC0 + (0)));
                 _delay((unsigned long)((1000)*(20000000/4000.0)));
+                clcd_print("                ", (0x80 + (0)));
+                clcd_print("                ", (0xC0 + (0)));
                 count = ind = new_password = confirm_password = mode = wait = 0;
                 attempt = 3;
                 pass_flag = 2;

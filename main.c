@@ -75,7 +75,7 @@ void main(void) {
     while (1) {
         adc_val = read_adc(4) / 10.23;
 
-        if (key == 10) {
+        if (key == 10 && pass_flag == 0) {
             pass_flag = 1;
             sec = 60;
             clcd_print("                ", LINE2(0));
